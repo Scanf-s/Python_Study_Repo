@@ -5,9 +5,68 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>설문조사</title>
 </head>
 <body>
-  
+  <header>
+    <h1>설문조사</h1>
+    <p>아래의 설문조사에 참여해 주세요.</p>
+  </header>
+  <hr>
+  <main>
+    <form>
+      <fieldset> <!-- 설문조사 영역 그룹화 하는 태그 -->
+        <legend>개인정보</legend> <!-- 범례 -->
+        <p>
+          <label for="name">이름</label>
+          <input type="text" id="name" name="name">
+        </p>
+        <p>
+          <label for="email">이메일</label>
+          <input type="email" id="email" name="email">
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend>설문</legend>
+        <p>연령대가 어떻게 되십니까?</p>
+        <!-- name attr을 통해 하나의 질문으로 묶을 수 있다 -->
+        <input type="radio" id="teenager" name="age" value="10대">
+        <label for="teenager">10대</label>
+        <input type="radio" id="20s" name="age" value="20대">
+        <label for="20s">20대</label>
+        <input type="radio" id="30s" name="age" value="30대">
+        <label for="30s">30대</label>
+        <input type="radio" id="40s" name="age" value="40대">
+        <label for="40s">40대</label>
+        <input type="radio" id="50s" name="age" value="50대">
+        <label for="50s">50대</label>
+
+        <p>어떤 음식을 더 좋아하십니까? (중복 선택 가능)</p>
+        <!-- name attr을 통해 하나의 질문으로 묶을 수 있다 -->
+        <input type="checkbox" id="korean" name="korean" value="한식">
+        <label for="teenager">한식</label>
+        <input type="checkbox" id="western" name="western" value="양식">
+        <label for="20s">양식</label>
+        <input type="checkbox" id="chinese" name="chinese" value="중식">
+        <label for="30s">중식</label>
+        <input type="checkbox" id="japanese" name="japanese" value="일식">
+        <label for="40s">일식</label>
+        <input type="checkbox" id="mexican" name="mexican" value="멕시칸">
+        <label for="50s">멕시칸</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>기타 의견</legend>
+        <textarea name="opinion" id="opinion" cols="50" rows="10"></textarea>
+      </fieldset>
+
+      <input type="submit" value="제출">
+    </form>
+  </main>
+  <hr>
+  <footer>
+    <p>이 설문조사는 양의종이 제작하였습니다.</p>
+  </footer>
 </body>
 </html>

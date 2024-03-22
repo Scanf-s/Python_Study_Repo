@@ -1,0 +1,97 @@
+/* 전체 설정 */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  height: 100%;
+  background-color: #f1f1f1;
+}
+
+/* 스크린 크기 조정*/
+.chat-screen {
+  height: calc(100% - 120px);
+  overflow-y: scroll;
+}
+
+/* 유저 정보 */
+.user {
+  background-color: #123456;
+  padding: 16px;
+  height: 80px;
+}
+
+.user__column {
+  float: left;
+}
+
+.user__picture {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 10px;
+  background-color: sandybrown;
+}
+
+.user__picture img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+}
+
+.user__name, .user__status {
+  color: white;
+  margin: 5px;
+}
+
+.user__status {
+  font-size: 10px;
+  color: greenyellow;
+}
+
+/* 채팅박스 설정 */
+.chat-form {
+  height: 120px;
+  background-color: #123456;
+}
+
+.chat-form__bar {
+  height: 120px;
+}
+
+.chat-form__message {
+  float: left;
+  height: 120px;
+  width: calc(100% - 120px);
+  border: none;
+  font-size: 24px;
+  padding: 10px;
+  font-family: "NanumSquare_ac ExtraBold", serif;
+}
+
+.chat-form__button{
+  color: white;
+  font-family: "NanumSquare_ac ExtraBold";
+  width: 120px;
+  height: 120px;
+  background-color: cornflowerblue;
+  font-size: 30px;
+}
+
+.chat-form__message{
+
+}
+
+.chat-form__button:active{
+  background-color: darkblue;
+}
+

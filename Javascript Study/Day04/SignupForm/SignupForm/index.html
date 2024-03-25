@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="kr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>회원가입 양식</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div id = "container">
+    <form id = "form" action="#">
+      <table class="table">
+        <tr>
+          <th>ID</th>
+          <td>
+            <input name = "id" placeholder="ID" required>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Password</th>
+          <td>
+            <input type="password" name = "password" placeholder="Password" required autocomplete="false">
+          </td>
+        </tr>
+
+        <tr>
+          <th>Confirm Password</th>
+          <td>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required autocomplete="false">
+          </td>
+        </tr>
+
+        <tr>
+          <th>Name</th>
+          <td>
+            <input name = "name" placeholder="Name">
+          </td>
+        </tr>
+
+        <tr>
+          <th>Email</th>
+          <td>
+            <input type="email" name = "email" placeholder="Email">
+          </td>
+        </tr>
+
+        <tr>
+          <th>Job</th>
+          <td>
+            <select name="job">
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+              <option value="engineer">Engineer</option>
+              <option value="etc" selected>ETC</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Gender</th>
+          <td>
+            <label>
+              <input type="radio" name = "gender" value="male" checked>Male
+            </label>
+            <label>
+              <input type="radio" name = "gender" value="female" >Female
+            </label>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Extra info</th>
+          <td>
+            <textarea name="extra_info" placeholder="Extra info"></textarea>
+          </td>
+        </tr>
+      </table>
+
+      <div class = "buttons">
+        <input type="submit" value = "Sign Up" class = "button" title = "Sign Up">
+        <input type="reset" value = "Reset" class = "button" title = "Reset">
+      </div>
+    </form>
+  </div>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

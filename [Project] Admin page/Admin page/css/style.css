@@ -1,0 +1,48 @@
+h3 {
+  font-size: 35px;
+
+  font-family: "NanumSquare_ac ExtraBold", Helvetica, Arial, sans-serif;
+  line-height: 1.1;
+  color: #333;
+}
+body {
+  font-family: "NanumSquare_ac", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
+}
+
+#data-table{
+  letter-spacing: 2px;
+  font-size: 17px;
+}
+
+#data-index{
+  font-size: 17px;
+  font-weight: bold;
+}
+#github_image{
+  width: 37px;
+  height: 37px;
+  object-fit: fill;
+}
+
+.flex-grow-1.d-flex.justify-content-center{
+  height: 37px;
+}
+
+.btn.btn-light{
+  font-family: "NanumSquare_ac Bold", Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+.btn.btn-light.forMen{
+  background-color: cornflowerblue;
+  letter-spacing: 1px;
+}
+
+.btn.btn-light.forWomen{
+  background-color: lightpink;
+  letter-spacing: 1px;
+}

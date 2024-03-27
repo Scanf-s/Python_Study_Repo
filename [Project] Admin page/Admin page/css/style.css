@@ -28,6 +28,10 @@ body {
   object-fit: fill;
 }
 
+#delete_button{
+  background-color: orangered;
+}
+
 .flex-grow-1.d-flex.justify-content-center{
   height: 37px;
 }

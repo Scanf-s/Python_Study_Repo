@@ -12,26 +12,29 @@
 <!-- d-flex https://getbootstrap.kr/docs/5.3/utilities/flex/#%ED%94%8C%EB%A0%89%EC%8A%A4-%EB%B9%84%ED%97%A4%EC%9D%B4%EB%B9%84%EC%96%B4-%ED%99%9C%EC%84%B1%ED%99%94 -->
 <div class="container mt-3">
   <h3 class="mt-5 mb-3">신규 등록 상품 <span id = "today"></span></h3>
-  <form class="row row-cols-lg-auto g-3 align-items-center d-flex-row">
-    <div class="col-auto">
-      <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-      <select class="form-select border-secondary-subtle border-1" id="inlineFormSelectPref">
-        <option value="all" selected>전체</option>
-        <option value="tops">상의</option>
-        <option value="bottoms">하의</option>
-        <option value="shoes">신발</option>
-        <option value="accessories">패션잡화</option>
-      </select>
+  <form class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <div class="me-2">
+        <select class="form-select border-secondary-subtle border-1" id="inlineFormSelectPref">
+          <option value="all" selected>전체</option>
+          <option value="tops">상의</option>
+          <option value="bottoms">하의</option>
+          <option value="shoes">신발</option>
+          <option value="accessories">패션잡화</option>
+        </select>
+      </div>
+      <div class="me-2">
+        <input type="text" class="form-control border-secondary-subtle border-1" id="merchant_search_bar" placeholder="제품명을 입력해주세요">
+      </div>
+      <div class="me-2">
+        <button type="button" class="btn btn-primary border-secondary-subtle border-1" id="search_button">조회</button>
+      </div>
     </div>
-
-    <div class="col-4">
-      <input type="text" class="form-control border-secondary-subtle border-1" id="merchant_search_bar" placeholder="제품명을 입력해주세요">
-    </div>
-    <div class="col-auto" id="header_buttons">
-      <button type="button" class="btn btn-primary border-secondary-subtle border-1" id="search_button">조회</button>
+    <div id="header_right_buttons">
       <button type="button" class="btn btn-primary border-secondary-subtle border-1 ms-2" id="delete_button">선택항목 삭제</button>
     </div>
   </form>
+
   <div class="container mt-3">
     <table class="table table-sm">
       <thead id = "data-index">

@@ -1,5 +1,6 @@
 # Admin page practice
-![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/d34201ec-b076-4134-a285-82901573e3bd)
+![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/94adb916-b6f8-434e-b957-517a11b3da4f)
+
 
 <br>
 

@@ -31,7 +31,13 @@ function displayTodos(){
   });
 }
 
-// handleTodoDelBtnClick 함수
+/**
+ * 배열메소드 filter 사용하여,
+ * 사용자가 클릭한 todoId와 일치하는 todoId를 가진 요소를 제외한
+ * 나머지 요소들(삭제 안한 요소들)만 남기고 새로운 배열을 반환
+ * 이후, 나머지 요소들에 대해서 displayTodos 함수를 호출하여 화면에 출력
+ * @param clickedId
+ */
 function handleTodoDelBtnClick(clickedId){
   todoArr = todoArr.filter(function(aTodo){
     return aTodo.todoId !== clickedId
@@ -40,7 +46,12 @@ function handleTodoDelBtnClick(clickedId){
   saveTodos()
 }
 
-// handleTodoItemClick 함수
+/**
+ * 배열메소드 map 사용하여,
+ * 사용자가 클릭한 todoId와 일치하는 todoId를 가진 요소만 찾아서
+ * todoDone 속성을 반대로 변경 (해야할 일을 완료했다는 뜻)
+ * @param clickedId
+ */
 function handleTodoItemClick(clickedId){
   todoArr = todoArr.map(function(aTodo){
     return aTodo.todoId !== clickedId ?

@@ -8,8 +8,22 @@ const main = document.getElementById("main");
 const input = document.getElementById("filter-text");
 const button = document.getElementById("filter-button");
 const select = document.getElementById("filter-select");
+const tothetop = document.getElementById("tothetop");
+const more = document.getElementById("more");
+const dogImageRefresh = document.getElementById("refresh");
 
 const currentDogs = [];
+
+/**
+ * 강아지 사진을 화면에 출력하는 함수
+ * @param item
+ */
+function displayDogs(item){
+  const dogImgDiv = document.createElement("div");
+  dogImgDiv.classList.add("flex-item");
+  dogImgDiv.innerHTML = `<img src="${item}" alt="dog">`;
+  main.appendChild(dogImgDiv);
+}
 
 /**
  * 강아지 사진 불러오는 함수
@@ -20,10 +34,7 @@ function fetchRandomDogs() {
     const response = JSON.parse(requestForRandomDogs.response); //response로 강아지 사진이 담긴 배열을 받아옴
     response.message.forEach(function (dog) {
       currentDogs.push(dog); //currentDogs 배열에 강아지 사진을 하나씩 넣어줌
-      const dogImgDiv = document.createElement("div");
-      dogImgDiv.classList.add("flex-item");
-      dogImgDiv.innerHTML = `<img src="${dog}" alt="dog">`;
-      main.appendChild(dogImgDiv);
+      displayDogs(dog);
     });
   });
   requestForRandomDogs.send();
@@ -68,10 +79,7 @@ function whenStart() {
     });
 
     filteredDogs.forEach(function (dog) {
-      const dogImgDiv = document.createElement("div");
-      dogImgDiv.classList.add("flex-item");
-      dogImgDiv.innerHTML = `<img src="${dog}" alt="dog">`;
-      main.appendChild(dogImgDiv);
+      displayDogs(dog);
     });
   });
 
@@ -88,11 +96,21 @@ function whenStart() {
     });
 
     filteredDogs.forEach(function (dog) {
-      const dogImgDiv = document.createElement("div");
-      dogImgDiv.classList.add("flex-item");
-      dogImgDiv.innerHTML = `<img src="${dog}" alt="dog">`;
-      main.appendChild(dogImgDiv);
+      displayDogs(dog);
     });
+  });
+
+  tothetop.addEventListener("click", function () {
+    window.scrollTo({top: 0});
+  });
+
+  more.addEventListener("click", function () {
+    fetchRandomDogs();
+  });
+
+  dogImageRefresh.addEventListener("click", function () {
+    main.innerHTML = "";
+    fetchRandomDogs();
   });
 }
 

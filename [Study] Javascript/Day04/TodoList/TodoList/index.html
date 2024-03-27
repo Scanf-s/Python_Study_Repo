@@ -1,18 +1,27 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>할일 목록</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <!-- <link rel="stylesheet" href="todo-style.css"> -->
 </head>
 <body>
-<p id = "item">홍길동</p>
-<button id = "set">SET</button>
-<button id = "get">GET</button>
-<button id = "remove">REMOVE</button>
-<button id = "clear">CLEAR</button>
+<div class="container">
+  <div class="app">
+    <h1>TO DO LIST</h1>
+    <ul id="todo-list">
+    </ul>
+    <form id="todo-form">
+      <label>
+        <input name="todo" type="text" placeholder="TO DO..." maxlength="16" autocomplete="off">
+      </label>
+      <input type="submit" value="추가">
+    </form>
+  </div>
+</div>
 <script src="./js/app.js"></script>
 </body>
 </html>

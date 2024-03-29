@@ -26,3 +26,10 @@ print(user1.mul())
 print(user1.sub())
 print(user1.div())
 print(user1.pow())
+
+퀴즈 = "스님이 공중에 뜬다를 4글자로 말하면? 어중이떠중이"
+
+print(퀴즈[21:27])
+print(퀴즈[21:])
+print(퀴즈[21:28])
+print(퀴즈[28])

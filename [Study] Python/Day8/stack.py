@@ -50,25 +50,26 @@ class Stack:
         __returnString += '|___|'
         return __returnString
 
-myStack = Stack()
-print("0을 스택에 넣어봅시다\n")
-myStack.push(0)
-print("Stack.top() -> ", myStack.top(), "\n")
+if __name__ == "__main__":
+    myStack = Stack()
+    print("0을 스택에 넣어봅시다\n")
+    myStack.push(0)
+    print("Stack.top() -> ", myStack.top(), "\n")
 
-print("1부터 10까지 스택에 넣어줍시다\n")
-for i in range(1, 11):
-    myStack.push(i)
+    print("1부터 10까지 스택에 넣어줍시다\n")
+    for i in range(1, 11):
+        myStack.push(i)
 
-print("Stack.top() -> ", myStack.top())
+    print("Stack.top() -> ", myStack.top())
 
-print("스택의 현재 구조는 다음과 같습니다\n")
-print(myStack.stackStatus())
+    print("스택의 현재 구조는 다음과 같습니다\n")
+    print(myStack.stackStatus())
 
-print("peek은 pop과 달리, element를 삭제하지 않습니다.\n")
-print(myStack.peek())
-print(myStack.stackStatus())
+    print("peek은 pop과 달리, element를 삭제하지 않습니다.\n")
+    print(myStack.peek())
+    print(myStack.stackStatus())
 
-print("\n이제 5회 pop해봅시다")
-for i in range(5):
-    myStack.pop()
-print(myStack.stackStatus())
+    print("\n이제 5회 pop해봅시다")
+    for i in range(5):
+        myStack.pop()
+    print(myStack.stackStatus())

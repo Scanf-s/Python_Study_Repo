@@ -4,7 +4,7 @@ class Node:
         self.prev = prev
         self.next = next
 
-class Doublely_LinkedList:
+class Circular_LinkedList:
     def __init__(self, data):
         self.head = Node(data) # head pointer 정의
         self.tail = self.head # tail pointer 정의 (for push_back)

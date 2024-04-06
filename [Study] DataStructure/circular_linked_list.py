@@ -1,76 +1,78 @@
 class Node:
-    def __init__(self, data, next=None, prev=None):
+    def __init__(self, data, next=None):
         self.data = data
-        self.prev = prev
         self.next = next
 
 class Circular_LinkedList:
     def __init__(self, data):
         self.head = Node(data) # head pointer 정의
-        self.tail = self.head # tail pointer 정의 (for push_back)
+        self.head.next = self.head # circular
     
     def push_back(self, data):
-        newNode = Node(data) # data를 담을 새 node 생성
-        self.tail.next = newNode # tail의 next가 새로운 node를 가리키도록 설정
-        newNode.prev = self.tail # 새로운 node가 tail을 가리키도록 설정
-        self.tail = newNode # tail을 새로운 node로 변경
-
-    def print_all(self, reversed=False):
-        if reversed:
-            cur = self.tail
-            print("Tail -> ", end="")
-            while cur:
-                print(cur.data, end="- > " if cur.prev else " -> ")
-                cur = cur.prev
-            print(" Head")
+        newNode = Node(data)
+        if self.head is None: # 리스트가 empty라면
+            self.head = newNode
+            newNode.next = self.head
         else:
             cur = self.head
-            print("Head -> ", end="")
-            while cur:
-                print(cur.data, end = " -> " if cur.next else " -> ")
+            while cur.next != self.head: # head pointer 이전까지 cur 이동
                 cur = cur.next
-            print(" Tail")
+            cur.next = newNode
+            newNode.next = self.head
 
-    def remove_element(self, data):
+    def print_all(self):
+        if self.head is None:
+            print("List is empty")
+            return
+        
         cur = self.head
-        while cur:
-            if cur.data == data and cur.prev: # 현재 지우려는 node가 head가 아닌 경우
-                cur.prev.next = cur.next # 현재 지우려는 노드의 이전 노드의 next를 현재 지우려는 노드의 다음 노드를 가리키게 설정
-                return
-            elif cur.data == data and not cur.prev: # 현재 지우려는 node가 head이면
-                self.head = cur.next # 현재 노드의 다음 노드를 head로 설정 
-                return
-            elif cur.data == data and cur.next: # 현재 지우려는 node가 tail이 아닌 경우
-                cur.next.prev = cur.prev # 현재 지우려는 노드의 다음 노드가 가리키고 있는 prev를 현재 지우려는 노드의 이전 노드를 가리키게 설정
-                return
-            elif cur.data == data and not cur.next: # 현재 지우려는 node가 tail이라면
-                self.tail = cur.prev # 현재 노드의 이전 노드를 tail로 설정
-                return
+        print("Head -> ", end="")
+        while True:
+            print(cur.data, end = " -> ")
             cur = cur.next
-        print("Data not found in given list")
+            if cur == self.head:
+                break
+        print("Head")
+
+    
+    def remove_element(self, data):
+        if self.head is None:
+            print("List is empty")
+            return
+
+        cur = self.head
+        prev = None # cur보다 한칸 뒤따르는 노드포인터
+        while True:
+            if cur.data == data:
+                if cur == self.head:
+                    if cur.next == self.head:  # list에 존재하는 유일한 node를 지우는 경우
+                        self.head = None
+                    else: # head를 지우기 위해서, 가장 마지막 node를 찾고, 가장 마지막 노드가 head의 다음에 존재하는 node를 가리키게 해야함
+                        last = self.head
+                        while last.next != self.head:
+                            last = last.next
+                        self.head = cur.next # head를 head의 다음에 있는 node로 설정
+                        last.next = self.head
+                else: # head가 아닌 노드를 지우는 경우
+                    prev.next = cur.next
+                return
+
+            prev = cur
+            cur = cur.next
+            if cur == self.head: # 데이터가 리스트에 존재하지 않는경우 loop 탈출
+                break
+        print("Data not found in given Linked List")
+
 
 if __name__ == "__main__":
-    # 1. 리스트 초기화 및 데이터 추가
-    myList = Doublely_LinkedList(10)
-    print("초기 리스트에 10 추가 후:")
-    myList.print_all()
+    myList = Circular_LinkedList(1)
     
-    for i in range(20, 31, 10):  # 20부터 30까지 10씩 증가하며 추가
+    for i in range(2, 12):
         myList.push_back(i)
     
-    # 2. 전체 리스트 출력
-    print("\n데이터 추가 후 전체 리스트 (정방향):")
     myList.print_all()
-    
-    print("\n데이터 추가 후 전체 리스트 (역방향):")
-    myList.print_all(reversed=True)
-    
-    # 3. 특정 요소 삭제
-    print("\n20을 삭제 후:")
-    myList.remove_element(20)
+
+    myList.remove_element(4)
     myList.print_all()
-    
-    # 4. 없는 요소 삭제 시도
-    print("\n없는 요소 999 삭제 시도:")
-    myList.remove_element(999)
+    myList.remove_element(1234)
 

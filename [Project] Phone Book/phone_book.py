@@ -1,4 +1,4 @@
-import sys, os, platform, time
+import os, platform, time
 
 # 연락처 추가 함수
 def add_contact() -> dict:

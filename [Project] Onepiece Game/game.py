@@ -29,7 +29,7 @@ while True:
 # Initialize Pygame
 pygame.init()
 
-# Colors
+# Color Definition
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 TREASURE_COLOR = (255, 215, 0)  # Gold
@@ -37,7 +37,7 @@ PLAYER_COLOR = (30, 144, 255)  # Dodger Blue
 INFO_TEXT_COLOR = (255, 255, 255)
 CLOSE_DISTANCE_COLOR = (255, 0, 0)
 
-# Game variables initialization function
+# init
 def init_game():
     player_position = (random.randint(0, grid_size-1), random.randint(0, grid_size-1))
     treasure_position = player_position
@@ -50,12 +50,12 @@ player_position, treasure_position, move_count = init_game()
 font_size = 30
 font = pygame.font.SysFont("arial", font_size, True)
 
-# Text display function
+# Text 표시 함수
 def draw_text(screen, text, position, font, color=INFO_TEXT_COLOR):
     text_surface = font.render(text, True, color)
     screen.blit(text_surface, position)
 
-# Handle player input
+# Keyboard arrow 처리
 def handle_input(player_pos, move_count):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -72,7 +72,7 @@ def handle_input(player_pos, move_count):
             move_count += 1
     return True, player_pos, move_count
 
-# Calculate Manhattan distance
+# distance between player and treasure
 def calculate_distance(pos1, pos2):
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
@@ -117,10 +117,10 @@ while running:
     if game_over:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:  # Restart game
+                if event.key == pygame.K_r:  # Restart
                     player_position, treasure_position, move_count = init_game()
                     game_over = False
-                elif event.key == pygame.K_q:  # Quit game
+                elif event.key == pygame.K_q:  # Quit
                     running = False
 
 pygame.quit()

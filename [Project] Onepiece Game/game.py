@@ -24,7 +24,7 @@ while True:
     else:
         print("e 또는 h를 입력하세요")
 
-#########################################################################################################################################################
+
 # Initialize Pygame
 pygame.init()
 
@@ -55,10 +55,12 @@ font = pygame.font.SysFont("arial", font_size, True)
 
 # Image 설정
 # https://stackoverflow.com/questions/20002242/how-to-scale-images-to-screen-size-in-pygame
-background_image = pygame.image.load("Background.jpg")
+background_image = pygame.image.load("images/Background.jpg")
 background = pygame.transform.scale(background_image, (screen_width, screen_height))
 background_rect = background.get_rect()
 
+player_image = pygame.image.load("images/Luffy.png")
+player = pygame.transform.scale(player_image, (cell_size, cell_size))
 
 # Text 표시 함수
 # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
@@ -69,7 +71,6 @@ def draw_text(screen, text, position, font, color):
 
 # Keyboard arrow 처리
 # https://stackoverflow.com/questions/16044229/how-to-get-keyboard-input-in-pygame
-# Contributor : ChatGPT4
 def handle_input(player_pos, move_count):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -105,7 +106,8 @@ while running:
             rect = pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size)
             pygame.draw.rect(screen, WHITE, rect, 1)
             if (x, y) == player_position:
-                pygame.draw.rect(screen, PLAYER_COLOR, rect)
+                screen.blit(player, (player_position[0] * cell_size, player_position[1] * cell_size))
+                # pygame.draw.rect(screen, PLAYER_COLOR, rect)
             elif (x, y) == treasure_position:
                 # pygame.draw.rect(screen, TREASURE_COLOR, rect)
                 pass  # 보물 숨김

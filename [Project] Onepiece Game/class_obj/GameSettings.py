@@ -1,5 +1,6 @@
 import pygame
 
+
 class GameSettings:
     def __init__(self, screen_width=800, screen_height=600, difficulty="easy", volume=50):
         self.volume = int(volume)
@@ -10,6 +11,9 @@ class GameSettings:
 
     def font_settings(self):
         self.font = pygame.font.SysFont("Arial", 40)
+
+    def get_font(self):
+        return self.font
 
     def set_screen_dimensions(self, width, height):
         self.screen_width = int(width)

@@ -3,17 +3,17 @@ if __name__ == "__main__":
     import random
 
     # 게임 설정
-    screen_width = 600
-    screen_height = 700
+    screen_width = 800
+    screen_height = 600
     screen = pygame.display.set_mode((screen_width, screen_height))
 
-    print("게임맵 크기를 입력해주세요 (10 ~ 30) : ")
+    print("게임맵 크기를 입력해 주세요 (10 ~ 30) : ")
     while True:
         grid_size = int(input())  # grid 생성
         if 30 >= grid_size >= 10:
             break
         else:
-            print("10 ~ 30 사이의 숫자 입력하세요")
+            print("10 ~ 30 사이의 숫자 입력 하세요")
 
     cell_size = screen_width // grid_size
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
         if difficulty == 'e' or difficulty == 'h':
             break
         else:
-            print("e 또는 h를 입력하세요")
+            print("e 또는 h를 입력 하세요")
 
     # Initialize Pygame
     pygame.init()
@@ -36,7 +36,6 @@ if __name__ == "__main__":
     RED = (255, 0, 0)
 
 
-    # Init
     def init_game():
         player_position = (random.randint(0, grid_size - 1), random.randint(0, grid_size - 1))
         treasure_position = player_position

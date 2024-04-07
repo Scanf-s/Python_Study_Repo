@@ -83,8 +83,8 @@ Admin page
     │  robots.txt
     │  site.webmanifest
     │  webpack.common.js
-    │  webpack.config.dev.js
-    │  webpack.config.prod.js
+    │  webpack.class_obj.dev.js
+    │  webpack.class_obj.prod.js
     │
     ├─.idea
     │  │  .gitignore

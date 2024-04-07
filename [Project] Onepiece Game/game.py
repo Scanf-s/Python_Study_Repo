@@ -1,13 +1,33 @@
 import pygame
 import random
 
-# Initialize Pygame
-pygame.init()
-
-# Screen dimensions
+# 게임 설정
 screen_width = 600
 screen_height = 700
 screen = pygame.display.set_mode((screen_width, screen_height))
+
+print("게임맵 크기를 입력해주세요 (10 ~ 30) : ")
+while True:
+    grid_size = int(input())  # grid 생성
+    if grid_size <= 30 and grid_size >= 10:
+        break
+    else:
+        print("10 ~ 30 사이의 숫자 입력하세요")
+        
+cell_size = screen_width // grid_size
+
+print("난이도 설정 (e : EASY, h : HARD): ")
+while True:
+    difficulty = input().lower()
+    if difficulty == 'e' or difficulty == 'h':
+        break
+    else:
+        print("e 또는 h를 입력하세요")
+
+
+#########################################################################################################################################################
+# Initialize Pygame
+pygame.init()
 
 # Colors
 BLACK = (0, 0, 0)
@@ -16,12 +36,6 @@ TREASURE_COLOR = (255, 215, 0)  # Gold
 PLAYER_COLOR = (30, 144, 255)  # Dodger Blue
 INFO_TEXT_COLOR = (255, 255, 255)
 CLOSE_DISTANCE_COLOR = (255, 0, 0)
-
-# Game settings
-grid_size = 10  # N x N grid
-cell_size = screen_width // grid_size  # Size of each cell
-font_size = 30
-font = pygame.font.SysFont("arial", font_size, True)
 
 # Game variables initialization function
 def init_game():
@@ -33,6 +47,8 @@ def init_game():
     return player_position, treasure_position, move_count
 
 player_position, treasure_position, move_count = init_game()
+font_size = 30
+font = pygame.font.SysFont("arial", font_size, True)
 
 # Text display function
 def draw_text(screen, text, position, font, color=INFO_TEXT_COLOR):
@@ -62,8 +78,8 @@ def calculate_distance(pos1, pos2):
 
 # Main game loop
 running = True
-easy_mode = True
 game_over = False
+
 while running:
     screen.fill(BLACK)
     running, player_position, move_count = handle_input(player_position, move_count)
@@ -75,19 +91,27 @@ while running:
             if (x, y) == player_position:
                 pygame.draw.rect(screen, PLAYER_COLOR, rect)
             elif (x, y) == treasure_position:
-                pygame.draw.rect(screen, TREASURE_COLOR, rect)
+                # 개발자 테스트 시 아래 주석을 풀고, pass 주석처리 해주세요
+                # pygame.draw.rect(screen, TREASURE_COLOR, rect)
+                pass # 보물 숨김
 
     distance = calculate_distance(player_position, treasure_position)
     color = CLOSE_DISTANCE_COLOR if distance <= 5 else INFO_TEXT_COLOR
-    draw_text(screen, f"움직인 횟수 : {move_count}", (10, 610), font)
-    if easy_mode:
-        draw_text(screen, f"보물까지의 거리 : {distance}", (10, 640), font, color)
 
-    if player_position == treasure_position:
-        draw_text(screen, "보물을 찾았습니다.", (100, 300), font, (0, 255, 0))
-        draw_text(screen, "한판 더 하시겠습니까? : R, 아니면 끝내시겠습니까? : Q", (50, 340), font, (255, 255, 0))
+    draw_text(screen, f"Move count : {move_count}", (10, 610), font, color)
+    if difficulty == 'e':
+        draw_text(screen, f"Distance : {distance}", (10, 650), font, color)
+    
+    if move_count >= grid_size * 2:
+        draw_text(screen, "You Lose", (100, 300), font, (0, 255, 0))
+        draw_text(screen, "Retry? : R, Quit? : Q", (150, 350), font, (255, 255, 0))
         game_over = True
 
+    if player_position == treasure_position and move_count < grid_size * 2:
+        draw_text(screen, "You found Onepiece!!!!", (100, 300), font, (0, 255, 0))
+        draw_text(screen, "Retry? : R, Quit? : Q", (150, 350), font, (255, 255, 0))
+        game_over = True
+        
     pygame.display.flip()
 
     if game_over:

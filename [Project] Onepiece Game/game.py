@@ -33,8 +33,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 TREASURE_COLOR = (255, 215, 0)  # Gold
 PLAYER_COLOR = (30, 144, 255)  # Dodger Blue
-INFO_TEXT_COLOR = (255, 255, 255)
-CLOSE_DISTANCE_COLOR = (255, 0, 0)
+RED = (255, 0, 0)
 
 
 # init
@@ -48,35 +47,47 @@ def init_game():
 
 
 player_position, treasure_position, move_count = init_game()
-font_size = 30
+
+# Font 설정
+pygame.font.init()
+font_size = 40
 font = pygame.font.SysFont("arial", font_size, True)
+
+# Image 설정
+# https://stackoverflow.com/questions/20002242/how-to-scale-images-to-screen-size-in-pygame
+background_image = pygame.image.load("Background.jpg")
+background = pygame.transform.scale(background_image, (screen_width, screen_height))
+background_rect = background.get_rect()
 
 
 # Text 표시 함수
-def draw_text(screen, text, position, font, color=INFO_TEXT_COLOR):
+# https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
+def draw_text(screen, text, position, font, color):
     text_surface = font.render(text, True, color)
     screen.blit(text_surface, position)
 
 
 # Keyboard arrow 처리
+# https://stackoverflow.com/questions/16044229/how-to-get-keyboard-input-in-pygame
+# Contributor : ChatGPT4
 def handle_input(player_pos, move_count):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             return False, player_pos, move_count
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:  # Move North
+            if event.key == pygame.K_UP:  # 위로
                 player_pos = (player_pos[0], max(0, player_pos[1] - 1))
-            elif event.key == pygame.K_DOWN:  # Move South
+            elif event.key == pygame.K_DOWN:  # 아래로
                 player_pos = (player_pos[0], min(grid_size - 1, player_pos[1] + 1))
-            elif event.key == pygame.K_LEFT:  # Move West
+            elif event.key == pygame.K_LEFT:  # 왼쪽으로
                 player_pos = (max(0, player_pos[0] - 1), player_pos[1])
-            elif event.key == pygame.K_RIGHT:  # Move East
+            elif event.key == pygame.K_RIGHT:  # 오른쪽으로
                 player_pos = (min(grid_size - 1, player_pos[0] + 1), player_pos[1])
             move_count += 1
     return True, player_pos, move_count
 
 
-# distance between player and treasure
+# 사용자 ~ 보물 거리 계산
 def calculate_distance(pos1, pos2):
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
@@ -86,7 +97,7 @@ running = True
 game_over = False
 
 while running:
-    screen.fill(BLACK)
+    screen.blit(background, background_rect)
     running, player_position, move_count = handle_input(player_position, move_count)
 
     for x in range(grid_size):
@@ -96,19 +107,19 @@ while running:
             if (x, y) == player_position:
                 pygame.draw.rect(screen, PLAYER_COLOR, rect)
             elif (x, y) == treasure_position:
-                # 개발자 테스트 시 아래 주석을 풀고, pass 주석처리 해주세요
                 # pygame.draw.rect(screen, TREASURE_COLOR, rect)
                 pass  # 보물 숨김
 
     distance = calculate_distance(player_position, treasure_position)
-    color = CLOSE_DISTANCE_COLOR if distance <= 5 else INFO_TEXT_COLOR
+    color = RED if distance <= 5 else BLACK
 
     draw_text(screen, f"Move count : {move_count}", (10, 610), font, color)
+    # Easy 난이도인 경우 추가 힌트 제공
     if difficulty == 'e':
         draw_text(screen, f"Distance : {distance}", (10, 650), font, color)
 
     if move_count >= grid_size * 2:
-        draw_text(screen, "You Lose", (100, 300), font, (0, 255, 0))
+        draw_text(screen, "You arrested by Navy", (100, 300), font, (0, 255, 0))
         draw_text(screen, "Retry? : R, Quit? : Q", (150, 350), font, (255, 255, 0))
         game_over = True
 

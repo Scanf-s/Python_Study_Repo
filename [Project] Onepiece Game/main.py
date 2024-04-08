@@ -1,4 +1,5 @@
 import sys
+import time
 
 import pygame
 import class_obj.GameSettings as gs
@@ -80,12 +81,17 @@ def main():
     player_image = pygame.image.load("./images/Luffy.png")
     player = pygame.transform.scale(player_image, (cell_size, cell_size))
 
+    # BGM 설정
+    bgm = pygame.mixer.Sound("./musics/onepiece_bgm.wav")
+    bgm.set_volume(settings.get_volume() / 100)
+
     # Main game loop
     running = True
     game_over = False
 
     while running:
         screen.blit(background, background_rect)
+        bgm.play(-1)
         running, player_position, move_count = handle_input(player_position, move_count, grid_size)
 
         for x in range(grid_size):
@@ -121,6 +127,7 @@ def main():
         pygame.display.flip()
 
         if game_over:
+            bgm.stop()
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_r:  # Restart

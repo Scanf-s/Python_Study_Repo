@@ -30,3 +30,6 @@ class GameSettings:
 
     def set_volume(self, volume):
         self.volume = int(volume)
+
+    def get_volume(self):
+        return self.volume

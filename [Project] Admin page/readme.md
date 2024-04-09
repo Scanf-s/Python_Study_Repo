@@ -1,7 +1,6 @@
 # Admin page practice
 ![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/94adb916-b6f8-434e-b957-517a11b3da4f)
 
-
 <br>
 
 ## 프로젝트 소개

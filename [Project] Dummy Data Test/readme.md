@@ -18,7 +18,7 @@
 - [X] Faker : https://faker.readthedocs.io/en/master/
 
 ## 해보면 좋은 것 (안해도 상관없는 것)
-- [] 패키지관리자로 poetry 사용해보기
+- [ ] 패키지관리자로 poetry 사용해보기
 
 
 ## 유의사항

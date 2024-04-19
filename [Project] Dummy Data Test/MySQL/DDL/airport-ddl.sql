@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `booking`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `employee`
 (
     `employee_id`  int                                                           NOT NULL AUTO_INCREMENT,
@@ -115,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `employee`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `flight_log`
 (
     `flight_log_id`   int unsigned                                                  NOT NULL AUTO_INCREMENT,
@@ -141,6 +143,7 @@ CREATE TABLE IF NOT EXISTS `flight_log`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `flight`
 (
     `flight_id`   int                                                      NOT NULL AUTO_INCREMENT,
@@ -161,6 +164,7 @@ CREATE TABLE IF NOT EXISTS `flight`
     KEY `flightno` (`flightno`)
 ) ENGINE = InnoDB
   COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `flightschedule`
 (
     `flightno`   char(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -183,6 +187,7 @@ CREATE TABLE IF NOT EXISTS `flightschedule`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `passenger`
 (
     `passenger_id` int                                                           NOT NULL AUTO_INCREMENT,
@@ -210,6 +215,7 @@ CREATE TABLE IF NOT EXISTS `weatherdata`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
 CREATE TABLE IF NOT EXISTS `passengerdetails`
 (
     `passenger_id` int                                                           NOT NULL,

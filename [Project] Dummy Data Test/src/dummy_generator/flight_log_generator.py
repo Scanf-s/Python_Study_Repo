@@ -7,9 +7,12 @@ def generate_flight_log_dummy_data(fake, n):
     for i in range(n):
         log_date = fake.date_time_this_decade()
         user = fake.user_name()
+
         flight_id = random.randint(100000, 500000)
+
         flightno_old = fake.bothify(text='???-####', letters=string.ascii_uppercase)
         flightno_new = fake.bothify(text='???-####', letters=string.ascii_uppercase)
+
         from_old = random.randint(1, 100)
         to_old = random.randint(1, 100)
         from_new = random.randint(1, 100)
@@ -20,11 +23,14 @@ def generate_flight_log_dummy_data(fake, n):
         arrival_old = fake.date_time_this_year(before_now=True, after_now=False)
         departure_new = fake.date_time_this_year(before_now=False, after_now=True)
         arrival_new = fake.date_time_this_year(before_now=False, after_now=True)
+
         airplane_id_old = random.randint(1, 20001)
         airplane_id_new = random.randint(1, 20001)
         airline_id_old = random.randint(1, 20001)
         airline_id_new = random.randint(1, 20001)
+
         comment = fake.text(max_nb_chars=200) if random.choice([True, False]) else None
+
         dummy_data.append(
             (log_date,
              user,

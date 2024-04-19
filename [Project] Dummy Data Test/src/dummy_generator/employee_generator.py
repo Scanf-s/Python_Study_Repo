@@ -35,7 +35,7 @@ def generate_employee_dummy_data(fake, n):
         telephoneno = fake.country_calling_code() + fake.basic_phone_number() if random.choice([True, False]) else None
 
         # https://faker.readthedocs.io/en/master/providers/faker.providers.python.html#faker.providers.python.Provider.pydecimal
-        salary = fake.pydecimal(right_digits=2, left_digits=8, positive=True, min_value=2000, max_value=50000) if random.choice([True, False]) else None
+        salary = fake.pydecimal(right_digits=2, left_digits=6, positive=True, min_value=2000, max_value=50000) if random.choice([True, False]) else None
 
         # enum ('Marketing','Buchhaltung','Management','Logistik','Flugfeld']
         # https://stackoverflow.com/questions/62724145/choosing-from-a-list-of-names-using-factory-boy-integrated-with-faker

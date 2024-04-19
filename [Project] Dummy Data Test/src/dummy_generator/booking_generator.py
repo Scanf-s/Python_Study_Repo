@@ -21,7 +21,7 @@ def generate_booking_dummy_data(fake, n):
         passenger_id = fake.random_int(min=10000, max=30001)
 
         # https://faker.readthedocs.io/en/master/providers/faker.providers.python.html#faker.providers.python.Provider.pydecimal
-        price = fake.pydecimal(right_digits=2, left_digits=10, positive=True, min_value=1, max_value=10000)
+        price = fake.pydecimal(right_digits=2, left_digits=8, positive=True, min_value=0.99, max_value=10000)
 
         dummy_data.append((flight_id, seat, passenger_id, float(price)))
 

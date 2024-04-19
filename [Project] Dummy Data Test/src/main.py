@@ -6,7 +6,7 @@ from faker import Faker
 from faker_airtravel import AirTravelProvider
 from sqlalchemy import create_engine, MetaData, delete, text
 
-from dummy_generator import airline_generator, airport_generator
+from dummy_generator import airline_generator, airport_generator, airplane_type_generator, airplane_generator, airport_geo_generator
 
 
 # 데이터베이스 연결 함수
@@ -35,10 +35,9 @@ def insert_dummy_data(engine, table_name, dummy_data):
             delete_current_data(connection, table)
             for data in dummy_data:
                 connection.execute(table.insert(), {
-                    "airline_id": data[0],
-                    "iata": data[1],
-                    "airlinename": data[2],
-                    "base_airport": data[3]})
+                    "iata": data[0],
+                    "airlinename": data[1],
+                    "base_airport": data[2]})
             connection.commit()
     elif table_name == 'airport':
         table = get_table_metadata(engine, table_name)
@@ -46,10 +45,44 @@ def insert_dummy_data(engine, table_name, dummy_data):
             delete_current_data(connection, table)
             for data in dummy_data:
                 connection.execute(table.insert(), {
+                    "iata": data[0],
+                    "icao": data[1],
+                    "name": data[2]
+                })
+            connection.commit()
+    elif table_name == 'airplane_type':
+        table = get_table_metadata(engine, table_name)
+        with engine.connect() as connection:
+            delete_current_data(connection, table)
+            for data in dummy_data:
+                connection.execute(table.insert(), {
+                    "identifier": data[0],
+                    "description": data[1]
+                })
+            connection.commit()
+    elif table_name == 'airplane':
+        table = get_table_metadata(engine, table_name)
+        with engine.connect() as connection:
+            delete_current_data(connection, table)
+            for data in dummy_data:
+                connection.execute(table.insert(), {
+                    "capacity": data[0],
+                    "type_id": data[1],
+                    "airline_id": data[2]
+                })
+            connection.commit()
+    elif table_name == 'airport_geo':
+        table = get_table_metadata(engine, table_name)
+        with engine.connect() as connection:
+            delete_current_data(connection, table)
+            for data in dummy_data:
+                connection.execute(table.insert(), {
                     "airport_id": data[0],
-                    "iata": data[1],
-                    "icao": data[2],
-                    "name": data[3]
+                    "name": data[1],
+                    "city": data[2],
+                    "country": data[3],
+                    "latitude": data[4],
+                    "longitude": data[5],
                 })
             connection.commit()
     else:
@@ -64,20 +97,25 @@ def get_table_metadata(engine, table_name):
     return table
 
 
-# 콘솔 지워주는 함수
+# 테이블 출력 해주는 함수
+def print_table(engine, table_name):
+    table = get_table_metadata(engine, table_name)
+    # https://stackoverflow.com/questions/58658690/retrieve-query-results-as-dict-in-sqlalchemy
+    with engine.connect() as connection:
+        sql = text("SELECT * FROM " + table_name)
+        result = connection.execute(sql)
+        conv_result = result.mappings().all()
+        print(f'\n<<<<<<<<<<<<<<<<<<<<<<<<<<< {table_name} 더미데이터 내역 >>>>>>>>>>>>>>>>>>>>>>>>>>>>\n')
+        for dic in conv_result:
+            print(dic)
+
+
+# 콘솔 지우는 함수
 def clean_console():
     if platform.system() == "Windows":
         os.system('cls')  # for Windows
     else:
         os.system('clear')  # for Linux and MacOS
-
-
-def result_dict(r):
-    return dict(zip(r.keys(), r))
-
-
-def result_dicts(rs):
-    return list(map(result_dict, rs))
 
 
 # main
@@ -111,6 +149,7 @@ def main():
 
         # 더미 데이터 생성
         if choice == '1':
+            clean_console()
             num_records = int(input("얼마나 생성할까요?: "))
             table_name = input("테이블 이름을 정확히 입력해주세요: ")
 
@@ -120,33 +159,39 @@ def main():
             else:
                 if table_name == 'airline':
                     dummy_data = airline_generator.generate_airline_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, "airline", dummy_data)
+                    insert_dummy_data(engine, table_name, dummy_data)
                     print("Data inserted successfully!")
                 elif table_name == 'airport':
                     dummy_data = airport_generator.generate_airport_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, "airport", dummy_data)
+                    insert_dummy_data(engine, table_name, dummy_data)
+                    print("Data inserted successfully!")
+                elif table_name == 'airplane_type':
+                    dummy_data = airplane_type_generator.generate_airplane_type_dummy_data(fake, num_records)
+                    insert_dummy_data(engine, table_name, dummy_data)
+                    print("Data inserted successfully!")
+                elif table_name == 'airplane':
+                    dummy_data = airplane_generator.generate_airplane_dummy_data(fake, num_records)
+                    insert_dummy_data(engine, table_name, dummy_data)
+                    print("Data inserted successfully!")
+                elif table_name == 'airport_geo':
+                    dummy_data = airport_geo_generator.generate_airport_geo_dummy_data(fake, num_records)
+                    insert_dummy_data(engine, table_name, dummy_data)
                     print("Data inserted successfully!")
                 else:
                     print("미구현 입니다.")
 
         # 테스트 데이터 출력
         elif choice == '2':
+            clean_console()
             table_name = input("테이블 이름을 정확히 입력해주세요: ")
             # 존재하지 않는 테이블을 가져왔다면
             if table_name not in table_lists:
                 print("테이블 이름이 정확하지 않습니다")
             else:
-                table = get_table_metadata(engine, table_name)
-                # https://stackoverflow.com/questions/58658690/retrieve-query-results-as-dict-in-sqlalchemy
-                with engine.connect() as connection:
-                    sql = text("SELECT * FROM " + table_name)
-                    result = connection.execute(sql)
-                    conv_result = result.mappings().all()
-                    print(f'\n<<<<<<<<<<<<<<<<<<<<<<<<<<< {table_name} 더미데이터 내역 >>>>>>>>>>>>>>>>>>>>>>>>>>>>\n')
-                    for dic in conv_result:
-                        print(dic)
+                print_table(engine, table_name)
 
         elif choice == '3':
+            clean_console()
             sys.exit(0)
         else:
             print("다시 입력해주세요.")

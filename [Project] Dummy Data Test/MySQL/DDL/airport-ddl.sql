@@ -16,8 +16,7 @@ CREATE TABLE IF NOT EXISTS `airport`
     KEY `iata_idx` (`iata`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci
-;
+  COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `airline`
 (
@@ -30,8 +29,7 @@ CREATE TABLE IF NOT EXISTS `airline`
     KEY `base_airport_idx` (`base_airport`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci
-;
+  COLLATE = utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `airplane_type`
 (

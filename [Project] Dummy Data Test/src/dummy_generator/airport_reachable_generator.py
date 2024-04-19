@@ -1,3 +1,6 @@
+import random
+
+
 def generate_airport_reachable_dummy_data(fake, n):
     check_duplicate_airport_id = set()
     dummy_data = []
@@ -10,7 +13,7 @@ def generate_airport_reachable_dummy_data(fake, n):
         check_duplicate_airport_id.add(airport_id)
 
         # int
-        hops = fake.random_int(1, 100)
+        hops = fake.random_int(1, 100) if random.choice([True, False]) else None
 
         dummy_data.append((airport_id, hops))
 

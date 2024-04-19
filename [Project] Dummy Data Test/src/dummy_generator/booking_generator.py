@@ -1,5 +1,5 @@
 import string
-
+import random
 
 def generate_booking_dummy_data(fake, n):
     check_duplicate_flight_id = set()
@@ -18,9 +18,9 @@ def generate_booking_dummy_data(fake, n):
         check_duplicate_flight_id.add(flight_id)
 
         # char(4), unique
-        seat = fake.bothify('??##', letters=string.ascii_uppercase)
+        seat = fake.bothify('??##', letters=string.ascii_uppercase) if random.choice([True, False]) else None
         while seat in check_duplicate_seat:
-            seat = fake.bothify('??##', letters=string.ascii_uppercase)
+            seat = fake.bothify('??##', letters=string.ascii_uppercase) if random.choice([True, False]) else None
         check_duplicate_seat.add(seat)
 
         # int

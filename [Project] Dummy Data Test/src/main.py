@@ -6,7 +6,7 @@ from faker import Faker
 from faker_airtravel import AirTravelProvider
 from sqlalchemy import create_engine, MetaData, delete, text
 
-from dummy_generator import airline_generator, airport_generator, airplane_type_generator, airplane_generator, airport_geo_generator, airport_reachable_generator, booking_generator, employee_generator
+from dummy_generator import airline_generator, airport_generator, airplane_type_generator, airplane_generator, airport_geo_generator, airport_reachable_generator, booking_generator, employee_generator, flight_log_generator
 
 
 # 데이터베이스 연결 함수
@@ -129,6 +129,32 @@ def insert_dummy_data(engine, table_name, dummy_data):
                     "password": data[13]
                 })
             connection.commit()
+    elif table_name == 'flight_log':
+        table = get_table_metadata(engine, table_name)
+        with engine.connect() as connection:
+            delete_current_data(connection, table)
+            for data in dummy_data:
+                connection.execute(table.insert(), {
+                    "log_date": data[0],
+                    "user": data[1],
+                    "flight_id": data[2],
+                    "flightno_old": data[3],
+                    "flightno_new": data[4],
+                    "from_old": data[5],
+                    "to_old": data[6],
+                    "from_new": data[7],
+                    "to_new": data[8],
+                    "departure_old": data[9],
+                    "arrival_old": data[10],
+                    "departure_new": data[11],
+                    "arrival_new": data[12],
+                    "airplane_id_old": data[13],
+                    "airplane_id_new": data[14],
+                    "airline_id_old": data[15],
+                    "airline_id_new": data[16],
+                    "comment": data[17]
+                })
+            connection.commit()
     else:
         print("미구현 입니다.")
 
@@ -201,40 +227,47 @@ def main():
             if table_name not in table_lists:
                 print("테이블 이름이 정확하지 않습니다")
             else:
-                if table_name == 'airline':
-                    dummy_data = airline_generator.generate_airline_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, table_name, dummy_data)
-                    print("Data inserted successfully!")
-                elif table_name == 'airport':
-                    dummy_data = airport_generator.generate_airport_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, table_name, dummy_data)
-                    print("Data inserted successfully!")
-                elif table_name == 'airplane_type':
-                    dummy_data = airplane_type_generator.generate_airplane_type_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, table_name, dummy_data)
-                    print("Data inserted successfully!")
-                elif table_name == 'airplane':
-                    dummy_data = airplane_generator.generate_airplane_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, table_name, dummy_data)
-                    print("Data inserted successfully!")
-                elif table_name == 'airport_geo':
-                    dummy_data = airport_geo_generator.generate_airport_geo_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, table_name, dummy_data)
-                    print("Data inserted successfully!")
-                elif table_name == 'airport_reachable':
-                    dummy_data = airport_reachable_generator.generate_airport_reachable_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, table_name, dummy_data)
-                    print("Data inserted successfully!")
-                elif table_name == 'booking':
-                    dummy_data = booking_generator.generate_booking_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, table_name, dummy_data)
-                    print("Data inserted successfully!")
-                elif table_name == 'employee':
-                    dummy_data = employee_generator.generate_employee_dummy_data(fake, num_records)
-                    insert_dummy_data(engine, table_name, dummy_data)
-                    print("Data inserted successfully!")
-                else:
-                    print("미구현 입니다.")
+                try:
+                    if table_name == 'airline':
+                        dummy_data = airline_generator.generate_airline_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airport':
+                        dummy_data = airport_generator.generate_airport_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airplane_type':
+                        dummy_data = airplane_type_generator.generate_airplane_type_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airplane':
+                        dummy_data = airplane_generator.generate_airplane_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airport_geo':
+                        dummy_data = airport_geo_generator.generate_airport_geo_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airport_reachable':
+                        dummy_data = airport_reachable_generator.generate_airport_reachable_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'booking':
+                        dummy_data = booking_generator.generate_booking_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'employee':
+                        dummy_data = employee_generator.generate_employee_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'flight_log':
+                        dummy_data = flight_log_generator.generate_flight_log_dummy_data(fake, num_records)
+                        insert_dummy_data(engine, table_name, dummy_data)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    else:
+                        print("미구현 입니다.")
+                except Exception as e:
+                    print("Exception Occurs : ", e)
 
         # 테스트 데이터 출력
         elif choice == '2':

@@ -1,11 +1,9 @@
 import string
 
 def generate_airline_dummy_data(fake, n):
-    # check_duplicate_airline_id = set()
     check_duplicate_iata = set()
     dummy_data = []
 
-    # airline_id, iata 집어넣을때마다 중복 체크 반드시 해줘야함
     for i in range(n):
         # https://faker.readthedocs.io/en/master/providers/baseprovider.html#faker.providers.BaseProvider.random_int
         # airline_id = fake.random_int(min=0, max=32000)

@@ -14,6 +14,8 @@ def generate_flight_log_dummy_data(fake, n):
         to_old = random.randint(1, 100)
         from_new = random.randint(1, 100)
         to_new = random.randint(1, 100)
+
+        # https://faker.readthedocs.io/en/master/locales/ar_AA.html#faker.providers.date_time.ar_AA.Provider.date_time_this_year
         departure_old = fake.date_time_this_year(before_now=True, after_now=False)
         arrival_old = fake.date_time_this_year(before_now=True, after_now=False)
         departure_new = fake.date_time_this_year(before_now=False, after_now=True)

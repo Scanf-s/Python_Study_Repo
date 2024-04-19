@@ -3,7 +3,6 @@ def generate_airport_geo_dummy_data(fake, n):
     dummy_data = []
 
     for i in range(n):
-        # smallint, primary key
         airport_id = fake.random_int(1, 32767)
         while airport_id in check_duplicate_airport_id:
             airport_id = fake.random_int(1, 32767)

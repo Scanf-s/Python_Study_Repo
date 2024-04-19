@@ -5,21 +5,20 @@
 > 테스트를 위한 dummy 데이터 만들기 (MySQL)
 
 ## 상황
-
-- MySQL의 Database에 14개의 테이블을 생성함.
-- Table만 만든 상태라서 테스트를 위해 더미데이터를 테이블 별로 1000개~2만개 사이로 세팅해달라는 요청을 받음
-- 테이블 별로 데이터를 몇 건 씩 세팅할지 지정할 수 있어야함.
-- 더미데이터 생성시마다 데이터를 전부 삭제하고 새로 세팅할지, 추가할지를 지정할 수 있어야함.
+- [X] MySQL의 Database에 14개의 테이블을 생성함.
+- [X] Table만 만든 상태라서 테스트를 위해 더미데이터를 테이블 별로 1000개~2만개 사이로 세팅해달라는 요청을 받음
+- [X] 테이블 별로 데이터를 몇 건 씩 세팅할지 지정할 수 있어야함.
+- [X] 더미데이터 생성시마다 데이터를 전부 삭제하고 새로 세팅할지, 추가할지를 지정할 수 있어야함.
 
 ## 가이드 (힌트)
-sqlalchemy의 MetaData()를 이용하세요. metadata.reflect() 을 이용하면 현재 접속한 database의 table, column 정보를 얻을 수 있습니다.
+- [X] sqlalchemy의 MetaData()를 이용하세요. metadata.reflect() 을 이용하면 현재 접속한 database의 table, column 정보를 얻을 수 있습니다.
 
 ## 사용해야할 라이브러리
-sqlalchemy : https://www.sqlalchemy.org/
-Faker : https://faker.readthedocs.io/en/master/
+- [X] sqlalchemy : https://www.sqlalchemy.org/
+- [X] Faker : https://faker.readthedocs.io/en/master/
 
 ## 해보면 좋은 것 (안해도 상관없는 것)
-- 패키지관리자로 poetry 사용해보기
+- [] 패키지관리자로 poetry 사용해보기
 
 
 ## 유의사항

@@ -35,3 +35,49 @@ faker, sqlalchemy 같이 처음 접하는 라이브러리라도 사용법을 찾
 2. Start MySQL, and then use the **`airport-ddl.sql`** script located in the MySQL/DDL directory of the project to create the database and tables.
 
 3. Execute the **`main.py`** file to run the project.
+
+## 프로젝트 구조
+```yaml
+[Project] Dummy Data Test
+│  readme.md
+│
+├─MySQL
+│  └─DDL
+│          airport-ddl.sql
+│
+└─src
+    │  main.py
+    │  table_modifier.py
+    │
+    └─dummy_generator
+        │  airline_generator.py
+        │  airplane_generator.py
+        │  airplane_type_generator.py
+        │  airport_generator.py
+        │  airport_geo_generator.py
+        │  airport_reachable_generator.py
+        │  booking_generator.py
+        │  employee_generator.py
+        │  flightschedule_generator.py
+        │  flight_generator.py
+        │  flight_log_generator.py
+        │  passengerdetails_generator.py
+        │  passenger_generator.py
+        │  weatherdata_generator.py
+        │
+        └─__pycache__
+                airline_generator.cpython-312.pyc
+                airplane_generator.cpython-312.pyc
+                airplane_type_generator.cpython-312.pyc
+                airport_generator.cpython-312.pyc
+                airport_geo_generator.cpython-312.pyc
+                airport_reachable_generator.cpython-312.pyc
+                booking_generator.cpython-312.pyc
+                employee_generator.cpython-312.pyc
+                flightschedule_generator.cpython-312.pyc
+                flight_generator.cpython-312.pyc
+                flight_log_generator.cpython-312.pyc
+                passengerdetails_generator.cpython-312.pyc
+                passenger_generator.cpython-312.pyc
+                weatherdata_generator.cpython-312.pyc
+```

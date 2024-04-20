@@ -13,9 +13,9 @@
 ## 가이드 (힌트)
 - [X] sqlalchemy의 MetaData()를 이용하세요. metadata.reflect() 을 이용하면 현재 접속한 database의 table, column 정보를 얻을 수 있습니다.
 
-## 사용해야할 라이브러리
-- [X] sqlalchemy : https://www.sqlalchemy.org/
-- [X] Faker : https://faker.readthedocs.io/en/master/
+## Libraries
+- [X] [SQLAlchemy 라이브러리 링크](https://www.sqlalchemy.org/)
+- [X] [Faker 라이브러리 링크](https://faker.readthedocs.io/en/master/)
 
 ## 해보면 좋은 것 (안해도 상관없는 것)
 - [ ] 패키지관리자로 poetry 사용해보기
@@ -27,8 +27,11 @@
 faker, sqlalchemy 같이 처음 접하는 라이브러리라도 사용법을 찾아서 적용해보는 연습을 하는 시간이라고 생각해주시면됩니다. 
 사용법을 찾아서 적용하기 어려워도 괜찮습니다. 어려운게 당연합니다.
 
-https://www.sqlalchemy.org/
+[SQLAlchemy 라이브러리 링크](https://www.sqlalchemy.org/)
 
-## 실행 방법
-1. 프로젝트 clone -> 로컬 저장소에 저장
-2. main.py실행
+## Instructions
+1. Clone the project into your local repository.
+
+2. Start MySQL, and then use the **`airport-ddl.sql`** script located in the MySQL/DDL directory of the project to create the database and tables.
+
+3. Execute the **`main.py`** file to run the project.

@@ -167,6 +167,8 @@ def main():
         except KeyboardInterrupt as ki:
             print(f"사용자 임의 종료")
             sys.exit(0)
+        except Exception as e:
+            print(f"Error occurs : {e}")
 
 
 if __name__ == "__main__":

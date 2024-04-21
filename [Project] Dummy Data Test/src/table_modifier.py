@@ -13,17 +13,6 @@ def print_table(engine, table_name):
         for dic in conv_result:
             print(dic)
 
-def print_table(engine, table_name):
-    table = get_table_metadata(engine, table_name)
-    # https://stackoverflow.com/questions/58658690/retrieve-query-results-as-dict-in-sqlalchemy
-    with engine.connect() as connection:
-        sql = text("SELECT * FROM " + table_name)
-        result = connection.execute(sql)
-        conv_result = result.mappings().all()
-        print(f'\n<<<<<<<<<<<<<<<<<<<<<<<<<<< {table_name} 더미데이터 내역 >>>>>>>>>>>>>>>>>>>>>>>>>>>>\n')
-        for dic in conv_result:
-            print(dic)
-
 
 # 테이블 데이터 삭제(초기화) 함수
 def delete_current_data(connection, table):

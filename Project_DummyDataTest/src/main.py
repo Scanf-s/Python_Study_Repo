@@ -7,25 +7,28 @@ from faker_airtravel import AirTravelProvider
 from sqlalchemy import create_engine
 import table_modifier
 
-from dummy_generator import (airline_generator,
-                             airport_generator,
-                             airplane_type_generator,
-                             airplane_generator,
-                             airport_geo_generator,
-                             airport_reachable_generator,
-                             booking_generator,
-                             employee_generator,
-                             flight_log_generator,
-                             flightschedule_generator,
-                             flight_generator,
-                             passenger_generator,
-                             passengerdetails_generator,
-                             weatherdata_generator)
+from dummy_generator import (
+    airline_generator,
+    airport_generator,
+    airplane_type_generator,
+    airplane_generator,
+    airport_geo_generator,
+    airport_reachable_generator,
+    booking_generator,
+    employee_generator,
+    flight_log_generator,
+    flightschedule_generator,
+    flight_generator,
+    passenger_generator,
+    passengerdetails_generator,
+    weatherdata_generator
+)
 
 
 # 데이터베이스 연결 함수
 def create_connection():
     try:
+        # 추후 유저네임 및 패스워드같은 정보는 숨겨야한다 >> Flask 또는 나중에 배울거임
         engine = create_engine('mysql+pymysql://root:123123@localhost:3306/airportdb?charset=utf8mb4', echo=True)
         return engine
     except Exception as e:
@@ -82,72 +85,72 @@ def main():
                 # 존재하지 않는 테이블을 가져왔다면
                 if table_name not in table_lists:
                     raise ValueError(f"테이블 이름 '{table_name}'은(는) 유효하지 않습니다. 가능한 테이블 이름을 확인해주세요.")
-                else:
-                    try:
-                        if table_name == 'airline':
-                            dummy_data = airline_generator.generate_airline_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'airport':
-                            dummy_data = airport_generator.generate_airport_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'airplane_type':
-                            dummy_data = airplane_type_generator.generate_airplane_type_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'airplane':
-                            dummy_data = airplane_generator.generate_airplane_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'airport_geo':
-                            dummy_data = airport_geo_generator.generate_airport_geo_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'airport_reachable':
-                            dummy_data = airport_reachable_generator.generate_airport_reachable_dummy_data(fake,
-                                                                                                           num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'booking':
-                            dummy_data = booking_generator.generate_booking_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'employee':
-                            dummy_data = employee_generator.generate_employee_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'flight_log':
-                            dummy_data = flight_log_generator.generate_flight_log_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'flightschedule':
-                            dummy_data = flightschedule_generator.generate_flightschedule_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'flight':
-                            dummy_data = flight_generator.generate_flight_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'passenger':
-                            dummy_data = passenger_generator.generate_passenger_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'passengerdetails':
-                            dummy_data = passengerdetails_generator.generate_passengerdetails_dummy_data(fake,
-                                                                                                         num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        elif table_name == 'weatherdata':
-                            dummy_data = weatherdata_generator.generate_weatherdata_dummy_data(fake, num_records)
-                            table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
-                            print("데이터를 정상적으로 적용했습니다.")
-                        else:
-                            print("올바른 테이블명을 입력해주세요.")
-                    except ValueError as ve:
-                        print(f"입력 오류: {ve}")
-                    except Exception as e:
-                        print("Exception Occurs : ", e)
+                try:
+                    if table_name == 'airline':
+                        dummy_data = airline_generator.generate_airline_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airport':
+                        dummy_data = airport_generator.generate_airport_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airplane_type':
+                        dummy_data = airplane_type_generator.generate_airplane_type_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airplane':
+                        dummy_data = airplane_generator.generate_airplane_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airport_geo':
+                        dummy_data = airport_geo_generator.generate_airport_geo_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'airport_reachable':
+                        dummy_data = airport_reachable_generator.generate_airport_reachable_dummy_data(fake,
+                                                                                                       num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'booking':
+                        dummy_data = booking_generator.generate_booking_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'employee':
+                        dummy_data = employee_generator.generate_employee_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'flight_log':
+                        dummy_data = flight_log_generator.generate_flight_log_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'flightschedule':
+                        dummy_data = flightschedule_generator.generate_flightschedule_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'flight':
+                        dummy_data = flight_generator.generate_flight_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'passenger':
+                        dummy_data = passenger_generator.generate_passenger_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'passengerdetails':
+                        dummy_data = passengerdetails_generator.generate_passengerdetails_dummy_data(fake,
+                                                                                                     num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    elif table_name == 'weatherdata':
+                        dummy_data = weatherdata_generator.generate_weatherdata_dummy_data(fake, num_records)
+                        table_modifier.insert_dummy_data(engine, table_name, dummy_data, mode)
+                        print("데이터를 정상적으로 적용했습니다.")
+                    else:
+                        print("올바른 테이블명을 입력해주세요.")
+
+                except ValueError as ve:
+                    print(f"입력 오류: {ve}")
+                except Exception as e:
+                    print("Exception Occurs : ", e)
 
             # 테스트 데이터 출력
             elif choice == '2':

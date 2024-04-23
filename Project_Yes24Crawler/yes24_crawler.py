@@ -160,8 +160,10 @@ if __name__ == '__main__':
         print(f'\nScraping page {cnt + 1}\n')
         url = f'https://www.yes24.com/Product/Category/BestSeller?categoryNumber=001&pageNumber={cnt + 1}&pageSize=24'
         page_links = scrape_page_links(browser, url)
+
         for link in page_links:
             book_details = scrape_book_details(browser, link)
+
             if book_details is not None:
                 details.append(book_details)
             print(book_details)

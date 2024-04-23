@@ -56,3 +56,6 @@ select * from products;
 delete
 from products
 where productLine = "Temp2";
+
+-- 중급
+-- 1.

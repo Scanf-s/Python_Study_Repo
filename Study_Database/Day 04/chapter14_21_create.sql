@@ -134,7 +134,9 @@ select * from employees where employeeNumber = 2004;
 -- 10. productlines 테이블에 제품 라인을 추가하고 바로 여러 제품을 추가하세요
 insert into productlines
 values ("Temp2", "Temp Data 2", NULL, NULL);
+
 select * from products;
+
 update products
 set productLine = "Temp2"
 where productCode = "S99_0005";
@@ -142,7 +144,37 @@ select * from products where productCode = "S99_0005";
 
 -- 고급
 -- 1. customers 테이블에 새 고객을 추가하고 바로 주문을 추가하세요.
+insert into customers(customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, addressLine2, city, state, postalCode, country, salesRepEmployeeNumber, creditLimit)
+values(503, "Jane", "asdf", "asdf", "12341234", "asdf street", "asdf Line", "Somewhere", "New York", "12345", "USA", NULL, 15000);
+
+insert into orders(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber)
+values(100002, curdate(), curdate(), NULL, "In Process", NULL, 503);
+
 -- 2. employees 테이블에 새 직원을 추가하고 바로 그들의 매니저를 업데이터하세요.
+insert into employees(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle)
+values (2006, "va", "Ja", "x5555", "java@java.com", "9", 1102, "Sales Rep");
+
 -- 3. products 테이블에 새 제품을 추가하고 바로 그 제품에 대한 주문을 추가하세요.
+insert into products(productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP)
+values("S99_0006", "Coke", "Temp2", "1:998", "Scanf-s", "Coka Cola", 99, 5.99, 11.11)
+
+insert into orders(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber)
+values(100003, curdate(), curdate(), NULL, "In Process", NULL, 503)
+
+insert into orderdetails(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber)
+VALUES(100003, "S99_0006", 1, 5.99, 123)
+
 -- 4. orders 테이블에 새 주문을 추가하고 바로 지불 정보를 추가하세요.
+insert into orders(orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber)
+values(100004, curdate(), curdate(), NULL, "In Progress", NULL, 503)
+
+insert into payments(customerNumber, checkNumber, paymentDate, amount)
+values (503, "AA123123", curdate(), 5.99)
+
 -- 5. orderdetails 테이블에 주문 상세 정보를 추가하고 바로 관련 제품의 재고를 감소시키세요.
+insert into orderdetails(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber)
+values(100004, "S99_0006", 10, 5.99, 124)
+
+update products
+set quantityInStock = quantityInStock - 1
+where productCode = "S99_0006"

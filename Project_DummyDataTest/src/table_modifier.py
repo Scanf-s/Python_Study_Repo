@@ -28,6 +28,14 @@ def get_table_metadata(engine, table_name):
     return table
 
 
+# DB에 저장된 모든 테이블 정보를 가져와주는 함수
+def get_all_tables_from_database(engine):
+    metadata = MetaData()
+    metadata.reflect(bind=engine)
+    all_tables = list(metadata.tables.keys())
+    return all_tables
+
+
 # 더미 데이터 삽입 함수
 def insert_dummy_data(engine, table_name, dummy_data, mode):
     try:

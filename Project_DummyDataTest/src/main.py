@@ -50,22 +50,7 @@ def main():
     fake.add_provider(AirTravelProvider)
 
     # DB에 저장된 테이블 이름 목록 검증을 위한 리스트
-    table_lists = [
-        'airline',
-        'airplane',
-        'airplane_type',
-        'airport',
-        'airport_geo',
-        'airport_reachable',
-        'booking',
-        'employee',
-        'flight',
-        'flight_log',
-        'flightschedule',
-        'passenger',
-        'passengerdetails',
-        'weatherdata'
-    ]
+    table_lists = table_modifier.get_all_tables_from_database(engine)
 
     while True:
         try:

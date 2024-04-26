@@ -79,6 +79,7 @@ def generate_data(fake, type_detail, check_duplicate):
                 if type_detail.get('primary') == 'True' or type_detail.get('unique') == 'True':
                     # 알파벳 문자만으로 생성하면 최대 676개까지의 ROW밖에 생성할 수 없기 때문에
                     # 다른 문자도 섞어서 해줘야한다.
+                    # 추후 수정 예정입니다.
                     distinct_chars = ''.join(chr(i) for i in range(32, 127))
                     generated_char = fake.lexify('?' * size, letters=distinct_chars)
                     while generated_char in check_duplicate:

@@ -1,6 +1,7 @@
 import os
 import platform
 import sys
+import traceback
 
 from faker import Faker
 from faker_airtravel import AirTravelProvider
@@ -23,13 +24,13 @@ from dummy_generator import (
     passengerdetails_generator,
     weatherdata_generator
 )
+from OZCoding.OZCoding_Backend.Project_DummyDataTest.src import create_all_dummy
 
 
 # 데이터베이스 연결 함수
 def create_connection():
     try:
-        # 추후 유저네임 및 패스워드같은 정보는 숨겨야한다 >> Flask 또는 나중에 배울거임
-        engine = create_engine('mysql+pymysql://root:123123@localhost:3306/airportdb?charset=utf8mb4', echo=True)
+        engine = create_engine('mysql+pymysql://root:123123@localhost:3306/airportdb?charset=utf8mb4', echo=False)
         return engine
     except Exception as e:
         print(f"ERROR: {e}")
@@ -55,7 +56,7 @@ def main():
     while True:
         try:
             clean_console()
-            print("\n더미 데이터 생성 프로그램\n1. 더미 데이터 생성\n2. 테스트 데이터 확인\n3. 종료")
+            print("\n더미 데이터 생성 프로그램\n1. 선택 더미 데이터 생성\n2. 전체 더미 데이터 생성\n3. 테스트 데이터 확인\n4. 종료")
             choice = input("메뉴 입력: ")
 
             # 더미 데이터 생성
@@ -131,14 +132,20 @@ def main():
                         print("데이터를 정상적으로 적용했습니다.")
                     else:
                         print("올바른 테이블명을 입력해주세요.")
-
                 except ValueError as ve:
                     print(f"입력 오류: {ve}")
                 except Exception as e:
                     print("Exception Occurs : ", e)
+            elif choice == '2':
+                clean_console()
+                num_records = int(input("얼마나 생성할까요?: "))
+                mode = input("테이블을 초기화하고 새로 입력하시겠습니까? [y/n]: ")
+                if not (mode == 'y' or mode == 'Y' or mode == 'n' or mode == 'N'):
+                    raise ValueError("유효하지 않은 모드 선택: 모드는 'y/Y' 또는 'n/N' 이어야 합니다.")
+                create_all_dummy.run(engine, fake, num_records, mode)
 
             # 테스트 데이터 출력
-            elif choice == '2':
+            elif choice == '3':
                 clean_console()
                 table_name = input("테이블 이름을 정확히 입력해주세요: ")
                 # 존재하지 않는 테이블을 가져왔다면
@@ -147,7 +154,7 @@ def main():
                 else:
                     table_modifier.print_table(engine, table_name)
 
-            elif choice == '3':
+            elif choice == '4':
                 clean_console()
                 sys.exit(0)
             else:
@@ -155,8 +162,8 @@ def main():
         except KeyboardInterrupt as ki:
             print(f"사용자 임의 종료")
             sys.exit(0)
-        except Exception as e:
-            print(f"Error occurs : {e}")
+        except Exception:
+            traceback.print_exc()
 
 
 if __name__ == "__main__":

@@ -1,3 +1,5 @@
+import traceback
+
 from sqlalchemy import MetaData, delete, text
 
 
@@ -34,6 +36,19 @@ def get_all_tables_from_database(engine):
     metadata.reflect(bind=engine)
     all_tables = list(metadata.tables.keys())
     return all_tables
+
+
+def insert_into_all_tables(engine, dummy_data, mode):
+    try:
+        with engine.connect() as connection:
+            for table_name in dummy_data.keys():
+                meta_table = get_table_metadata(engine, table_name)
+                if mode == 'y' or mode == 'Y':
+                    delete_current_data(connection, meta_table)
+                connection.execute(meta_table.insert(), dummy_data[table_name])
+                connection.commit()
+    except Exception as e:
+        traceback.print_exc()
 
 
 # 더미 데이터 삽입 함수
@@ -251,4 +266,4 @@ def insert_dummy_data(engine, table_name, dummy_data, mode):
                     })
                 connection.commit()
     except Exception as e:
-        print(f"ERROR: {e}")
+        traceback.print_exc()

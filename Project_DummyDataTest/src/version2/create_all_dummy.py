@@ -2,7 +2,7 @@ import random
 import re
 import traceback
 
-import table_modifier
+from OZCoding.OZCoding_Backend.Project_DummyDataTest.src import table_modifier
 
 
 def generator(fake, table, n):

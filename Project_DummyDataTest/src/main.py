@@ -6,7 +6,6 @@ import traceback
 from faker import Faker
 from faker_airtravel import AirTravelProvider
 from sqlalchemy import create_engine
-import table_modifier
 
 from dummy_generator import (
     airline_generator,
@@ -24,7 +23,8 @@ from dummy_generator import (
     passengerdetails_generator,
     weatherdata_generator
 )
-from OZCoding.OZCoding_Backend.Project_DummyDataTest.src import create_all_dummy
+from OZCoding.OZCoding_Backend.Project_DummyDataTest.src.version2 import create_all_dummy
+from OZCoding.OZCoding_Backend.Project_DummyDataTest.src import table_modifier
 
 
 # 데이터베이스 연결 함수

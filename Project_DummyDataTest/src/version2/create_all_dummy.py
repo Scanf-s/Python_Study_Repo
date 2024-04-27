@@ -19,7 +19,7 @@ def generator(fake, table, n):
     return dummy_data
 
 
-# 해당 COL의 모든 ATTRIBUTE, CONSTRAINT 정보를 가져와주는 함수
+# 해당 COL의 모든 CONSTRAINT및 잡다한 정보를 가져와주는 함수
 def get_column_type_detail(table, column):
     column_type = column.type
     pattern = r"(\w+)\s*(\((\d+)(,\s*(\d+))?\))?(?:\s*CHARACTER SET \w+)?(?:\s*COLLATE \w+)?"  # 정규식 (CHAT-GPT 사용)

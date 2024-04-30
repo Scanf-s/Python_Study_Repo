@@ -23,8 +23,8 @@ from dummy_generator import (
     passengerdetails_generator,
     weatherdata_generator
 )
-from OZCoding.OZCoding_Backend.Project_DummyDataTest.src.version2 import create_all_dummy
-from OZCoding.OZCoding_Backend.Project_DummyDataTest.src import table_modifier
+from version2 import create_all_dummy
+import table_modifier
 
 
 # 데이터베이스 연결 함수

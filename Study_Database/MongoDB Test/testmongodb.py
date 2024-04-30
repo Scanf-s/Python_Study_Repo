@@ -11,6 +11,7 @@ def insert_data():
         {"title": "3453453", "author": "asdf", "year": 2013, "genre": "asdf"},
         {"title": "4564567", "author": "asdf", "year": 2013, "genre": "asdf"},
     ]
+    # 이거 전부 집어넣어야하므로 insert_many 함수 사용
     db.books.insert_many(books)
 
     # 영화 데이터 삽입
@@ -92,11 +93,15 @@ def question4(db):
 def question5(db, user_id, date):
     user_actions = db.user_actions
     user_actions.update_many(
+        # 1번 중괄호에 해당하는 모든 사용자 행동 데이터를 가져와서
         {
             "user_id": user_id,
+            # 그냥 date만 집어넣어서 비교하면 제대로 비교하지 않음.
+            # .isoformat()함수를 사용하여 형식에 맞게 date를 변형하여 less than 비교 수행
             "timestamp": {"$lt": date.isoformat()},
             "action": "view"
         },
+        # 그 사용자 행동 데이터의 "action"을 seen으로 변경
         {
             "$set": {"action": "seen"}
         }

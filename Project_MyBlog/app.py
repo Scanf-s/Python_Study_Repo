@@ -1,6 +1,4 @@
 # 서버 시작 파일
-# How to use mysql in flask?
-# https://stackoverflow.com/questions/9845102/using-mysql-in-flask
 from flask import Flask, render_template
 from flask_smorest import Api
 from flask_migrate import Migrate

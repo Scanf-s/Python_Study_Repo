@@ -15,7 +15,6 @@ post_blp = Blueprint('PostBluePrint', __name__, url_prefix='/posts', description
 class GetAllPosts(MethodView):
     def get(self):
         posts = Post.query.all()
-        print(post for post in posts)
         return jsonify(
             [
                 {

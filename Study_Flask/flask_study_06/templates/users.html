@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Management</title>
+  </head>
+  <body>
+    <h1>User Management</h1>
+
+    <!-- 사용자 생성 폼 -->
+    <form id="createUserForm">
+      <input type="text" id="name" placeholder="Username" />
+      <input type="text" id="email" placeholder="Email" />
+      <button type="submit">Create User</button>
+    </form>
+
+    <!-- 사용자 조회 -->
+    <button onclick="getUsers()">Get All Users</button>
+    <div id="users"></div>
+
+    <!-- 사용자 수정 폼 -->
+    <form id="updateUserForm">
+      <input type="number" id="updateUserId" placeholder="User ID" />
+      <input type="text" id="updateUsername" placeholder="New Username" />
+      <input type="text" id="updateEmail" placeholder="New Email" />
+      <button type="submit">Update User</button>
+    </form>
+
+    <!-- 사용자 삭제 -->
+    <form id="deleteUserForm">
+      <input type="number" id="deleteUserId" placeholder="User ID" />
+      <button type="submit">Delete User</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("createUserForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+
+          fetch("/users", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, email }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              getUsers(); // 사용자 목록을 다시 불러옵니다.
+            });
+        });
+
+      function getUsers() {
+        fetch("/users")
+          .then((response) => response.json())
+          .then((data) => {
+            const usersDiv = document.getElementById("users");
+            usersDiv.innerHTML = "";
+            data.forEach((user) => {
+              usersDiv.innerHTML += `<p>ID: ${user.id}, Name: ${user.name}, Email: ${user.email}</p>`;
+            });
+          });
+      }
+
+      document
+        .getElementById("updateUserForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const userId = document.getElementById("updateUserId").value;
+          const name = document.getElementById("updateUsername").value;
+          const email = document.getElementById("updateEmail").value;
+
+          fetch("/users/" + userId, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, email }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              getUsers(); // 사용자 목록을 다시 불러옵니다.
+            });
+        });
+
+      document
+        .getElementById("deleteUserForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const userId = document.getElementById("deleteUserId").value;
+
+          fetch("/users/" + userId, {
+            method: "DELETE",
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              getUsers(); // 사용자 목록을 다시 불러옵니다.
+            });
+        });
+    </script>
+  </body>
+</html>

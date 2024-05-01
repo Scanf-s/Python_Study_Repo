@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+    <script>
+      function fetchUsers() {
+        fetch("/users")
+          .then((response) => response.json())
+          .then((users) => {
+            const usersList = document.getElementById("users-list");
+            usersList.innerHTML = "";
+            users.forEach((user) => {
+              const userItem = document.createElement("li");
+              userItem.textContent = `ID: ${user.id}, Name: ${user.name}, Email: ${user.email}`;
+              usersList.appendChild(userItem);
+            });
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      function addUser() {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        fetch("/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: name, email: email }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            fetchUsers();
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      window.onload = fetchUsers;
+
+      function updateUser() {
+        const userId = document.getElementById("update-user-id").value;
+        const name = document.getElementById("update-name").value;
+        const email = document.getElementById("update-email").value;
+        fetch(`/users/${userId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: name, email: email }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            fetchUsers();
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+
+      function deleteUser() {
+        const userId = document.getElementById("update-user-id").value;
+        fetch(`/users/${userId}`, {
+          method: "DELETE",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            fetchUsers();
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Users</h1>
+    <ul id="users-list">
+      <!-- 사용자 목록이 여기에 표시됩니다. -->
+    </ul>
+
+    <h2>Add User</h2>
+    <input type="text" id="name" placeholder="Name" />
+    <input type="email" id="email" placeholder="Email" />
+    <button onclick="addUser()">Add User</button>
+
+    <h2>Update/Delete User</h2>
+    <input type="number" id="update-user-id" placeholder="User ID" />
+    <input type="text" id="update-name" placeholder="New Name" />
+    <input type="email" id="update-email" placeholder="New Email" />
+    <button onclick="updateUser()">Update User</button>
+    <button onclick="deleteUser()">Delete User</button>
+  </body>
+</html>

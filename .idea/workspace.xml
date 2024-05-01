@@ -5,43 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f639d1cc-7492-43b3-9ef3-cfaad95277d1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/.idea/flask_study_1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/.idea/pythonProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/poetry.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/pyproject.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Study_Flask/flask_study_01/pythonProject/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/.idea/Project_BookAPI.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/api.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_BookAPI/model/schema.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_DummyDataTest/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project_DummyDataTest/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Project_DummyDataTest/src/version2/create_all_dummy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Project_DummyDataTest/src/version2/create_all_dummy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Database/MongoDB Test/testmongodb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Study_Database/MongoDB Test/testmongodb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Flask/flask_study_1/pythonProject/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Flask/flask_study_1/pythonProject/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Flask/flask_study_1/pythonProject/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Flask/flask_study_1/pythonProject/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Flask/flask_study_1/pythonProject/.idea/pythonProject.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Flask/flask_study_1/pythonProject/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Flask/flask_study_1/pythonProject/app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Study_Flask/flask_study_1/pythonProject/templates/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Study_Flask/Project_BookAPI/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/Study_Flask/Project_BookAPI/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,22 +35,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.problem_solve.executor": "Run",
-    "Python.pybo.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/Dev/Workspace/OZCoding/OZCoding_Backend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.problem_solve.executor&quot;: &quot;Run&quot;,
+    &quot;Python.pybo.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Dev/Workspace/OZCoding/OZCoding_Backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Study_Flask/pybo" />
@@ -108,7 +74,9 @@
       <option name="presentableId" value="Default" />
       <updated>1714200153855</updated>
       <workItem from="1714200155678" duration="1412000" />
-      <workItem from="1714454478538" duration="6074000" />
+      <workItem from="1714454478538" duration="9648000" />
+      <workItem from="1714526223901" duration="15000" />
+      <workItem from="1714528140041" duration="208000" />
     </task>
     <servers />
   </component>

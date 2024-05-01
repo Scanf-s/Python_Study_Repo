@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Board Management</title>
+  </head>
+  <body>
+    <h1>Board Management</h1>
+
+    <!-- 게시글 생성 폼 -->
+    <form id="createBoardForm">
+      <input type="text" id="boardTitle" placeholder="Title" />
+      <textarea id="boardContent" placeholder="Content"></textarea>
+      <input type="number" id="userId" placeholder="User ID" />
+      <button type="submit">Create Board</button>
+    </form>
+
+    <!-- 게시글 조회 -->
+    <button onclick="getBoards()">Get All Boards</button>
+    <div id="boards"></div>
+
+    <!-- 게시글 수정 폼 -->
+    <form id="updateBoardForm">
+      <input type="number" id="updateBoardId" placeholder="Board ID" />
+      <input type="text" id="updateBoardTitle" placeholder="New Title" />
+      <textarea id="updateBoardContent" placeholder="New Content"></textarea>
+      <button type="submit">Update Board</button>
+    </form>
+
+    <!-- 게시글 삭제 -->
+    <form id="deleteBoardForm">
+      <input type="number" id="deleteBoardId" placeholder="Board ID" />
+      <button type="submit">Delete Board</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("createBoardForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const title = document.getElementById("boardTitle").value;
+          const content = document.getElementById("boardContent").value;
+          const userId = document.getElementById("userId").value;
+
+          fetch("/board", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title, content, user_id: userId }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              getBoards(); // 게시글 목록을 다시 불러옵니다.
+            });
+        });
+
+      function getBoards() {
+        fetch("/board")
+          .then((response) => response.json())
+          .then((data) => {
+            const boardsDiv = document.getElementById("boards");
+            boardsDiv.innerHTML = "";
+            data.forEach((board) => {
+              boardsDiv.innerHTML += `<p>${board.title} - ${board.content} (User ID: ${board.user_id}, Board ID: ${board.id})</p>`;
+            });
+          });
+      }
+
+      document
+        .getElementById("updateBoardForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const boardId = document.getElementById("updateBoardId").value;
+          const title = document.getElementById("updateBoardTitle").value;
+          const content = document.getElementById("updateBoardContent").value;
+
+          fetch("/board/" + boardId, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title, content }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              getBoards(); // 게시글 목록을 다시 불러옵니다.
+            });
+        });
+
+      document
+        .getElementById("deleteBoardForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const boardId = document.getElementById("deleteBoardId").value;
+
+          fetch("/board/" + boardId, {
+            method: "DELETE",
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              getBoards(); // 게시글 목록을 다시 불러옵니다.
+            });
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "flask-study-05"
+version = "0.1.0"
+description = ""
+authors = ["Scanf-s <calzone0404@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Flask = "^3.0.3"
+Flask-MySQLdb = "^2.0.0"
+flask-smorest = "^0.44.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

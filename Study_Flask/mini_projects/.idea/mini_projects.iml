@@ -7,4 +7,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PyNamespacePackagesService">
+    <option name="namespacePackageFolders">
+      <list>
+        <option value="$MODULE_DIR$/todoapp_project/models" />
+        <option value="$MODULE_DIR$/todoapp_project/views" />
+      </list>
+    </option>
+  </component>
 </module>

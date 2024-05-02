@@ -44,7 +44,7 @@ class AddNewPost(MethodView):
 
 
 # Post ID로 특정 게시글 조회
-@post_blp.route('/<int:post_id>', methods=['GET'])
+@post_blp.route('/<int:post_id>', methods=['GET']) # 이와 같이 /<int:post_id> 같은 형태는 path parameter라고 한다.
 class GetPostbyId(MethodView):
     def get(self, post_id):
         post = Post.query.get_or_404(post_id)

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <script>
+      function handleLogin(event) {
+        event.preventDefault(); // 폼의 기본 제출 동작을 방지
+
+        // 폼 데이터를 JSON으로 변환
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var data = { username: username, password: password };
+
+        // fetch를 사용하여 서버에 POST 요청 보내기
+        fetch("/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+            // 로그인 성공 후 'protected' 페이지로 리다이렉트
+            localStorage.setItem("access_token", data.access_token);
+            localStorage.setItem("refresh_token", data.refresh_token);
+            window.location.href = "/user/protected_page";
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form onsubmit="handleLogin(event)">
+      Username: <input type="text" id="username" name="username" /><br />
+      Password: <input type="password" id="password" name="password" /><br />
+      <input type="submit" value="Login" />
+    </form>
+  </body>
+</html>

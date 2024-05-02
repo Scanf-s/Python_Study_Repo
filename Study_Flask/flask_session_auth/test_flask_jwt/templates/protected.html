@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Protected Page</title>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("access_token");
+        console.log("token", token);
+        if (token) {
+          fetch("/user/protected", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("Access Denied");
+              }
+            })
+            .then((data) => {
+              document.getElementById("content").innerHTML =
+                "Welcome, " + data.logged_in_as;
+            })
+            .catch((error) => {
+              document.getElementById("content").innerHTML = "Access Denied";
+              console.error("Error:", error);
+            });
+        } else {
+          document.getElementById("content").innerHTML =
+            "No token found, please login.";
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <h1>This is a Protected Page</h1>
+    <div id="content">
+      <p>Loading...</p>
+    </div>
+    <button onclick="logout()">Logout</button>
+  </body>
+  <script>
+    // 로그아웃 함수
+    function logout() {
+      // 로컬 스토리지에서 JWT 토큰 제거
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+
+      // 로그인 페이지 또는 홈페이지로 리다이렉트
+      window.location.href = "/";
+    }
+  </script>
+</html>

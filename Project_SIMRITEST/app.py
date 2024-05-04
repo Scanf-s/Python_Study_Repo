@@ -1,4 +1,5 @@
 from flask import Flask, redirect, url_for, request, render_template
+from flask_migrate import Migrate
 
 from flask_sqlalchemy import SQLAlchemy
 from wtforms import form, validators
@@ -20,13 +21,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123123@localhost/s
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 
 # define user model
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    login_id = db.Column(db.String, unique=True)
-    password = db.Column(db.String)
+    login_id = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(100))
 
     # flask-login integration
     # More details : https://flask-login.readthedocs.io/en/latest/#your-user-class

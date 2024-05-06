@@ -1,0 +1,21 @@
+{% extends 'admin/admin_home.html' %}
+{% block content %}
+<div class="container mt-4">
+    {% if current_user.is_authenticated %}
+        <h1>Question Results</h1>
+        <div class="list-group mt-3">
+        {% for question in questions %}
+            <div class="list-group-item">
+                <h5 class="mb-1">Question ID: {{ question.id }}</h5>
+                <p class="mb-1">Question content: {{ question.content }}</p>
+                <p class="mb-1">Question #: {{ question.order_num }}</p>
+                <p class="mb-1">Is question active ? : {{ question.is_active }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+        </div>
+    {% else %}
+        <h1>Access Denied : You are not logged in</h1>
+    {% endif %}
+</div>
+{% endblock %}

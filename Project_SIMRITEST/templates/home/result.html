@@ -1,18 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Result</title>
-</head>
-<body>
-{% for answer in answers %}
-    <div class="list-group-item">
-        <h5 class="mb-1">Answer ID: {{ answer.id }}</h5>
-        <p class="mb-1">Answered User: {{ answer.user_id }}</p>
-        <p class="mb-1">Answer Question: {{ answer.question_id }}</p>
-        <p class="mb-1">Answer Response: {{ answer.chosen_answer }}</p>
-    </div>
-    <hr>
-{% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Answered User Name: {{ answered_user }}</h1>
+    {% if answers %}
+        <div class="list-group">
+            {% for answer in answers %}
+                <div class="list-group-item">
+                    <h5 class="mb-1">Answer ID: {{ answer.id }}</h5>
+                    <p class="mb-1">Answered User: {{ answer.user_id }}</p>
+                    <p class="mb-1">Answer Question: {{ answer.question_id }}</p>
+                    <p class="mb-1">Answer Response: {{ answer.chosen_answer }}</p>
+                </div>
+                {% if not loop.last %}
+                    <hr> <!-- Only include the horizontal rule if it's not the last item -->
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="mb-1">표시할 답변이 존재하지 않습니다.</p>
+    {% endif %}
+    <button class="btn btn-primary" type="button" onclick="return_home()">처음으로 되돌아가기</button>
+</div>
+<script>
+    function return_home(){
+        window.location.href = '/hello';
+    }
+</script>
+{% endblock %}

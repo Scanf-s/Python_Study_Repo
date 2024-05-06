@@ -4,18 +4,21 @@ from flask import request, redirect, url_for, render_template, Blueprint, flash
 from flask_login import login_user, logout_user
 
 from app import db
-from models.model_definitions import AdminModel, AnswerModel
+from models.model_definitions import AdminModel, AnswerModel, QuestionModel
 
 admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
 @admin_blp.route('/register', methods=["GET", "POST"])
+# This method is very dangerous for security,
+# but it has been implemented for convenience of development.
 def register():
     # If the user made a POST request, create a new user
     if request.method == "POST":
         user = AdminModel(
             username=request.form.get("username"),
             password=request.form.get("password"),
+            email=request.form.get("email"),
             is_admin=True,
             created_at=datetime.now()
         )
@@ -60,7 +63,21 @@ def logout():
     return redirect(url_for("admin.home"))
 
 
+@admin_blp.route("/answer_list", methods=["GET"])
+def answer_list():
+    # 추후, 페이지네이션 기능 구현 예정
+    answers = AnswerModel.query.all()
+    return render_template("admin/answer_list.html", answers=answers)
+
+
+@admin_blp.route("/question_list", methods=["GET"])
+def question_list():
+    questions = QuestionModel.query.all()
+    return render_template("admin/question_list.html", questions=questions)
+
+
 @admin_blp.route("/")
 def home():
-    answers= AnswerModel.query.all()
-    return render_template("admin/admin_home.html", answers=answers)
+    questions = QuestionModel.query.all()
+    answers = AnswerModel.query.all()
+    return render_template("admin/admin_home.html")

@@ -1,5 +1,12 @@
+from datetime import datetime
+
+from flask import request, session
+
 from flask import Blueprint, url_for, render_template
 from werkzeug.utils import redirect
+
+from app import db
+from models.model_definitions import UserModel
 
 main_blp = Blueprint('MAIN', __name__, url_prefix='/')
 
@@ -12,6 +19,35 @@ def hello():
 @main_blp.route('/hello')
 def index():
     return render_template('home/index.html')
+
+@main_blp.route('/user_info', methods=['GET', 'POST'])
+def user_info():
+    # get form data from userinfo.html
+    if request.method == 'POST':
+        username = request.form['username']
+        age = request.form['age']
+        gender = request.form['gender']
+
+        # make UserModel to insert mysql database
+        user = UserModel(
+            username=username,
+            age=age,
+            gender=gender,
+            created_at=datetime.now()
+        )
+
+        db.session.add(user)
+        db.session.commit()
+
+        # Create a session to remember who is answering questions
+        session['user_id'] = user.id
+        session['username'] = username
+
+        # pass question_id=1 to start the first question
+        return redirect(url_for('QUESTION.question_detail', question_id=1))
+
+    # if request.method ==' GET'
+    return render_template('home/userinfo.html')
 
 
 @main_blp.route('/result')

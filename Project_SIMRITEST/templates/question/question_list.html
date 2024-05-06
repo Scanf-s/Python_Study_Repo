@@ -5,7 +5,6 @@
     {% if question_list %}
         <ul class="list-group list-group-flush mt-3">
         {% for question in question_list %}
-            <!-- Modify hard coded URL to use url_for -->
             <li class="list-group-item">
                 <a href="{{ url_for('QUESTION.question_detail', question_id=question.id) }}">{{ question.content }}</a>
             </li>

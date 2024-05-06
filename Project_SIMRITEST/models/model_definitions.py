@@ -50,7 +50,7 @@ class AnswerModel(db.Model):
     # ON DELETE CASCADE
     # https://docs.sqlalchemy.org/en/20/orm/cascades.html#using-foreign-key-on-delete-cascade-with-orm-relationships
     __tablename__ = "answers"
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
     question_id = db.Column(db.Integer, db.ForeignKey("questions.id", ondelete='CASCADE'))
     question = db.relationship('QuestionModel', backref=db.backref('answer_set'))

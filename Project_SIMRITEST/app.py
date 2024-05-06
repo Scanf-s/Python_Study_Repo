@@ -1,3 +1,5 @@
+import secrets
+
 from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -8,7 +10,7 @@ from views import main_views, question_views, admin_views
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'secret'
+app.config['SECRET_KEY'] = secrets.token_hex(16)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123123@127.0.0.1/simritest'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['FLASK_ADMIN_SWATCH'] = 'cyborg'

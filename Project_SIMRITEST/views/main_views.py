@@ -44,6 +44,7 @@ def user_info():
             flash('사용자가 이미 존재합니다.', category="error")
             return redirect(url_for('MAIN.index'))
         except Exception as e:
+            db.session.rollback()
             flash("Error : {}".format(e), category="error")
             return redirect(url_for("MAIN.index"))
 

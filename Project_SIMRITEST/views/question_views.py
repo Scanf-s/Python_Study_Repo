@@ -39,7 +39,7 @@ def question_detail(question_id):
                 )
                 db.session.add(response)
                 db.session.commit()
-                flash('Successfully added response', 'success')
+                flash('Successfully added response', category="success")
 
             # filter only questions that greater than current question_id,
             # then get first question order by question_id ascend
@@ -48,7 +48,7 @@ def question_detail(question_id):
                 return redirect(url_for('QUESTION.question_detail', question_id=next_question.id))
             else:
                 # if there is no next_question, pop session and show result page to user
-                flash('Question complete', 'success')
+                flash('Question complete', category="success")
                 session.pop('user_id', None)
                 answers = AnswerModel.query.filter_by(user_id=answered_user_id).order_by(AnswerModel.id.desc()).all()
                 return render_template('home/result.html', answered_user=answered_username, answers=answers)

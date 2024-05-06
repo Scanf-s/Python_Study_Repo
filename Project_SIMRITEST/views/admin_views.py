@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from flask import request, redirect, url_for, render_template, Blueprint, flash
-from flask_login import LoginManager, login_user, logout_user, current_user
+from flask_login import login_user, logout_user
+
 from app import db
 from models.model_definitions import AdminModel, AnswerModel
 
@@ -61,4 +62,5 @@ def logout():
 
 @admin_blp.route("/")
 def home():
-    return render_template("admin/admin_home.html", answers=AnswerModel.query.all())
+    answers= AnswerModel.query.all()
+    return render_template("admin/admin_home.html", answers=answers)

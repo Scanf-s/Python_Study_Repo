@@ -1,6 +1,7 @@
-from flask import request
-from app import db
 from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import request
+
+from app import db
 from models.model_definitions import QuestionModel, AnswerModel
 
 question_blp = Blueprint('QUESTION', __name__, url_prefix='/questions')

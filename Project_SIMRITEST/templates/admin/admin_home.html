@@ -24,12 +24,17 @@
                 <ul class="navbar-nav">
                     {% if not current_user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin/login">Login</a>
+                        <a class="nav-link btn-block" href="/admin/login">Login</a>
                     </li>
-                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/register">Create account</a>
                     </li>
+                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                    <li>
+                        <a class="btn btn-danger" href="/admin/logout">Logout</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -37,18 +42,17 @@
 
     <div class="container mt-4">
         {% if current_user.is_authenticated %}
-            <h1>Admin page</h1>
-            <a href="/admin/logout" class="btn btn-danger">Logout</a>
+            <h1>Answer Results</h1>
             <div class="list-group mt-3">
-                {% for answer in answers %}
-                    <div class="list-group-item">
-                        <h5 class="mb-1">Answer ID: {{ answer.id }}</h5>
-                        <p class="mb-1">Answered User: {{ answer.user_id }}</p>
-                        <p class="mb-1">Answer Question: {{ answer.question_id }}</p>
-                        <p class="mb-1">Answer Response: {{ answer.chosen_answer }}</p>
-                    </div>
-                    <hr>
-                {% endfor %}
+            {% for answer in answers %}
+                <div class="list-group-item">
+                    <h5 class="mb-1">Answer ID: {{ answer.id }}</h5>
+                    <p class="mb-1">Answered User: {{ answer.user_id }}</p>
+                    <p class="mb-1">Answer Question: {{ answer.question_id }}</p>
+                    <p class="mb-1">Answer Response: {{ answer.chosen_answer }}</p>
+                </div>
+                <hr>
+            {% endfor %}
             </div>
         {% else %}
             <h1>You are not logged in</h1>

@@ -1,6 +1,7 @@
 from flask import Flask
-from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_migrate import Migrate
+
 from config.db import init_db, db
 from models.model_definitions import AdminModel
 from views import main_views, question_views, admin_views

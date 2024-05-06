@@ -1,0 +1,20 @@
+<!-- Include Bootstrap CSS from CDN -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-3">{{ question.id }}</h1>
+    <div class="card">
+        <div class="card-body">
+            {{ question.content }}
+        </div>
+        <div class="answer">
+            <button id="yes" type="button" class="btn btn-primary">네</button>
+            <button id="no" type="button" class="btn btn-primary">아니오</button>
+            <!-- 여기서 네 또는 아니오 버튼을 누르면, url_for을 이용해서 answer 처리 백엔드로 이동 -->
+            <!-- answer 처리 백엔드에서 해당 기록을 mysql database에 저장하는 로직 필요함 -->
+            <!-- div class="card-body" 위에 form, method = POST로 작동하도록 작성 -->
+            <!--  <form action="jinja url_for('엔드포인트', 백엔드로보낼 폼데이터) jinja" method="post"> -->
+        </div>
+    </div>
+</div>
+{% endblock %}

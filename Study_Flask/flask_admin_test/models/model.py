@@ -1,8 +1,6 @@
 import enum
 from datetime import datetime
-
 from flask_login import UserMixin
-
 from config.db import db
 
 
@@ -34,6 +32,7 @@ class UserModel(db.Model):
 class AdminModel(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), nullable=True)
     is_admin = db.Column(db.Boolean, default=False, nullable=False)
     password = db.Column(db.String(60), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
@@ -51,7 +50,7 @@ class AnswerModel(db.Model):
     # ON DELETE CASCADE
     # https://docs.sqlalchemy.org/en/20/orm/cascades.html#using-foreign-key-on-delete-cascade-with-orm-relationships
     __tablename__ = "answers"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete='CASCADE'))
     question_id = db.Column(db.Integer, db.ForeignKey("questions.id", ondelete='CASCADE'))
     question = db.relationship('QuestionModel', backref=db.backref('answer_set'))

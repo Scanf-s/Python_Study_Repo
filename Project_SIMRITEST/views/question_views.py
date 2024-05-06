@@ -50,7 +50,7 @@ def question_detail(question_id):
                 # if there is no next_question, pop session and show result page to user
                 flash('Question complete', category="success")
                 session.pop('user_id', None)
-                answers = AnswerModel.query.filter_by(user_id=answered_user_id).order_by(AnswerModel.id.desc()).all()
+                answers = AnswerModel.query.filter_by(user_id=answered_user_id).order_by(AnswerModel.id.asc()).all()
                 return render_template('home/result.html', answered_user=answered_username, answers=answers)
 
     # if request.method == 'GET', just render question_detail page

@@ -3,6 +3,9 @@ from datetime import datetime
 from flask import request, redirect, url_for, render_template, Blueprint, flash
 from flask_login import login_user, logout_user
 
+from werkzeug.security import check_password_hash
+from sqlalchemy.exc import IntegrityError
+
 from app import db
 from models.model_definitions import AdminModel, AnswerModel, QuestionModel
 
@@ -15,15 +18,26 @@ admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
 def register():
     # If the user made a POST request, create a new user
     if request.method == "POST":
-        user = AdminModel(
+        admin = AdminModel(
             username=request.form.get("username"),
-            password=request.form.get("password"),
             email=request.form.get("email"),
             is_admin=True,
             created_at=datetime.now()
         )
-        db.session.add(user)
-        db.session.commit()
+        password = request.form.get("password")
+        admin.set_password(password)
+
+        try:
+            db.session.add(admin)
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            flash("There are duplicate elements in database. Please use another username or email", "error")
+            return redirect(url_for('admin.register'))
+        # except Exception as e:
+        #     db.session.rollback()
+        #     flash("Error : {}".format(e), category="error")
+        #     return redirect(url_for("admin.register"))
 
         # Once user account created, redirect them to login route
         return redirect(url_for("admin.login"))
@@ -37,12 +51,12 @@ def login():
     # filtering for the username
     try:
         if request.method == "POST":
-            user = AdminModel.query.filter_by(username=request.form.get("username")).first()
-            # Check if the password entered is the
-            # same as the user's password
-            if user.password == request.form.get("password"):
+            admin = AdminModel.query.filter_by(username=request.form.get("username")).first()
+            # From request form data,
+            # check if form password hash code is in AdminModel
+            if admin and check_password_hash(admin.password_hash, request.form.get("password")):
                 # Use the login_user method to log in the user
-                login_user(user)
+                login_user(admin)
                 flash("You are logged in.", category="success")
                 return redirect(url_for("admin.home"))
             else:

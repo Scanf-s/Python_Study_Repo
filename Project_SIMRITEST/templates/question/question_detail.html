@@ -1,20 +1,33 @@
-<!-- Include Bootstrap CSS from CDN -->
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-3">{{ question.id }}</h1>
+    <h1 class="mb-3">Question {{ question.id }}</h1>
     <div class="card">
-        <div class="card-body">
+        <div class="card-body text-center">
             {{ question.content }}
         </div>
-        <div class="answer">
-            <button id="yes" type="button" class="btn btn-primary">네</button>
-            <button id="no" type="button" class="btn btn-primary">아니오</button>
-            <!-- 여기서 네 또는 아니오 버튼을 누르면, url_for을 이용해서 answer 처리 백엔드로 이동 -->
-            <!-- answer 처리 백엔드에서 해당 기록을 mysql database에 저장하는 로직 필요함 -->
-            <!-- div class="card-body" 위에 form, method = POST로 작동하도록 작성 -->
-            <!--  <form action="jinja url_for('엔드포인트', 백엔드로보낼 폼데이터) jinja" method="post"> -->
-        </div>
+        <form id="question_form" action="{{ url_for('QUESTION.question_detail', question_id=question.id) }}" method="post">
+            <div class="answer text-center mt-3">
+                <!-- Use radio buttons for single-choice response -->
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="response" id="yes" value="yes">
+                    <label class="form-check-label" for="yes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="response" id="no" value="no">
+                    <label class="form-check-label" for="no">No</label>
+                </div>
+                <button onclick="is_answered()" type="submit" class="btn btn-primary mt-2">Submit</button>
+            </div>
+        </form>
     </div>
 </div>
+<script>
+    function is_answered() {
+        const response = document.querySelector('input[name="response"]:checked');
+        if (!response) {
+            alert("아직 항목에 응답하지 않았습니다.");
+        }
+    }
+</script>
 {% endblock %}

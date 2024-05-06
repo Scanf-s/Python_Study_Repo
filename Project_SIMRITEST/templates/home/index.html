@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">간단한 심리 테스트</h2>
+    <p class="lead">버튼을 눌러 기본 정보를 입력해주세요</p>
+    <button class="btn btn-primary btn-lg" onclick="get_input_page()">입력하기</button>
+</div>
+
+<script>
+    function get_input_page() {
+        window.location.href = '/user_info';
+    }
+</script>
+{% endblock %}

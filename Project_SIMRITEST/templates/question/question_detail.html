@@ -6,7 +6,7 @@
         <div class="card-body">
             {{ question.content }}
         </div>
-        <form action="{{ url_for('QUESTION.question_detail', question_id=question.id) }}" method="post">
+        <form id="question_form" action="{{ url_for('QUESTION.question_detail', question_id=question.id) }}" method="post">
             <div class="answer text-center mt-3">
                 <!-- Use radio buttons for single-choice response -->
                 <div class="form-check form-check-inline">
@@ -17,9 +17,17 @@
                     <input class="form-check-input" type="radio" name="response" id="no" value="no">
                     <label class="form-check-label" for="no">No</label>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                <button onclick="is_answered()" type="submit" class="btn btn-primary mt-2">Submit</button>
             </div>
         </form>
     </div>
 </div>
+<script>
+    function is_answered() {
+        const response = document.querySelector('input[name="response"]:checked');
+        if (!response) {
+            alert("아직 항목에 응답하지 않았습니다.");
+        }
+    }
+</script>
 {% endblock %}

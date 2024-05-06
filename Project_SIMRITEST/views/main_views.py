@@ -1,14 +1,19 @@
-from flask import Blueprint, url_for
+from flask import Blueprint, url_for, render_template
 from werkzeug.utils import redirect
 
 main_blp = Blueprint('MAIN', __name__, url_prefix='/')
 
 
-@main_blp.route('/hello')
-def hello_pybo():
-    return 'SIMRITEST HELLO PAGE'
-
-
 @main_blp.route('/')
+def hello():
+    return redirect(url_for('MAIN.index'))
+
+
+@main_blp.route('/hello')
 def index():
-    return redirect(url_for('QUESTION.question_list'))  # Using blueprint 'QUESTION', route to 'question_list'
+    return render_template('home/index.html')
+
+
+@main_blp.route('/result')
+def result():
+    return render_template('home/result.html')

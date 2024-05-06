@@ -14,15 +14,15 @@
   <body>
     <nav>
       <ul>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/register">Create account</a></li>
+        <li><a href="/admin/login">Login</a></li>
+        <li><a href="/admin/register">Create account</a></li>
       </ul>
     </nav>
     {% if current_user.is_authenticated %}
-    <h1>You are logged in</h1>
-    <a href="/logout">Logout</a>
+        <h1>You are logged in</h1>
+        <a href="/admin/logout">Logout</a>
     {% else %}
-    <h1>You are not logged in</h1>
+        <h1>You are not logged in</h1>
     {% endif %}
   </body>
 </html>

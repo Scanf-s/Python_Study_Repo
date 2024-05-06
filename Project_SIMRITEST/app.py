@@ -15,19 +15,6 @@ app.config['FLASK_ADMIN_SWATCH'] = 'cyborg'
 init_db(app)
 migrate = Migrate(app, db)
 
-# Initialize Flask-Admin lib
-
-# Initialize Flask-Login lib
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'admin.login'
-
-
-# User loader callback
-@login_manager.user_loader
-def load_user(user_id):
-    return AdminModel.query.get(int(user_id))
-
 
 # Register blueprints
 app.register_blueprint(main_views.main_blp)

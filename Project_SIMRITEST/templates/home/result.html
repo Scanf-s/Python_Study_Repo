@@ -2,11 +2,12 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1 class="mb-4">Answered User Name: {{ answered_user }}</h1>
+    <h1 class="mb-4">{{ answered_user }} 님이 응답한 결과는...</h1>
     {% if answers %}
         <div class="list-group">
             {% for answer in answers %}
                 <div class="list-group-item">
+                <!--- Will be modified UI when there is a chance to improved in the future...-->
                     <h5 class="mb-1">Answer ID: {{ answer.id }}</h5>
                     <p class="mb-1">Answered User: {{ answer.user_id }}</p>
                     <p class="mb-1">Answer Question: {{ answer.question_id }}</p>

@@ -43,16 +43,16 @@ def login():
             if user.password == request.form.get("password"):
                 # Use the login_user method to log in the user
                 login_user(user)
-                flash("You are logged in.", "success")
+                flash("You are logged in.", category="success")
                 return redirect(url_for("admin.home"))
             else:
-                flash("Incorrect password.", "error")
+                flash("Incorrect password.", category="error")
                 return redirect(url_for("admin.login"))
     except AttributeError:
-        flash(f"username : {request.form.get("username")} not exist", "error")
+        flash(f"username : {request.form.get("username")} not exist", category="error")
         return redirect(url_for("admin.login"))
     except Exception as e:
-        flash("Error : {}".format(e), "error")
+        flash("Error : {}".format(e), category="error")
         return redirect(url_for("admin.login"))
     return render_template("admin/login.html")
 
@@ -65,7 +65,7 @@ def logout():
 
 @admin_blp.route("/answer_list", methods=["GET"])
 def answer_list():
-    # 추후, 페이지네이션 기능 구현 예정
+    # PageNation function to be implemented in the future
     answers = AnswerModel.query.all()
     return render_template("admin/answer_list.html", answers=answers)
 

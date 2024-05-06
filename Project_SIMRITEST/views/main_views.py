@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from flask import request, session
+from flask import request, session, flash
 
 from flask import Blueprint, url_for, render_template
 from werkzeug.utils import redirect
+from sqlalchemy.exc import IntegrityError
 
 from app import db
 from models.model_definitions import UserModel
@@ -35,9 +36,16 @@ def user_info():
             gender=gender,
             created_at=datetime.now()
         )
-
-        db.session.add(user)
-        db.session.commit()
+        try:
+            db.session.add(user)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash('사용자가 이미 존재합니다.', category="error")
+            return redirect(url_for('MAIN.index'))
+        except Exception as e:
+            flash("Error : {}".format(e), category="error")
+            return redirect(url_for("MAIN.index"))
 
         # Create a session to remember who is answering questions
         session['user_id'] = user.id

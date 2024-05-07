@@ -2,9 +2,8 @@ from datetime import datetime
 
 from flask import request, redirect, url_for, render_template, Blueprint, flash
 from flask_login import login_user, logout_user
-
-from werkzeug.security import check_password_hash
 from sqlalchemy.exc import IntegrityError
+from werkzeug.security import check_password_hash
 
 from app import db
 from models.model_definitions import AdminModel, AnswerModel, QuestionModel

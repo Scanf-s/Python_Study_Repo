@@ -3,33 +3,26 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-3">User Information</h2>
-    <form action="#" method="post">
-        <div class="mb-3">
-            <label for="username" class="form-label">닉네임:</label>
-            <input type="text" class="form-control" name="username" id="username" placeholder="닉네임을 입력해주세요.">
+    <form action="{{ url_for('MAIN.user_info') }}" method="post">
+        {{ form.hidden_tag() }}
+        <div class="mb-3 form-group">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(class="form-control") }}
         </div>
 
-        <div class="mb-3">
-            <label for="age" class="form-label">연령대:</label>
-            <select class="form-select" name="age" id="age">
-                <option value="tens">10대</option>
-                <option value="twenties">20대</option>
-                <option value="thirties">30대</option>
-                <option value="fourties">40대</option>
-                <option value="fifties">50대</option>
-            </select>
+        <div class="mb-3 form-group">
+            {{ form.age.label(class="form-label") }}
+            {{ form.age(class="form-control") }}
         </div>
 
-        <div class="mb-3">
-            <label for="gender" class="form-label">성별:</label>
-            <select class="form-select" name="gender" id="gender">
-                <option value="male">남성</option>
-                <option value="female">여성</option>
-                <option value="other">비공개</option>
-            </select>
+        <div class="mb-3 form-group">
+            {{ form.gender.label(class="form-label") }}
+            {{ form.gender(class="form-control") }}
         </div>
 
-        <button type="submit" class="btn btn-primary">시작</button>
+        <div class="mb-3 form-group">
+            {{ form.submit(class="btn btn-success btn-lg shadow") }}
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -21,11 +21,8 @@
     {% else %}
         <p class="mb-1">표시할 답변이 존재하지 않습니다.</p>
     {% endif %}
-    <button class="btn btn-primary" type="button" onclick="return_home()">처음으로 되돌아가기</button>
+    <form action="{{ url_for('MAIN.index') }}" method="get">
+        <button class="btn btn-primary">처음으로 되돌아가기</button>
+    </form>
 </div>
-<script>
-    function return_home(){
-        window.location.href = '/hello';
-    }
-</script>
 {% endblock %}

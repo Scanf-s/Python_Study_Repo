@@ -16,5 +16,12 @@
         </script>
     {% endif %}
 {% endwith %}
+{% with messages = get_flashed_messages(category_filter=["success"]) %}
+    {% if messages %}
+        <script>
+            alert("{{ messages[0] }}");
+        </script>
+    {% endif %}
+{% endwith %}
 </body>
 </html>

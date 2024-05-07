@@ -1,41 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container mt-4">
-    <h1 class="mb-3">Question {{ question.id }}</h1>
-    <div class="card">
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Question {{ question.id }}</h1>
+    <div class="card shadow-lg">
         <div class="card-body text-center">
-            {{ question.content }}
+            <h5 class="card-title">{{ question.content }}</h5>
         </div>
-        <form id="question_form" action="{{ url_for('QUESTION.question_detail', question_id=question.id) }}" method="post">
-            <div class="answer text-center mt-3">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="response" id="yes" value="yes">
-                    <label class="form-check-label" for="yes">네</label>
+        <div class="card-footer">
+            <form id="question_form" action="{{ url_for('QUESTION.question_detail', question_id=question.id) }}" method="post">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.answer.label(class="form-label") }}
+                    {{ form.answer(class="form-radio") }}
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="response" id="no" value="no">
-                    <label class="form-check-label" for="no">아니오</label>
+                <div class="d-grid gap-2">
+                    {{ form.submit(class="btn btn-primary btn-lg") }}
                 </div>
-                {% if question.id == 5 %}
-                    <!-- Currently, I'm only asking up to five questions, so I use this if statement. -->
-                    <!-- But I'm going to fix it when I improve the functionality later!-->
-                    <button onclick="return is_answered()" type="submit" class="btn btn-primary mt-2">제출하기</button>
-                {% else %}
-                    <button onclick="return is_answered()" type="submit" class="btn btn-primary mt-2">다음으로</button>
-                {% endif %}
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
-<script>
-    // Only items that answered the question should be able to send POST requests
-    function is_answered() {
-        const response = document.querySelector('input[name="response"]:checked');
-        if (!response) {
-            alert("아직 항목에 응답하지 않았습니다.");
-            return false;
-        }
-        return true;
-    }
-</script>
 {% endblock %}

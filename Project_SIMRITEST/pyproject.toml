@@ -12,6 +12,7 @@ flask-admin = "1.6.1"
 flask = "3.0.3"
 flask-sqlalchemy = "3.1.1"
 flask-migrate = "4.0.7"
+flask-wtf = "1.2.1"
 mysqlclient = "2.2.4"
 pymysql = "1.1.0"
 alembic = "1.13.1"
@@ -61,6 +62,7 @@ urllib3 = "2.2.1"
 virtualenv = "20.26.1"
 werkzeug = "3.0.2"
 wtforms = "3.1.2"
+flask-wtf = "^1.2.1"
 
 
 [build-system]

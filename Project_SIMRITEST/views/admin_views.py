@@ -33,10 +33,10 @@ def register():
             db.session.rollback()
             flash("There are duplicate elements in database. Please use another username or email", "error")
             return redirect(url_for('admin.register'))
-        # except Exception as e:
-        #     db.session.rollback()
-        #     flash("Error : {}".format(e), category="error")
-        #     return redirect(url_for("admin.register"))
+        except Exception as e:
+            db.session.rollback()
+            flash("Error : {}".format(e), category="error")
+            return redirect(url_for("admin.register"))
 
         # Once user account created, redirect them to login route
         return redirect(url_for("admin.login"))

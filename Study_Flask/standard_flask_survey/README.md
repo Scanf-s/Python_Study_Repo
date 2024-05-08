@@ -1,9 +1,6 @@
 # Overview
 이 프로젝트는, 간단한 심리테스트를 제공하는 Flask Application이다. 총 5문항으로 이루어져 있으며, Admin 기능을 통해 문항을 늘리거나 줄일 수 있다.
 
-# Refercence
-> ![제공받은 프로젝트 소스코드 Repo](https://github.com/Scanf-s/OZCoding_Backend/tree/main/Study_Flask/standard_flask_survey/app)
-
 # Dependencies
 
 ## 1. Python 3.11

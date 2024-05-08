@@ -23,6 +23,7 @@
 
 ## 프로젝트 구조
 ```yaml
+Project_SIMRITEST
 │  .gitignore
 │  app.py
 │  poetry.lock

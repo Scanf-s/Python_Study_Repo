@@ -11,7 +11,7 @@
 - 어드민 페이지: 각 사용자의 답변에 대한 기록, Database Model, 등을 확인할 수 있는 페이지 입니다.
 
 ## 개발 환경
-![](https://img.shields.io/badge/AMD-Radeon_RX_6600-ED1C24?style=for-the-badge&logo=amd&logoColor=white)
+![](https://img.shields.io/badge/AMD-ED1C24?style=for-the-badge&logo=amd&logoColor=white)
 ![](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 ![](https://img.shields.io/badge/Poetry-60A5FA?style=for-the-badge&logo=poetry&logoColor=white)
 

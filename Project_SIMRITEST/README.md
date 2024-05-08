@@ -124,7 +124,9 @@ Project_SIMRITEST
 1. 자신의 로컬 드라이브로 프로젝트 clone
 2. MySQL 설치 및 설정, database 생성
    ![MySQL Install](https://dev.mysql.com/downloads/installer/)
-   > 추후, MySQL 연결 설정 및 Database 생성에 대해 업데이트 할 예정입니다.
+   > 추후, MySQL 연결 설정 및 Database Schema 생성에 대해 업데이트 할 예정입니다.
+   1. MySQL 설치 후, localhost 3306 port로 접속하도록 설정
+   2. username = root, password = 123123 (또는 임의로 설정 후 app.py에서 수정)
 3. 의존성 설치 및 가상환경 접속
    ```sh
    pip install poetry

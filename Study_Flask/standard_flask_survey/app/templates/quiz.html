@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심리테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #question {
+            margin-top: 50px;
+            font-size: 24px;
+        }
+        #buttons {
+            margin-top: 20px;
+        }
+        button {
+            font-size: 18px;
+            margin: 15px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="question"></div>
+    <div id="buttons">
+        <button id="yes">예</button>
+        <button id="no">아니오</button>
+    </div>
+    <div id="resultPage" style="display: none;">
+        <button onclick="sendResult()">결과 제출</button>
+    </div>
+
+    <script>
+        async function fetchQuestions() {
+            const response = await fetch('/questions');
+            const data = await response.json();
+            return data.questions; // 수정됨: 질문 데이터 배열 반환
+        }
+
+        const questionElement = document.getElementById("question");
+        const buttonsElement = document.getElementById("buttons");
+        const resultPageElement = document.getElementById("resultPage");
+
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let questions_list;
+
+        async function initializeQuiz() {
+            questions_list = await fetchQuestions();
+            userAnswers = Array(questions_list.length).fill(null);
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex < questions_list.length) {
+                questionElement.innerText = questions_list[currentQuestionIndex].content;
+                buttonsElement.style.display = "block";
+                resultPageElement.style.display = "none";
+            } else {
+                questionElement.innerText = "심리테스트가 종료되었습니다.";
+                buttonsElement.style.display = "none";
+                resultPageElement.style.display = "block";
+            }
+        }
+
+        document.getElementById("yes").addEventListener("click", () => {
+            userAnswers[currentQuestionIndex] = "yes";
+            currentQuestionIndex++;
+            showQuestion();
+        });
+
+        document.getElementById("no").addEventListener("click", () => {
+            userAnswers[currentQuestionIndex] = "no";
+            currentQuestionIndex++;
+            showQuestion();
+        });
+
+        async function sendResult() {
+            const quizzes = questions_list.map((question, index) => ({
+                question_id: question.id,
+                chosen_answer: userAnswers[index]
+            }));
+
+            try {
+                const response = await fetch("/submit", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ quizzes })
+                });
+
+                if (!response.ok) throw new Error("서버 응답 실패");
+                console.log("결과 전송 완료");
+                // 성공적으로 제출 후, 결과 페이지로 이동하거나 다른 액션을 수행할 수 있습니다.
+                window.location.href = "/results"
+
+            } catch (error) {
+                console.error("오류 발생:", error);
+            }
+        }
+
+        initializeQuiz();
+    </script>
+</body>
+</html>

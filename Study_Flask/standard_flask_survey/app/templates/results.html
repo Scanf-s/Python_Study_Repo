@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .graph-container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        #quiz-responses-container, #age-quiz-responses-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #quiz-responses-container div, #age-quiz-responses-container div {
+            flex-basis: calc(50% - 40px);
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Results Dashboard</h1>
+    <div class="graph-container" id="age-distribution"></div>
+    <div class="graph-container" id="gender-distribution"></div>
+    
+    <!-- 각 질문의 응답 분포 그래프를 위한 컨테이너 -->
+    <div id="quiz-responses-container"></div>
+    
+    <!-- 각 질문에 대한 나이대별 응답 분포 그래프를 위한 컨테이너 -->
+    <div id="age-quiz-responses-container"></div>
+
+    <script>
+        var graphs_json = {{ graphs_json | safe }};
+
+        Plotly.newPlot('age-distribution', graphs_json.age_distribution.data, graphs_json.age_distribution.layout);
+        Plotly.newPlot('gender-distribution', graphs_json.gender_distribution.data, graphs_json.gender_distribution.layout);
+
+        // 각 질문의 응답 데이터에 대한 그래프 동적 생성 및 렌더링
+        Object.keys(graphs_json.quiz_responses).forEach(function(key) {
+            var quizResponse = graphs_json.quiz_responses[key];
+            var div = document.createElement('div');
+            div.id = key;
+            div.className = 'graph-container';
+            document.getElementById('quiz-responses-container').appendChild(div);
+            Plotly.newPlot(key, quizResponse.data, quizResponse.layout);
+        });
+
+        // 나이대별 응답 데이터에 대한 그래프 동적 생성 및 렌더링
+        Object.keys(graphs_json.age_quiz_response_figs).forEach(function(key) {
+            var ageQuizResponse = graphs_json.age_quiz_response_figs[key];
+            var div = document.createElement('div');
+            div.id = key + "-age";
+            div.className = 'graph-container';
+            document.getElementById('age-quiz-responses-container').appendChild(div);
+            Plotly.newPlot(div.id, ageQuizResponse.data, ageQuizResponse.layout);
+});
+    </script>
+</body>
+</html>

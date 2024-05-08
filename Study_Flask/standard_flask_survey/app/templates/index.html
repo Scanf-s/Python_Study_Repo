@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>참여자 정보 입력</title>
+  </head>
+  <body>
+    <h2>참여자 정보 입력</h2>
+    <form id="participantForm">
+      <div>
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required  autocomplete="off"/>
+      </div>
+      <div>
+        <label for="age">나이:</label>
+        <!-- <input type="number" id="age" name="age" required /> -->
+        <select id="age" name="age" required>
+        <option value="teenage">10대</option>
+        <option value="twenty">20대</option>
+        <option value="thirty">30대</option>
+        <option value="forty">40대</option>
+        <option value="fifties">50대</option>
+        <option value="sixty">60대 이상</option>
+      </select>
+      </div>
+      <div>
+        <label for="gender">성별:</label>
+        <select id="gender" name="gender" required>
+          <option value="male">남성</option>
+          <option value="female">여성</option>
+          <option value="other">기타</option>
+        </select>
+      </div>
+      <button type="submit">퀴즈 시작하기</button>
+    </form>
+
+    <script>
+      document.getElementById("participantForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch("/participants", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error("Network response was not ok.");
+            return response.json(); // 서버 응답을 JSON으로 파싱
+          })
+          .then((data) => {
+            // 참여자 ID를 쿠키에 저장
+            document.cookie = "participant_id=" + data.participant_id + ";max-age=" + (60 * 60 * 24).toString() + ";path=/";
+
+            // 서버에서 받은 리다이렉션 URL로 페이지 이동
+            if (data.redirect) {
+              window.location.href = data.redirect;
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      });
+    </script>
+  </body>
+</html>

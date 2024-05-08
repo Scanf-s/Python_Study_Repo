@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Questions</title>
+</head>
+<body>
+    <a href="{{ url_for('admin.dashboard') }}">
+        <button class="dashboard-button">Back to Dashboard</button>
+    </a>
+    <h1>Manage Questions</h1>
+    <h2>Add New Question</h2>
+    <form action="{{ url_for('admin.manage_questions') }}" method="post">
+        <input type="text" name="content" placeholder="Question content" required>
+        <input type="number" name="order_num" placeholder="Order number" required>
+        <label>
+            <input type="checkbox" name="is_active"> Active
+        </label>
+        <button type="submit" name="new_question">Add Question</button>
+    </form>
+
+    <h2>Existing Questions</h2>
+    {% for question in questions %}
+        <form action="{{ url_for('admin.manage_questions') }}" method="post">
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <input type="text" name="content" value="{{ question.content }}" required>
+            <input type="number" name="order_num" value="{{ question.order_num }}" required>
+            <label>
+                <input type="checkbox" name="is_active" {% if question.is_active %}checked{% endif %}> Active
+            </label>
+            <button type="submit">Update Question</button>
+        </form>
+    {% endfor %}
+</body>
+</html>

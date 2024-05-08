@@ -1,0 +1,24 @@
+<!-- templates/admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+</head>
+<body>
+    <h1>Admin Login</h1>
+    <form action="{{ url_for('admin.login') }}" method="post">
+        <div>
+            <label for="username" >ID:</label>
+            <input type="text" id="username" name="username" autocomplete="off">
+        </div>
+        <div>
+            <label for="password">PW:</label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+</body>
+</html>

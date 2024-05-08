@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz List</title>
+</head>
+<body>
+    <h1>Quiz List</h1>
+    <a href="{{ url_for('admin.dashboard') }}">
+        <button class="dashboard-button">Back to Dashboard</button>
+    </a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Participant Name</th>
+                <th>Question Content</th>
+                <th>Chosen Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quiz in quizzes %}
+                <tr>
+                    <td>{{ quiz.participant.name }}</td>
+                    <td>{{ quiz.question.content }}</td>
+                    <td>{{ quiz.chosen_answer }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        .dashboard-button, .logout-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .dashboard-button:hover, .logout-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <a href="{{ url_for('admin.manage_questions') }}">
+        <button class="dashboard-button">Manage Questions</button>
+    </a>
+    <a href="{{ url_for('admin.quiz_list') }}">
+        <button class="dashboard-button">Quiz List</button>
+    </a>
+    <a href="{{ url_for('admin.logout') }}">
+        <button class="logout-button">Logout</button>
+    </a>
+    <div>{{ graph_div|safe }}</div>
+</body>
+</html>

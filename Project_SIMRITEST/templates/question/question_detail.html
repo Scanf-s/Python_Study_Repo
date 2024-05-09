@@ -7,7 +7,7 @@
             <h5 class="card-title">{{ question.content }}</h5>
         </div>
         <div class="card-footer">
-            <form id="question_form" action="{{ url_for('QUESTION.question_detail', question_id=question.id) }}" method="post">
+            <form id="question_form" action="{{ url_for('QUESTION.question_detail', question_order_num=question_order_num) }}" method="post">
                 {{ form.hidden_tag() }}
                 <div class="mb-3">
                     {{ form.answer.label(class="form-label") }}

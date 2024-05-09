@@ -57,7 +57,7 @@ def user_info():
 
             # create session info using flask.session
             create_user_session(user.id, username)
-            return redirect(url_for('QUESTION.question_detail', question_id=1))
+            return redirect(url_for('QUESTION.question_detail', question_order_num=1))
         except IntegrityError:
             db.session.rollback()
             flash('사용자가 이미 존재합니다.', category="error")

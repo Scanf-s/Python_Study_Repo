@@ -121,11 +121,12 @@ def add_question():
 
     # if post request and POST form data is valid
     if request.method == 'POST' and question_form.validate_on_submit():
-        question_content = get_question_form_data(question_form)
+        question = get_question_form_data(question_form)
         # create UserModel to insert into MySQL database using sqlalchemy
         new_question = QuestionModel(
-            content=question_content,
-            is_active=False
+            content=question.content.data,
+            order_num=question.order_num.data,
+            is_active=question.is_active.data
         )
         try:
             db.session.add(new_question)

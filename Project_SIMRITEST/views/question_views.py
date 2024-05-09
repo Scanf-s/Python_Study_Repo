@@ -9,12 +9,31 @@ from models.model_definitions import QuestionModel, AnswerModel
 question_blp = Blueprint('QUESTION', __name__, url_prefix='/questions')
 
 
+def get_questions():
+    """
+    Function to get all questions
+    :return:
+    """
+    questions = QuestionModel.query.filter_by(is_active=True).limit(5).all()
+    return questions
+
+
 def get_form_data(form):
+    """
+    Function to get form data
+    Returns answer data that user answered
+    :param form:
+    :return: answer
+    """
     answer = form.answer.data
     return answer
 
 
 def get_session_info():
+    """
+    Function to get session info
+    :return: session_info
+    """
     answered_user_id = session.get('user_id', None)
     answered_username = session.get('username', None)
     session_info = {
@@ -24,22 +43,43 @@ def get_session_info():
     return session_info
 
 
-def get_next_question(current_question_id, session_info):
+def get_next_question(current_question_order_num, session_info):
     """
-    :param current_question_id:
+    Function to get next question
+    :param current_question_order_num:
     :param session_info:
     :return:
     """
-
-    # filter only questions that greater than current question_id,
-    # then get first question order by question_id ascend
-    next_question = QuestionModel.query.filter(QuestionModel.id > current_question_id).order_by(
-        QuestionModel.id.asc()).first()
-    if next_question:
-        return redirect(url_for('QUESTION.question_detail', question_id=next_question.id))
+    if current_question_order_num < 5:
+        return redirect(url_for('QUESTION.question_detail', question_order_num=current_question_order_num + 1))
     else:
-        # if there is no next_question, pop session and show result page to user
+        # After the 5th question, redirect to the result page
         return redirect(url_for('QUESTION.question_result'))
+
+
+def verify_question_order_num(question_order_num):
+    """
+    Verify the question order number
+    This app shows up to 5 questions.
+    if question order number is less than or equal to 5,
+    then return question from database. Otherwise, redirect to result.
+    :param question_order_num:
+    :return: question or redirect
+    """
+    try:
+        if 1 <= question_order_num <= 5:
+            questions = get_questions()
+            question = questions[question_order_num - 1]
+            return question
+        else:
+            flash("Invalid question number", category="error")
+            return redirect(url_for('QUESTION.question_result'))
+    except IndexError as e:
+        flash(f'Error: {e}', 'error')
+        return redirect(url_for('MAIN.index'))
+    except Exception as e:
+        flash(f'Error: {e}', 'error')
+        return redirect(url_for('MAIN.index'))
 
 
 @question_blp.route('/result', methods=['GET'])
@@ -52,13 +92,13 @@ def question_result():
     return render_template('question/result.html', answered_user=session_info['answered_username'], answers=answers)
 
 
-@question_blp.route('/detail/<int:question_id>/', methods=['GET', 'POST'])
-def question_detail(question_id):
-    # find question by question_id in QuestionModel
-    question = QuestionModel.query.get_or_404(question_id)
-
+@question_blp.route('/detail/<int:question_order_num>/', methods=['GET', 'POST'])
+def question_detail(question_order_num):
     # get session info to verify current user is valid
     session_info = get_session_info()
+
+    # get question if question order number less than 5
+    question = verify_question_order_num(question_order_num)
 
     # use AnswerForm when POST requests
     # see forms/Answerform.py
@@ -69,7 +109,7 @@ def question_detail(question_id):
         flash("Please enter your information", category="warning")
         return redirect(url_for('MAIN.user_info'))
 
-    elif request.method == 'POST' and answer_form.validate_on_submit():
+    if request.method == 'POST' and answer_form.validate_on_submit():
         answer = get_form_data(answer_form)
 
         # if current user has session(cookie)
@@ -82,7 +122,7 @@ def question_detail(question_id):
             try:
                 db.session.add(answer)
                 db.session.commit()
-                return get_next_question(question_id, session_info)
+                return get_next_question(question_order_num, session_info)
             except IntegrityError:
                 db.session.rollback()
                 flash('Integrity Error Occurs.', category="error")
@@ -92,4 +132,5 @@ def question_detail(question_id):
             return redirect(url_for('MAIN.index'))
 
     # if request.method == 'GET', just render question_detail page
-    return render_template('question/question_detail.html', question=question, form=answer_form)
+    return render_template('question/question_detail.html', question_order_num=question_order_num, question=question,
+                           form=answer_form)

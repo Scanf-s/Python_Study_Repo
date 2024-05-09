@@ -17,26 +17,28 @@
             </nav>
             <!-- Apply Bootstrap table styling -->
             <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>#</th>
-                  <th>ID</th>
-                  <th>CONTENT</th>
-                  <th>ORDER_NUM</th>
-                  <th>IS_ACTIVE</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for question in questions %}
-                  <tr>
-                    <td>{{ loop.index + pagination.skip }}</td>
-                    <td>{{ question.id }}</td>
-                    <td>{{ question.content }}</td>
-                    <td>{{ question.order_num }}</td>
-                    <td>{{ question.is_active }}</td>
-                  </tr>
-                {% endfor %}
-              </tbody>
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Select</th>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>CONTENT</th>
+                        <th>ORDER_NUM</th>
+                        <th>IS_ACTIVE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for question in questions %}
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>{{ loop.index + pagination.skip }}</td>
+                            <td>{{ question.id }}</td>
+                            <td>{{ question.content }}</td>
+                            <td>{{ question.order_num }}</td>
+                            <td>{{ question.is_active }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
             <nav>
               {{ pagination.links }}

@@ -123,7 +123,7 @@ Project_SIMRITEST
 ## 설치 및 실행 방법 (업데이트 예정)
 1. 자신의 로컬 드라이브로 프로젝트 clone
 2. MySQL 설치 및 설정, database 생성
-   ![MySQL Install](https://dev.mysql.com/downloads/installer/)
+   [MySQL Install](https://dev.mysql.com/downloads/installer/)
    > 추후, MySQL 연결 설정 및 Database Schema 생성에 대해 업데이트 할 예정입니다.
    1. MySQL 설치 후, localhost 3306 port로 접속하도록 설정
    2. username = root, password = 123123 (또는 임의로 설정 후 app.py에서 수정)
@@ -150,3 +150,8 @@ Project_SIMRITEST
 2. 설문 진행
 3. 결과 확인
 4. Admin 페이지
+
+## !더 개발해야 할 기능!
+1. **결과창 개선**
+2. **설문 항목 개선**
+3. **어드민 페이지 설문 항목 관리 기능 추가**

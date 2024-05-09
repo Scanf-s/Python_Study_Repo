@@ -11,7 +11,7 @@ from views.admin_util.utils import (
     get_question_form_data
 )
 from app import db
-from forms.AdminForm import AdminForm
+from forms.AdminForm import AdminForm, AdminRegisterForm
 from forms.QuestionForm import QuestionForm
 from models.model_definitions import AdminModel, AnswerModel, QuestionModel
 
@@ -23,14 +23,15 @@ admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
 # but it has been implemented for convenience of development.
 def register():
     # If the user made a POST request, create a new user
-    if request.method == "POST":
+    admin_form = AdminRegisterForm(request.form)
+    if request.method == "POST" and admin_form.validate_on_submit():
         admin = AdminModel(
-            username=request.form.get("username"),
-            email=request.form.get("email"),
+            username=admin_form.username.data,
+            email=admin_form.email.data,
             is_admin=True,
             created_at=datetime.now()
         )
-        password = request.form.get("password")
+        password = admin_form.password.data
         admin.set_password(password)
 
         try:
@@ -48,7 +49,7 @@ def register():
         # Once a user account created, redirect them to login route
         return redirect(url_for("admin.login"))
     # Renders sign_up template if user made a GET request
-    return render_template("admin/register.html")
+    return render_template("admin/register.html", form=admin_form)
 
 
 @admin_blp.route("/login", methods=["GET", "POST"])

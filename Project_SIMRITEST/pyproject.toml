@@ -62,7 +62,9 @@ urllib3 = "2.2.1"
 virtualenv = "20.26.1"
 werkzeug = "3.0.2"
 wtforms = "3.1.2"
-flask-paginate = "^2024.4.12"
+flask-paginate = "2024.4.12"
+email-validator = "2.1.1"
+dnspython = "2.6.1"
 
 
 [build-system]

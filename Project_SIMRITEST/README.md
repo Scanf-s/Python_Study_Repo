@@ -201,6 +201,7 @@ path_to_project/.venv/bin/python -m flask run
 
 // open your web browser, connect to 127.0.0.1:5000/
 // admin page route : 127.0.0.1/admin
+// go to admin page, in question tab, add new at least 5 questions
 ```
 
 ### Windows (추가 예정)

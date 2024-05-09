@@ -155,3 +155,14 @@ Project_SIMRITEST
 1. **결과창 개선**
 2. **설문 항목 개선**
 3. **어드민 페이지 설문 항목 관리 기능 추가**
+
+## 수정 사항
+### Flask session 관련 오류 수정
+
+#### 1. 동시에 여러 유저가 설문을 진행할 때, 사용자 정보가 정상적으로 반영되지 않던 오류를 수정하였습니다.
+
+![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/4b742b84-4eae-440b-b59c-a50f9bbf5e31)
+
+#### 2. 사용자가 Session 정보가 없음에도 불구하고 question/details/로 들어갈 수 있던 문제를 수정하였습니다.
+
+#### 3. Admin page 새로운 기능 추가 (Question add feature)

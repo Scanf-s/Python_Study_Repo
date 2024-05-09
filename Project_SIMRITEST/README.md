@@ -165,4 +165,8 @@ Project_SIMRITEST
 
 #### 2. 사용자가 Session 정보가 없음에도 불구하고 question/details/로 들어갈 수 있던 문제를 수정하였습니다.
 
-#### 3. Admin page 새로운 기능 추가 (Question add feature)
+### Admin page 새로운 기능 추가 (Question add feature)
+![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/1f66bceb-deed-4bb8-9a86-418fb3a55bed)
+![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/1e9d3107-af88-4fb8-bc4a-95cc05714fe3)
+
+

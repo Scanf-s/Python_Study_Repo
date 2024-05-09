@@ -183,21 +183,30 @@ poetry env use path_to_project/.venv/bin/python // set interpreter
 
 5. Flask-migrate
 ```yaml
+1. deactivate // deactivate python venv
+
+2. flask db init
+or
+2. path_to_project/.venv/bin/python -m flask db init
 // if cryptography error occurs
 // pip install cryptography
-path_to_project/.venv/bin/python -m flask db init
 
-flask db migrate
+3. flask db migrate
+or
+3. path_to_project/.venv/bin/python -m flask db migrate
 // if this command occurs 'Error : Can't locate revision identified by 'blabla'',
 // open mysql workbench and drop table 'alembic_version'
 // and type flask db migrate again.
 
-
-flask db upgrade
+4. flask db upgrade
+or
+4. path_to_project/.venv/bin/python -m flask db upgrade
 ```
 7. Run
 ```yaml
-path_to_project/.venv/bin/python -m flask run
+1. path_to_project/.venv/bin/python -m flask run
+or
+1. flask run
 
 // open your web browser, connect to 127.0.0.1:5000/
 // admin page route : 127.0.0.1/admin

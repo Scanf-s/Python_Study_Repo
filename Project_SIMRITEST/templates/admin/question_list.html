@@ -3,17 +3,31 @@
 <div class="container mt-4">
     {% if current_user.is_authenticated %}
         <h1>Question Results</h1>
-        <div class="list-group mt-3">
-        {% for question in questions %}
-            <div class="list-group-item">
-                <h5 class="mb-1">Question ID: {{ question.id }}</h5>
-                <p class="mb-1">Question content: {{ question.content }}</p>
-                <p class="mb-1">Question #: {{ question.order_num }}</p>
-                <p class="mb-1">Is question active ? : {{ question.is_active }}</p>
-            </div>
-            <hr>
-        {% endfor %}
-        </div>
+        {{ pagination.info }}
+        {{ pagination.links }}
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ID</th>
+              <th>CONTENT</th>
+              <th>ORDER_NUM</th>
+              <th>IS_ACTIVE</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for question in questions %}
+              <tr>
+                <td>{{ loop.index + pagination.skip }}</td>
+                <td>{{ question.id }}</td>
+                <td>{{ question.content }}</td>
+                <td>{{ question.order_num }}</td>
+                <td>{{ question.is_active }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {{ pagination.links }}
     {% else %}
         <h1>Access Denied : You are not logged in</h1>
     {% endif %}

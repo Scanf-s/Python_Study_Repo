@@ -2,6 +2,7 @@ from datetime import datetime
 
 from flask import request, redirect, url_for, render_template, Blueprint, flash
 from flask_login import login_user, logout_user
+from flask_paginate import Pagination, get_page_parameter
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash
 
@@ -99,11 +100,11 @@ def answer_list():
 @admin_blp.route("/question_list", methods=["GET"])
 def question_list():
     questions = QuestionModel.query.all()
-    return render_template("admin/question_list.html", questions=questions)
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = Pagination(page=page, total=questions.count(), record_name='questions', per_page=10)
+    return render_template("admin/question_list.html", questions=questions, pagination=pagination)
 
 
 @admin_blp.route("/")
 def home():
-    questions = QuestionModel.query.all()
-    answers = AnswerModel.query.all()
     return render_template("admin/admin_home.html")

@@ -144,29 +144,43 @@ Project_SIMRITEST
    flask run
    ```
 
-## 사용법
-> 추후 자세한 사용방법에 대해 업데이트할 예정입니다.
-1. 사용자 정보 입력
-2. 설문 진행
-3. 결과 확인
-4. Admin 페이지
+## 실행방법
+### MAC OS
+1. Clone repo
+```yaml
+git clone repo // 해당 repo를 복제해옵니다
+cd path_to_dir // 해당 Project의 위치로 이동합니다.
+```
+2. Install MySQL and Config
+```yaml
+Address : localhost
+Port : 3306
+Username : root
+password : 123123
+```
+3. Generate python virtual environment, Activate
+```yaml
+python3 -m venv .venv
+source ./.venv/bin/activate
+```
+4. Install Poetry and Dependencies
+```yaml
+pip install poetry
 
-## !더 개발해야 할 기능!
-1. **결과창 개선**
-2. **설문 항목 개선**
-3. ~**어드민 페이지 설문 항목 관리 기능 추가**~
+poetry install // install dependencies
+poetry env use path_to_project/.venv/bin/python // set interpreter
+```
 
-## 수정 사항
-### Flask session 관련 오류 수정
+5. Flask-migrate
+```yaml
+flask db migrate
+flask db upgrade
+```
+7. Run
+```yaml
+path_to_project/.venv/bin/python -m flask run
+```
 
-#### 1. 동시에 여러 유저가 설문을 진행할 때, 사용자 정보가 정상적으로 반영되지 않던 오류를 수정하였습니다.
-
-![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/4b742b84-4eae-440b-b59c-a50f9bbf5e31)
-
-#### 2. 사용자가 Session 정보가 없음에도 불구하고 question/details/로 들어갈 수 있던 문제를 수정하였습니다.
-
-### Admin page 새로운 기능 추가 (Question add feature)
-![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/1f66bceb-deed-4bb8-9a86-418fb3a55bed)
-![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/1e9d3107-af88-4fb8-bc4a-95cc05714fe3)
+### Windows (추가 예정)
 
 

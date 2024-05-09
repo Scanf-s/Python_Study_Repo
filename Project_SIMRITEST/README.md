@@ -185,13 +185,22 @@ poetry env use path_to_project/.venv/bin/python // set interpreter
 ```yaml
 // if cryptography error occurs
 // pip install cryptography
-flask db init
+path_to_project/.venv/bin/python -m flask db init
+
 flask db migrate
+// if this command occurs 'Error : Can't locate revision identified by 'blabla'',
+// open mysql workbench and drop table 'alembic_version'
+// and type flask db migrate again.
+
+
 flask db upgrade
 ```
 7. Run
 ```yaml
 path_to_project/.venv/bin/python -m flask run
+
+// open your web browser, connect to 127.0.0.1:5000/
+// admin page route : 127.0.0.1/admin
 ```
 
 ### Windows (추가 예정)

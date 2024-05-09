@@ -146,23 +146,33 @@ Project_SIMRITEST
 
 ## 실행방법
 ### MAC OS
+
 1. Clone repo
 ```yaml
-git clone repo // 해당 repo를 복제해옵니다
-cd path_to_dir // 해당 Project의 위치로 이동합니다.
+git clone repo
+cd path_to_dir
 ```
+
 2. Install MySQL and Config
 ```yaml
 Address : localhost
 Port : 3306
 Username : root
 password : 123123
+Database Name : simritest
 ```
+
+```sql
+// open mysql workbench, run below command
+create database simritest;
+```
+
 3. Generate python virtual environment, Activate
 ```yaml
 python3 -m venv .venv
 source ./.venv/bin/activate
 ```
+
 4. Install Poetry and Dependencies
 ```yaml
 pip install poetry
@@ -173,6 +183,9 @@ poetry env use path_to_project/.venv/bin/python // set interpreter
 
 5. Flask-migrate
 ```yaml
+// if cryptography error occurs
+// pip install cryptography
+flask db init
 flask db migrate
 flask db upgrade
 ```

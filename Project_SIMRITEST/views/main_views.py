@@ -60,7 +60,7 @@ def user_info():
             return redirect(url_for('QUESTION.question_detail', question_order_num=1))
         except IntegrityError:
             db.session.rollback()
-            flash('사용자가 이미 존재합니다.', category="error")
+            flash('Username already exists.', category="error")
         except Exception as e:
             db.session.rollback()
             flash(f"Error: {e}", category="error")

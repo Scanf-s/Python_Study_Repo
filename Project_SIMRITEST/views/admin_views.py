@@ -6,23 +6,16 @@ from flask_paginate import Pagination, get_page_parameter
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash
 
+from views.admin_util.utils import (
+    get_admin_form_data,
+    get_question_form_data
+)
 from app import db
 from forms.AdminForm import AdminForm
 from forms.QuestionForm import QuestionForm
 from models.model_definitions import AdminModel, AnswerModel, QuestionModel
 
 admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
-
-
-def get_admin_form_data(form):
-    username = form.username.data
-    password = form.password.data
-    return username, password
-
-
-def get_question_form_data(form):
-    content = form.content.data
-    return content
 
 
 @admin_blp.route('/register', methods=["GET", "POST"])
@@ -52,7 +45,7 @@ def register():
             flash("Error : {}".format(e), category="error")
             return redirect(url_for("admin.register"))
 
-        # Once user account created, redirect them to login route
+        # Once a user account created, redirect them to login route
         return redirect(url_for("admin.login"))
     # Renders sign_up template if user made a GET request
     return render_template("admin/register.html")
@@ -121,12 +114,12 @@ def add_question():
 
     # if post request and POST form data is valid
     if request.method == 'POST' and question_form.validate_on_submit():
-        question = get_question_form_data(question_form)
+        content, order_num, is_active = get_question_form_data(question_form)
         # create UserModel to insert into MySQL database using sqlalchemy
         new_question = QuestionModel(
-            content=question.content.data,
-            order_num=question.order_num.data,
-            is_active=question.is_active.data
+            content=content,
+            order_num=order_num,
+            is_active=is_active
         )
         try:
             db.session.add(new_question)

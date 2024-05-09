@@ -1,12 +1,19 @@
 {% extends 'admin/admin_home.html' %}
+
 {% block content %}
+<!-- Include Bootstrap CSS from CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <div class="container mt-4">
     {% if current_user.is_authenticated %}
         <h1>Question Results</h1>
-        {{ pagination.info }}
-        {{ pagination.links }}
-        <table>
-          <thead>
+        <p>{{ pagination.info }}</p>
+        <nav>
+          {{ pagination.links }}
+        </nav>
+        <!-- Apply Bootstrap table styling -->
+        <table class="table table-striped">
+          <thead class="thead-dark">
             <tr>
               <th>#</th>
               <th>ID</th>
@@ -27,9 +34,19 @@
             {% endfor %}
           </tbody>
         </table>
-        {{ pagination.links }}
+        <nav>
+          {{ pagination.links }}
+        </nav>
     {% else %}
-        <h1>Access Denied : You are not logged in</h1>
+        <!-- Using Bootstrap classes for styling the warning message -->
+        <div class="alert alert-danger" role="alert">
+            Access Denied : You are not logged in
+        </div>
     {% endif %}
 </div>
+
+<!-- Optional: include Bootstrap JS and Popper.js for components that require them -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}

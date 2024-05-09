@@ -94,14 +94,16 @@ def logout():
 def answer_list():
     # PageNation function to be implemented in the future
     answers = AnswerModel.query.all()
-    return render_template("admin/answer_list.html", answers=answers)
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = Pagination(page=page, total=len(answers), record_name='answers', per_page=10)
+    return render_template("admin/answer_list.html", answers=answers, pagination=pagination)
 
 
 @admin_blp.route("/question_list", methods=["GET"])
 def question_list():
     questions = QuestionModel.query.all()
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    pagination = Pagination(page=page, total=questions.count(), record_name='questions', per_page=10)
+    pagination = Pagination(page=page, total=len(questions), record_name='questions', per_page=10)
     return render_template("admin/question_list.html", questions=questions, pagination=pagination)
 
 

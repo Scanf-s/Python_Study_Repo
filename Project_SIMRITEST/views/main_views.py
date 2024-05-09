@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from flask import Blueprint, url_for, render_template
-from flask import request, session, flash
+from flask import Blueprint, url_for, render_template, request, session, flash
 from sqlalchemy.exc import IntegrityError
 from werkzeug.utils import redirect
 
@@ -56,6 +55,7 @@ def user_info():
             db.session.add(user)
             db.session.commit()
 
+            # create session info using flask.session
             create_user_session(user.id, username)
             return redirect(url_for('QUESTION.question_detail', question_id=1))
         except IntegrityError:
@@ -67,8 +67,3 @@ def user_info():
         return redirect(url_for('MAIN.index'))
     # if request == get
     return render_template('home/userinfo.html', form=user_form)
-
-
-@main_blp.route('/result', methods=['GET'])
-def result():
-    return render_template('home/result.html')

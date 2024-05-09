@@ -1,21 +1,52 @@
 {% extends 'admin/admin_home.html' %}
+
 {% block content %}
+<!-- Include Bootstrap CSS from CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <div class="container mt-4">
     {% if current_user.is_authenticated %}
         <h1>Answer Results</h1>
-        <div class="list-group mt-3">
-        {% for answer in answers %}
-            <div class="list-group-item">
-                <h5 class="mb-1">Answer ID: {{ answer.id }}</h5>
-                <p class="mb-1">Answered User: {{ answer.user_id }}</p>
-                <p class="mb-1">Answer Question: {{ answer.question_id }}</p>
-                <p class="mb-1">Answer Response: {{ answer.chosen_answer }}</p>
-            </div>
-            <hr>
-        {% endfor %}
-        </div>
+        <p>{{ pagination.info }}</p>
+        <nav>
+          {{ pagination.links }}
+        </nav>
+        <!-- Apply Bootstrap table styling -->
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>ID</th>
+              <th>CONTENT</th>
+              <th>ORDER_NUM</th>
+              <th>IS_ACTIVE</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for answer in answers %}
+              <tr>
+                <td>{{ loop.index + pagination.skip }}</td>
+                <td>{{ answer.user_id }}</td>
+                <td>{{ answer.username }}</td>
+                <td>{{ answer.question }}</td>
+                <td>{{ answer.chosen_answer }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <nav>
+          {{ pagination.links }}
+        </nav>
     {% else %}
-        <h1>Access Denied : You are not logged in</h1>
+        <!-- Using Bootstrap classes for styling the warning message -->
+        <div class="alert alert-danger" role="alert">
+            Access Denied : You are not logged in
+        </div>
     {% endif %}
 </div>
+
+<!-- Optional: include Bootstrap JS and Popper.js for components that require them -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}

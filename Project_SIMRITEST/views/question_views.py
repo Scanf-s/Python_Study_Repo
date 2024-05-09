@@ -9,7 +9,7 @@ from models.model_definitions import QuestionModel, AnswerModel
 question_blp = Blueprint('QUESTION', __name__, url_prefix='/questions')
 
 
-def get_from_data(form):
+def get_form_data(form):
     answer = form.answer.data
     return answer
 
@@ -25,6 +25,12 @@ def get_session_info():
 
 
 def get_next_question(current_question_id, session_info):
+    """
+    :param current_question_id:
+    :param session_info:
+    :return:
+    """
+
     # filter only questions that greater than current question_id,
     # then get first question order by question_id ascend
     next_question = QuestionModel.query.filter(QuestionModel.id > current_question_id).order_by(
@@ -33,29 +39,38 @@ def get_next_question(current_question_id, session_info):
         return redirect(url_for('QUESTION.question_detail', question_id=next_question.id))
     else:
         # if there is no next_question, pop session and show result page to user
-        flash('검사 완료', category="success")
-        session.pop('user_id', None)
-        answers = AnswerModel.query.filter_by(user_id=session_info['answered_user_id']).order_by(
-            AnswerModel.id.asc()).all()
-        return render_template('home/result.html', answered_user=session_info['answered_username'], answers=answers)
+        return redirect(url_for('QUESTION.question_result'))
+
+
+@question_blp.route('/result', methods=['GET'])
+def question_result():
+    session_info = get_session_info()
+    flash('검사 완료', category="success")
+    session.pop('user_id', None)
+    answers = AnswerModel.query.filter_by(user_id=session_info['answered_user_id']).order_by(
+        AnswerModel.id.asc()).all()
+    return render_template('question/result.html', answered_user=session_info['answered_username'], answers=answers)
 
 
 @question_blp.route('/detail/<int:question_id>/', methods=['GET', 'POST'])
 def question_detail(question_id):
     # find question by question_id in QuestionModel
     question = QuestionModel.query.get_or_404(question_id)
+
+    # get session info to verify current user is valid
+    session_info = get_session_info()
+
     # use AnswerForm when POST requests
     # see forms/Answerform.py
     answer_form = AnswerForm(request.form)
 
-    # container for session
-    session_info = {}
+    # if there is no session info, redirect to user_info page
+    if not session_info['answered_username']:
+        flash("Please enter your information", category="warning")
+        return redirect(url_for('MAIN.user_info'))
 
-    if request.method == 'POST' and answer_form.validate_on_submit():
-        answer = get_from_data(answer_form)
-
-        # get session info to verify current user is valid
-        session_info = get_session_info()
+    elif request.method == 'POST' and answer_form.validate_on_submit():
+        answer = get_form_data(answer_form)
 
         # if current user has session(cookie)
         if session_info:

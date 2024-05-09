@@ -8,15 +8,21 @@ from werkzeug.security import check_password_hash
 
 from app import db
 from forms.AdminForm import AdminForm
+from forms.QuestionForm import QuestionForm
 from models.model_definitions import AdminModel, AnswerModel, QuestionModel
 
 admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
 
 
-def get_form_data(form):
+def get_admin_form_data(form):
     username = form.username.data
     password = form.password.data
     return username, password
+
+
+def get_question_form_data(form):
+    content = form.content.data
+    return content
 
 
 @admin_blp.route('/register', methods=["GET", "POST"])
@@ -60,7 +66,7 @@ def login():
 
     if request.method == "POST" and admin_form.validate_on_submit():
         try:
-            username, password = get_form_data(admin_form)
+            username, password = get_admin_form_data(admin_form)
             admin = AdminModel.query.filter_by(username=username).first()
 
             # Password in requested form data,
@@ -105,6 +111,39 @@ def question_list():
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = Pagination(page=page, total=len(questions), record_name='questions', per_page=10)
     return render_template("admin/question_list.html", questions=questions, pagination=pagination)
+
+
+@admin_blp.route("/add_question", methods=["GET", "POST"])
+def add_question():
+    # use UserForm when POST requests
+    # see forms/Userform.py
+    question_form = QuestionForm(request.form)
+
+    # if post request and POST form data is valid
+    if request.method == 'POST' and question_form.validate_on_submit():
+        question_content = get_question_form_data(question_form)
+        # create UserModel to insert into MySQL database using sqlalchemy
+        new_question = QuestionModel(
+            content=question_content,
+            is_active=False
+        )
+        try:
+            db.session.add(new_question)
+            db.session.commit()
+
+            return redirect(url_for('admin.add_question'))
+        except IntegrityError as ie:
+            db.session.rollback()
+            flash(f"Error: {ie}", category="error")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error: {e}", category="error")
+        return redirect(url_for('admin.add_question'))
+
+    # if request == get
+    return render_template('admin/add_question.html', form=question_form)
+
+
 
 
 @admin_blp.route("/")

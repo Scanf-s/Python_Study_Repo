@@ -6,37 +6,42 @@
 
 <div class="container mt-4">
     {% if current_user.is_authenticated %}
-        <h1>Question Results</h1>
-        <p>{{ pagination.info }}</p>
-        <nav>
-          {{ pagination.links }}
-        </nav>
-        <!-- Apply Bootstrap table styling -->
-        <table class="table table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th>#</th>
-              <th>ID</th>
-              <th>CONTENT</th>
-              <th>ORDER_NUM</th>
-              <th>IS_ACTIVE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for question in questions %}
-              <tr>
-                <td>{{ loop.index + pagination.skip }}</td>
-                <td>{{ question.id }}</td>
-                <td>{{ question.content }}</td>
-                <td>{{ question.order_num }}</td>
-                <td>{{ question.is_active }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <nav>
-          {{ pagination.links }}
-        </nav>
+        <div>
+            <h1>Question Results</h1>
+            <a class="btn btn-success btn-lg shadow mb-3" href="/admin/add_question">ADD NEW QUESTION</a>
+        </div>
+        <div>
+            <p>{{ pagination.info }}</p>
+            <nav>
+              {{ pagination.links }}
+            </nav>
+            <!-- Apply Bootstrap table styling -->
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>ID</th>
+                  <th>CONTENT</th>
+                  <th>ORDER_NUM</th>
+                  <th>IS_ACTIVE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for question in questions %}
+                  <tr>
+                    <td>{{ loop.index + pagination.skip }}</td>
+                    <td>{{ question.id }}</td>
+                    <td>{{ question.content }}</td>
+                    <td>{{ question.order_num }}</td>
+                    <td>{{ question.is_active }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <nav>
+              {{ pagination.links }}
+            </nav>
+        </div>
     {% else %}
         <!-- Using Bootstrap classes for styling the warning message -->
         <div class="alert alert-danger" role="alert">

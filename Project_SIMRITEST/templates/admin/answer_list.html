@@ -16,10 +16,9 @@
           <thead class="thead-dark">
             <tr>
               <th>#</th>
-              <th>ID</th>
-              <th>CONTENT</th>
-              <th>ORDER_NUM</th>
-              <th>IS_ACTIVE</th>
+              <th>USER_ID</th>
+              <th>QUESTION</th>
+              <th>CHOSEN_ANSWER</th>
             </tr>
           </thead>
           <tbody>
@@ -27,8 +26,7 @@
               <tr>
                 <td>{{ loop.index + pagination.skip }}</td>
                 <td>{{ answer.user_id }}</td>
-                <td>{{ answer.username }}</td>
-                <td>{{ answer.question }}</td>
+                <td>{{ answer.question.content }}</td>
                 <td>{{ answer.chosen_answer }}</td>
               </tr>
             {% endfor %}

@@ -6,9 +6,16 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.security import check_password_hash
 
 from app import db
+from forms.AdminForm import AdminForm
 from models.model_definitions import AdminModel, AnswerModel, QuestionModel
 
 admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
+
+
+def get_form_data(form):
+    username = form.username.data
+    password = form.password.data
+    return username, password
 
 
 @admin_blp.route('/register', methods=["GET", "POST"])
@@ -46,14 +53,18 @@ def register():
 
 @admin_blp.route("/login", methods=["GET", "POST"])
 def login():
-    # If a post request was made, find the user by
-    # filtering for the username
-    try:
-        if request.method == "POST":
-            admin = AdminModel.query.filter_by(username=request.form.get("username")).first()
-            # From request form data,
+    # use AdminForm when POST requests
+    # see forms/AdminForm.py
+    admin_form = AdminForm(request.form)
+
+    if request.method == "POST" and admin_form.validate_on_submit():
+        try:
+            username, password = get_form_data(admin_form)
+            admin = AdminModel.query.filter_by(username=username).first()
+
+            # Password in requested form data,
             # check if form password hash code is in AdminModel
-            if admin and check_password_hash(admin.password_hash, request.form.get("password")):
+            if admin and check_password_hash(admin.password_hash, password):
                 # Use the login_user method to log in the user
                 login_user(admin)
                 flash("You are logged in.", category="success")
@@ -61,13 +72,15 @@ def login():
             else:
                 flash("Incorrect password.", category="error")
                 return redirect(url_for("admin.login"))
-    except AttributeError:
-        flash(f"username : {request.form.get("username")} not exist", category="error")
-        return redirect(url_for("admin.login"))
-    except Exception as e:
-        flash("Error : {}".format(e), category="error")
-        return redirect(url_for("admin.login"))
-    return render_template("admin/login.html")
+        except AttributeError:
+            flash(f"username : {request.form.get("username")} not exist", category="error")
+            return redirect(url_for("admin.login"))
+        except Exception as e:
+            flash("Error : {}".format(e), category="error")
+            return redirect(url_for("admin.login"))
+
+    # if request == GET
+    return render_template("admin/admin_login.html", form=admin_form)
 
 
 @admin_blp.route("/logout", methods=["GET"])

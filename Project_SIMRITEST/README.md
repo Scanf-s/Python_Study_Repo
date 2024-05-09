@@ -92,7 +92,7 @@ Project_SIMRITEST
 │  ├─admin
 │  │      admin_home.html
 │  │      answer_list.html
-│  │      login.html
+│  │      admin_login.html
 │  │      question_list.html
 │  │      register.html
 │  │

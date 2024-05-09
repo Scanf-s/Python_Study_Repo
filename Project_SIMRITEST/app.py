@@ -1,20 +1,26 @@
-import secrets
-
 from flask import Flask
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf import CSRFProtect
 
 from config.db import init_db, db
+from config.app_config import (
+    SECRET_KEY,
+    DATABASE,
+    USERNAME,
+    PASSWORD,
+    ADDRESS,
+    PORT,
+    DATABASE_NAME
+)
 from models.model_definitions import AdminModel
 from views import main_views, question_views, admin_views
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = secrets.token_hex(16)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:123123@127.0.0.1/simritest'
+app.config['SECRET_KEY'] = SECRET_KEY
+app.config['SQLALCHEMY_DATABASE_URI'] = f'{DATABASE}://{USERNAME}:{PASSWORD}@{ADDRESS}:{PORT}/{DATABASE_NAME}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['FLASK_ADMIN_SWATCH'] = 'cyborg'
 
 init_db(app)
 migrate = Migrate(app, db)

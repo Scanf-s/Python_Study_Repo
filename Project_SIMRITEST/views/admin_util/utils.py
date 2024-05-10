@@ -46,6 +46,11 @@ def insert_question_in_database(question_form):
 
 
 def insert_admin_in_database(admin_register_form):
+    """
+    Function to insert an admin data into the database
+    :param admin_register_form: admin register data [request.form] required!!
+    :return:
+    """
     username, email, password = get_admin_register_form_data(admin_register_form)
     flash(f"username : {username}, email:{email}, password:{password}", "success")
     admin = AdminModel(
@@ -58,3 +63,30 @@ def insert_admin_in_database(admin_register_form):
     db.session.add(admin)
     db.session.commit()
     return True
+
+
+def update_activation(update_target_ids, set_activate_status):
+    """
+    update is_active status in QuestionModel
+    :param update_target_ids:
+    :param set_activate_status: if set_activate_status is 1 then is_active = True else set_activate_status is 0 then is_active = False
+    :return:
+    """
+    # https://docs.sqlalchemy.org/en/20/core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_
+    target_metadata_list = QuestionModel.query.filter(QuestionModel.id.in_(update_target_ids))
+    for target_metadata in target_metadata_list:
+        target_metadata.is_active = True
+    db.session.commit()
+    flash("Activated checked questions.", category="success")
+
+
+def delete_questions_in_database(update_target_ids):
+    """
+    delete questions in QuestionModel
+    :param update_target_ids:
+    :return:
+    """
+    # https://docs.sqlalchemy.org/en/20/core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_
+    QuestionModel.query.filter(QuestionModel.id.in_(update_target_ids)).delete()
+    db.session.commit()
+    flash("Deleted checked questions.", category="success")

@@ -10,7 +10,9 @@ from models.model_definitions import AdminModel, AnswerModel, QuestionModel
 from views.admin_util.utils import (
     get_admin_form_data,
     insert_question_in_database,
-    insert_admin_in_database
+    insert_admin_in_database,
+    update_activation,
+    delete_questions_in_database
 )
 
 admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -76,7 +78,6 @@ def answer_list():
     return render_template("admin/answer_list.html", answers=answers, pagination=pagination)
 
 
-
 @admin_blp.route("/question_list", methods=["GET"])
 def question_list():
     # pagination config
@@ -86,7 +87,7 @@ def question_list():
     # Depending on the current page, we need to determine the starting location to import from the database.
     # For example, the starting position of the DB displayed on page 1 is zero
     # The starting position of the DB displayed on page 2 is 10
-    total = QuestionModel.query.count() # Total amount of content to page-nation
+    total = QuestionModel.query.count()  # Total amount of content to page-nation
 
     # Query based on Ordernum ascending order in QuestionModel,
     # set the start position to offset and import only per_page
@@ -98,7 +99,6 @@ def question_list():
         pagination=pagination,
         form=QuestionForm(),
     )
-
 
 
 @admin_blp.route("/add_question", methods=["GET", "POST"])
@@ -125,36 +125,24 @@ def update_questions():
 
     # if delete request
     if request.form.get("delete_row_data") == "delete":
-        delete_target_ids = request.form.getlist("question_checkbox")
-        # https://docs.sqlalchemy.org/en/20/core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_
-        QuestionModel.query.filter(QuestionModel.id.in_(delete_target_ids)).delete()
-        db.session.commit()
-        flash("Deleted checked questions.", category="success")
+        update_target_ids = request.form.getlist("question_checkbox")
+        delete_questions_in_database(update_target_ids)
         return redirect(url_for("admin.question_list"))
 
     # if update to set activate request
     elif request.form.get("active_status") == "update":
         update_target_ids = request.form.getlist("question_checkbox")
-        # https://docs.sqlalchemy.org/en/20/core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_
-        target_metadata_list = QuestionModel.query.filter(QuestionModel.id.in_(update_target_ids))
-        for target_metadata in target_metadata_list:
-            target_metadata.is_active = True
-        db.session.commit()
-        flash("Activated checked questions.", category="success")
+        update_activation(update_target_ids, 1)
         return redirect(url_for("admin.question_list"))
 
     # if update to set deactivate request
     elif request.form.get("deactive_status") == "update":
         update_target_ids = request.form.getlist("question_checkbox")
-        # https://docs.sqlalchemy.org/en/20/core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_
-        target_metadata_list = QuestionModel.query.filter(QuestionModel.id.in_(update_target_ids))
-        for target_metadata in target_metadata_list:
-            target_metadata.is_active = False
-        db.session.commit()
-        flash("Deactivated checked questions.", category="success")
+        update_activation(update_target_ids, 0)
         return redirect(url_for("admin.question_list"))
 
     return redirect(url_for("admin.question_list"))
+
 
 @admin_blp.route("/")
 def home():

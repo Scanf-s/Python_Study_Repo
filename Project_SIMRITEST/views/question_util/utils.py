@@ -1,4 +1,4 @@
-from flask import session, redirect, url_for, flash
+from flask import session, redirect, url_for, flash, request
 
 from config.db import db
 from models.model_definitions import QuestionModel, AnswerModel
@@ -51,12 +51,9 @@ def redirect_next_question(current_question_order_num, session_info):
 
 def verify_question_order_num(question_order_num):
     """
-    Verify the question order number
-    This app shows up to 5 questions.
-    if the question order number is less than or equal to 5,
-    then return question from a database. Otherwise, redirect to result.
+    Will be updated soon!!!!
     :param question_order_num:
-    :return: question or redirect
+    :return: Question or redirect
     """
     try:
         questions = get_questions()
@@ -66,9 +63,6 @@ def verify_question_order_num(question_order_num):
             flash("Invalid question order number", category="error")
             return redirect(url_for('QUESTION.question_result'))
     except IndexError as e:
-        flash(f'Error: {e}', 'error')
-        return redirect(url_for('MAIN.index'))
-    except Exception as e:
         flash(f'Error: {e}', 'error')
         return redirect(url_for('MAIN.index'))
 

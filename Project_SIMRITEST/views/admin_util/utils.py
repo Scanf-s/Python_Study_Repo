@@ -1,6 +1,9 @@
-from models.model_definitions import QuestionModel
+from datetime import datetime
+
 from flask import flash, redirect, url_for
+
 from config.db import db
+from models.model_definitions import QuestionModel, AdminModel
 
 
 def get_admin_form_data(form):
@@ -40,3 +43,18 @@ def insert_question_in_database(question_form):
         db.session.commit()
         flash("Successfully added question", "success")
         return redirect(url_for('admin.add_question'))
+
+
+def insert_admin_in_database(admin_register_form):
+    username, email, password = get_admin_register_form_data(admin_register_form)
+    flash(f"username : {username}, email:{email}, password:{password}", "success")
+    admin = AdminModel(
+        username=username,
+        email=email,
+        is_admin=True,
+        created_at=datetime.now()
+    )
+    admin.set_password(password)
+    db.session.add(admin)
+    db.session.commit()
+    return True

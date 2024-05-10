@@ -21,7 +21,11 @@ def question_result():
     session.pop('user_id', None)
     answers = AnswerModel.query.filter_by(user_id=session_info['answered_user_id']).order_by(
         AnswerModel.id.asc()).all()
-    return render_template('question/result.html', answered_user=session_info['answered_username'], answers=answers)
+    return render_template(
+        'question/result.html',
+        answered_user=session_info['answered_username'],
+        answers=answers
+    )
 
 
 @question_blp.route('/detail/<int:question_order_num>/', methods=['GET', 'POST'])

@@ -6,53 +6,58 @@
 
 <div class="container mt-4">
     {% if current_user.is_authenticated %}
-        <div>
-            <h1>Question Results</h1>
-            <a class="btn btn-success btn-lg shadow mb-3" href="/admin/add_question">ADD NEW QUESTION</a>
-        </div>
+        <div><h1>Question List</h1></div>
         <div>
             <p>{{ pagination.info }}</p>
-            <nav>
-              {{ pagination.links }}
-            </nav>
-            <!-- Apply Bootstrap table styling -->
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Select</th>
-                        <th>#</th>
-                        <th>ID</th>
-                        <th>CONTENT</th>
-                        <th>ORDER_NUM</th>
-                        <th>IS_ACTIVE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for question in questions %}
+            <nav>{{ pagination.links }}</nav>
+            <form action="{{ url_for('admin.update_questions') }}" method="post">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-2">
+                    <button type="submit" class="btn btn-danger" name="delete_row_data" value="delete">Delete Selected</button>
+                    <button type="submit" class="btn btn-primary" name="active_status" value="update">Set Status Activate Selected</button>
+                    <button type="submit" class="btn btn-primary" name="deactive_status" value="update">Set Status Deactivate Selected</button>
+                </div>
+
+                <table class="table table-striped">
+                    <thead class="thead-dark">
                         <tr>
-                            <td><input type="checkbox"></td>
-                            <td>{{ loop.index + pagination.skip }}</td>
-                            <td>{{ question.id }}</td>
-                            <td>{{ question.content }}</td>
-                            <td>{{ question.order_num }}</td>
-                            <td>{{ question.is_active }}</td>
+                            <th>Select</th>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>CONTENT</th>
+                            <th>ORDER_NUM</th>
+                            <th>IS_ACTIVE</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for question in questions %}
+                            <tr>
+                                <td><input type="checkbox" name="question_checkbox" value="{{ question.id }}"></td>
+                                <td>{{ loop.index + pagination.skip }}</td>
+                                <td>{{ question.id }}</td>
+                                <td>{{ question.content }}</td>
+                                <td>{{ question.order_num }}</td>
+                                <td>{{ question.is_active }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
             <nav>
               {{ pagination.links }}
             </nav>
+            <div class="mb-2">
+                <a class="btn btn-success" href="/admin/add_question">Add New Question</a>
+            </div>
         </div>
     {% else %}
-        <!-- Using Bootstrap classes for styling the warning message -->
         <div class="alert alert-danger" role="alert">
-            Access Denied : You are not logged in
+            Access Denied: You are not logged in
         </div>
     {% endif %}
 </div>
 
-<!-- Optional: include Bootstrap JS and Popper.js for components that require them -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

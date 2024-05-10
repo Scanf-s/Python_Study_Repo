@@ -1,5 +1,4 @@
 from flask import session, redirect, url_for, flash
-from sqlalchemy.exc import IntegrityError
 
 from config.db import db
 from models.model_definitions import QuestionModel, AnswerModel
@@ -43,7 +42,7 @@ def redirect_next_question(current_question_order_num, session_info):
     :param session_info:
     :return:
     """
-    if current_question_order_num < 5:
+    if current_question_order_num < len(get_questions()):
         return redirect(url_for('QUESTION.question_detail', question_order_num=current_question_order_num + 1))
     else:
         # After the 5th question, redirect to the result page

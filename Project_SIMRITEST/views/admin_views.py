@@ -1,9 +1,8 @@
-from flask import request, redirect, url_for, render_template, Blueprint, flash, jsonify
+from flask import request, redirect, url_for, render_template, Blueprint, flash
 from flask_login import login_user, logout_user
 from flask_paginate import Pagination, get_page_parameter
 from werkzeug.security import check_password_hash
 
-from config.db import db
 from forms.AdminForm import AdminForm, AdminRegisterForm
 from forms.QuestionForm import QuestionForm
 from models.model_definitions import AdminModel, AnswerModel, QuestionModel

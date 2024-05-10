@@ -34,7 +34,7 @@ def question_detail(question_order_num):
     session_info = get_session_info()
     # if there is no session info, redirect to user_info page
     if not session_info['answered_username']:
-        flash("Please enter your information", category="warning")
+        flash("Please enter your information", category="error")
         return redirect(url_for('MAIN.user_info'))
 
     # get question if question order number less than true state question numbers

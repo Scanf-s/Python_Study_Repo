@@ -45,7 +45,6 @@ def redirect_next_question(current_question_order_num, session_info):
     if current_question_order_num < len(get_questions()):
         return redirect(url_for('QUESTION.question_detail', question_order_num=current_question_order_num + 1))
     else:
-        # After the 5th question, redirect to the result page
         return redirect(url_for('QUESTION.question_result'))
 
 

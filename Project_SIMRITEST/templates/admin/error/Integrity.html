@@ -1,0 +1,10 @@
+{% extends 'admin/admin_home.html' %}
+{% block content %}
+    <h1>Integrity Error</h1>
+    <p>Something wrong with your database work</p>
+    <div>
+        <p>Error message</p>
+        {{ error }}
+    </div>
+    <p><a href="{{ url_for('admin.home') }}">return to admin home page</a></p>
+{% endblock %}

@@ -74,33 +74,31 @@ def verify_question_order_num(question_order_num):
         return redirect(url_for('MAIN.index'))
 
 
-def write_answer_in_database(answer_data, session_info, question_id):
+def insert_answer_in_database(answer_data, session_info, question_id):
     """
     Function to create new answer
-    :param answer_data:
-    :param session_info:
-    :param question_id:
-    :return:
+    :param answer_data: Data of the answer to insert
+    :param session_info: Session information containing user details
+    :param question_id: ID of the question being answered
+    :return: Boolean indicating success or failure
     """
 
-    # verify user has session info
-    if not session_info['answered_username']:
+    # verify user has session info and is authenticated
+    if not session_info.get('answered_username') or not session_info.get('answered_user_id'):
         flash("Please enter your information", category="warning")
-        return False
+        return redirect(url_for('MAIN.index'))
 
     answer = AnswerModel(
         user_id=session_info['answered_user_id'],
         question_id=question_id,
         chosen_answer=answer_data
     )
-    try:
+
+    existing_answer = AnswerModel.query.filter_by(user_id=session_info['answered_user_id'], question_id=question_id).first()
+    if existing_answer is None:
         db.session.add(answer)
         db.session.commit()
         return True
-    except IntegrityError:
-        db.session.rollback()
-        return False
-    except Exception as e:
-        db.session.rollback()
-        flash(f'Error: {e}', 'error')
-        return False
+    else:
+        # if user already answered question, return True to redirect next question
+        return True

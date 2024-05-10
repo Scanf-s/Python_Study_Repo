@@ -6,7 +6,7 @@ from models.model_definitions import AnswerModel
 from views.question_util.utils import (
     get_session_info,
     verify_question_order_num,
-    write_answer_in_database,
+    insert_answer_in_database,
     get_form_data,
     redirect_next_question
 )
@@ -39,7 +39,7 @@ def question_detail(question_order_num):
     # Answer form
     answer_form = AnswerForm(request.form)
     if request.method == 'POST' and answer_form.validate_on_submit():
-        if write_answer_in_database(get_form_data(answer_form), session_info, question.id):
+        if insert_answer_in_database(get_form_data(answer_form), session_info, question.id):
             return redirect_next_question(question_order_num, session_info)
 
     # if request.method == 'GET', just render question_detail page

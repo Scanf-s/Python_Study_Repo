@@ -8,7 +8,9 @@ from werkzeug.security import check_password_hash
 
 from views.admin_util.utils import (
     get_admin_form_data,
-    get_question_form_data
+    get_admin_register_form_data,
+    get_question_form_data,
+    insert_question_in_database
 )
 from app import db
 from forms.AdminForm import AdminForm, AdminRegisterForm
@@ -22,17 +24,16 @@ admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
 # This method is very dangerous for security,
 # but it has been implemented for convenience of development.
 def register():
-    admin_register_form = AdminRegisterForm()
     # If the user made a POST request, create a new user
-    admin_form = AdminRegisterForm(request.form)
-    if request.method == "POST" and admin_form.validate_on_submit():
+    admin_register_form = AdminRegisterForm(request.form)
+    if request.method == "POST" and admin_register_form.validate_on_submit():
+        username, email, password = get_admin_register_form_data(admin_register_form)
         admin = AdminModel(
-            username=admin_form.username.data,
-            email=admin_form.email.data,
+            username=username,
+            email=email,
             is_admin=True,
             created_at=datetime.now()
         )
-        password = admin_form.password.data
         admin.set_password(password)
         db.session.add(admin)
         db.session.commit()
@@ -40,35 +41,26 @@ def register():
         # Once a user account created, redirect them to login route
         return redirect(url_for("admin.login"))
     # Renders sign_up template if user made a GET request
-    return render_template("admin/register.html", form=admin_form)
+    return render_template("admin/register.html", form=admin_register_form)
 
 
 @admin_blp.route("/login", methods=["GET", "POST"])
 def login():
-    # use AdminForm when POST requests
-    # see forms/AdminForm.py
     admin_form = AdminForm(request.form)
 
     if request.method == "POST" and admin_form.validate_on_submit():
-        try:
-            username, password = get_admin_form_data(admin_form)
-            admin = AdminModel.query.filter_by(username=username).first()
+        username, password = get_admin_form_data(admin_form)
+        admin = AdminModel.query.filter_by(username=username).first()
 
-            # Password in requested form data,
-            # check if form password hash code is in AdminModel
-            if admin and check_password_hash(admin.password_hash, password):
-                # Use the login_user method to log in the user
-                login_user(admin)
-                flash("You are logged in.", category="success")
-                return redirect(url_for("admin.home"))
-            else:
-                flash("Incorrect password.", category="error")
-                return redirect(url_for("admin.login"))
-        except AttributeError:
-            flash(f"username : {request.form.get("username")} not exist", category="error")
-            return redirect(url_for("admin.login"))
-        except Exception as e:
-            flash("Error : {}".format(e), category="error")
+        # Password in requested form data,
+        # check if form password hash code is in AdminModel
+        if admin and check_password_hash(admin.password_hash, password):
+            # Use the login_user method to log in the user
+            login_user(admin)
+            flash("You are logged in.", category="success")
+            return redirect(url_for("admin.home"))
+        else:
+            flash("Incorrect password.", category="error")
             return redirect(url_for("admin.login"))
 
     # if request == GET
@@ -92,7 +84,7 @@ def answer_list():
 
 @admin_blp.route("/question_list", methods=["GET"])
 def question_list():
-    questions = QuestionModel.query.all()
+    questions = QuestionModel.query.order_by(QuestionModel.order_num.desc()).all()
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = Pagination(page=page, total=len(questions), record_name='questions', per_page=10)
     return render_template("admin/question_list.html", questions=questions, pagination=pagination)
@@ -105,30 +97,12 @@ def add_question():
     question_form = QuestionForm(request.form)
 
     # if post request and POST form data is valid
-    if request.method == 'POST' and question_form.validate_on_submit():
-        content, order_num, is_active = get_question_form_data(question_form)
-        # create UserModel to insert into MySQL database using sqlalchemy
-        new_question = QuestionModel(
-            content=content,
-            order_num=order_num,
-            is_active=is_active
-        )
-        try:
-            db.session.add(new_question)
-            db.session.commit()
-            return redirect(url_for('admin.add_question'))
-        except IntegrityError as ie:
-            db.session.rollback()
-            flash(f"Error: {ie}", category="error")
-        except Exception as e:
-            db.session.rollback()
-            flash(f"Error: {e}", category="error")
+    if request.method == 'POST':
+        insert_question_in_database(question_form)
         return redirect(url_for('admin.add_question'))
 
     # if request == get
     return render_template('admin/add_question.html', form=question_form)
-
-
 
 
 @admin_blp.route("/")

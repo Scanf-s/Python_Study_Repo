@@ -205,3 +205,7 @@ or
 6. 면접때 해당 라이브러리를 왜 사용했는지 정확하게 말해야한다 
 예를 들어 flask-login을 왜 사용했는지? 그냥 flask route로 간단하게 구현하면 되지 않을까?
 
+### 버그 내역
+1. admin page question_list
+set deactivate 버튼을 클릭하면 false로 바뀌어야 하는데, 반영되지 않음. 수정 필요
+

@@ -37,14 +37,13 @@ def question_detail(question_order_num):
         flash("Please enter your information", category="warning")
         return redirect(url_for('MAIN.user_info'))
 
-    # get question if question order number less than 5
+    # get question if question order number less than true state question numbers
     question = verify_question_order_num(question_order_num)
-
-    # Answer form
     answer_form = AnswerForm(request.form)
-    if request.method == 'POST' and answer_form.validate_on_submit():
-        if insert_answer_in_database(get_form_data(answer_form), session_info, question.id):
-            return redirect_next_question(question_order_num, session_info)
+    if question:
+        if request.method == 'POST' and answer_form.validate_on_submit():
+            if insert_answer_in_database(get_form_data(answer_form), session_info, question.id):
+                return redirect_next_question(question_order_num, session_info)
 
     # if request.method == 'GET', just render question_detail page
     return render_template(

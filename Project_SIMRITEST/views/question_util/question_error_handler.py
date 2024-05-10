@@ -10,4 +10,9 @@ def page_not_found(e):
 
 @question_blp.errorhandler(500)
 def internal_server_error(e):
-    return jsonify({"error": "Internal server error", "message": str(e)}), 500
+    return jsonify({"error": "Internal server error", "message": str(e)})
+
+
+@question_blp.errorhandler(IndexError)
+def index_error_handler(e):
+    return jsonify({"error": "Index error", "message": str(e)})

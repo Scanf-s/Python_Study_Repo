@@ -9,7 +9,7 @@ def get_questions():
     Function to get all question
     :return: questions
     """
-    questions = QuestionModel.query.filter_by(is_active=True).limit(5).all()
+    questions = QuestionModel.query.filter_by(is_active=True).order_by(QuestionModel.order_num.asc()).all()
     return questions
 
 
@@ -51,20 +51,17 @@ def redirect_next_question(current_question_order_num, session_info):
 
 def verify_question_order_num(question_order_num):
     """
-    Will be updated soon!!!!
+    verify if requested order number is valid
+    order number has to be between 1 and len(questions)
     :param question_order_num:
     :return: Question or redirect
     """
-    try:
-        questions = get_questions()
-        if 1 <= question_order_num <= len(questions):
-            return questions[question_order_num - 1]
-        else:
-            flash("Invalid question order number", category="error")
-            return redirect(url_for('QUESTION.question_result'))
-    except IndexError as e:
-        flash(f'Error: {e}', 'error')
-        return redirect(url_for('MAIN.index'))
+    questions = get_questions()
+    if 1 <= question_order_num <= len(questions):
+        return questions[question_order_num - 1]
+    else:
+        flash("Invalid question order number", category="error")
+        return False
 
 
 def insert_answer_in_database(answer_data, session_info, question_id):

@@ -24,23 +24,23 @@ admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
 def register():
     admin_register_form = AdminRegisterForm()
     # If the user made a POST request, create a new user
-    if request.method == "POST":
+    admin_form = AdminRegisterForm(request.form)
+    if request.method == "POST" and admin_form.validate_on_submit():
         admin = AdminModel(
-            username=request.form.get("username"),
-            email=request.form.get("email"),
+            username=admin_form.username.data,
+            email=admin_form.email.data,
             is_admin=True,
             created_at=datetime.now()
         )
-        password = request.form.get("password")
+        password = admin_form.password.data
         admin.set_password(password)
         db.session.add(admin)
         db.session.commit()
 
         # Once a user account created, redirect them to login route
         return redirect(url_for("admin.login"))
-
-    # if request == GET, Renders sign_up template
-    return render_template("admin/register.html")
+    # Renders sign_up template if user made a GET request
+    return render_template("admin/register.html", form=admin_form)
 
 
 @admin_blp.route("/login", methods=["GET", "POST"])

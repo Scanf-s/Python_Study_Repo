@@ -120,53 +120,75 @@ Project_SIMRITEST
         app.cpython-312.pyc
 ```
 
-## 설치 및 실행 방법 (업데이트 예정)
-1. 자신의 로컬 드라이브로 프로젝트 clone
-2. MySQL 설치 및 설정, database 생성
-   [MySQL Install](https://dev.mysql.com/downloads/installer/)
-   > 추후, MySQL 연결 설정 및 Database Schema 생성에 대해 업데이트 할 예정입니다.
-   1. MySQL 설치 후, localhost 3306 port로 접속하도록 설정
-   2. username = root, password = 123123 (또는 임의로 설정 후 app.py에서 수정)
-3. 의존성 설치 및 가상환경 접속
-   ```sh
-   pip install poetry
-   poetry install
-   poetry shell
-   ```
-4. Flask-migrate 사용
-   ```sh
-   flask db init
-   flask db migrate
-   flask db uprade
-   ```
-5. Flask App 실행
-   ```sh
-   flask run
-   ```
+## 실행방법
+### MAC OS
 
-## 사용법
-> 추후 자세한 사용방법에 대해 업데이트할 예정입니다.
-1. 사용자 정보 입력
-2. 설문 진행
-3. 결과 확인
-4. Admin 페이지
+1. Clone repo
+```yaml
+git clone repo
+cd path_to_dir
+```
 
-## !더 개발해야 할 기능!
-1. **결과창 개선**
-2. **설문 항목 개선**
-3. ~**어드민 페이지 설문 항목 관리 기능 추가**~
+2. Install MySQL and Config
+```yaml
+Address : localhost
+Port : 3306
+Username : root
+password : 123123
+Database Name : simritest
+```
 
-## 수정 사항
-### Flask session 관련 오류 수정
+```sql
+// open mysql workbench, run below command
+create database simritest;
+```
 
-#### 1. 동시에 여러 유저가 설문을 진행할 때, 사용자 정보가 정상적으로 반영되지 않던 오류를 수정하였습니다.
+3. Generate python virtual environment, Activate
+```yaml
+python3 -m venv .venv
+source ./.venv/bin/activate
+```
 
-![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/4b742b84-4eae-440b-b59c-a50f9bbf5e31)
+4. Install Poetry and Dependencies
+```yaml
+pip install poetry
 
-#### 2. 사용자가 Session 정보가 없음에도 불구하고 question/details/로 들어갈 수 있던 문제를 수정하였습니다.
+poetry install // install dependencies
+poetry env use path_to_project/.venv/bin/python // set interpreter
+```
 
-### Admin page 새로운 기능 추가 (Question add feature)
-![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/1f66bceb-deed-4bb8-9a86-418fb3a55bed)
-![image](https://github.com/Scanf-s/OZCoding_Backend/assets/105439069/1e9d3107-af88-4fb8-bc4a-95cc05714fe3)
+5. Flask-migrate
+```yaml
+1. deactivate // deactivate python venv
+
+2. flask db init
+or
+2. path_to_project/.venv/bin/python -m flask db init
+// if cryptography error occurs
+// pip install cryptography
+
+3. flask db migrate
+or
+3. path_to_project/.venv/bin/python -m flask db migrate
+// if this command occurs 'Error : Can't locate revision identified by 'blabla'',
+// open mysql workbench and drop table 'alembic_version'
+// and type flask db migrate again.
+
+4. flask db upgrade
+or
+4. path_to_project/.venv/bin/python -m flask db upgrade
+```
+7. Run
+```yaml
+1. path_to_project/.venv/bin/python -m flask run
+or
+1. flask run
+
+// open your web browser, connect to 127.0.0.1:5000/
+// admin page route : 127.0.0.1/admin
+// go to admin page, in question tab, add new at least 5 questions
+```
+
+### Windows (추가 예정)
 
 

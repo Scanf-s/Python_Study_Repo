@@ -11,7 +11,7 @@ from views.admin_util.utils import (
     get_question_form_data
 )
 from app import db
-from forms.AdminForm import AdminForm
+from forms.AdminForm import AdminForm, AdminRegisterForm
 from forms.QuestionForm import QuestionForm
 from models.model_definitions import AdminModel, AnswerModel, QuestionModel
 
@@ -22,6 +22,7 @@ admin_blp = Blueprint('admin', __name__, url_prefix='/admin')
 # This method is very dangerous for security,
 # but it has been implemented for convenience of development.
 def register():
+    admin_register_form = AdminRegisterForm()
     # If the user made a POST request, create a new user
     if request.method == "POST":
         admin = AdminModel(
@@ -32,22 +33,13 @@ def register():
         )
         password = request.form.get("password")
         admin.set_password(password)
-
-        try:
-            db.session.add(admin)
-            db.session.commit()
-        except IntegrityError as e:
-            db.session.rollback()
-            flash("There are duplicate elements in database. Please use another username or email", "error")
-            return redirect(url_for('admin.register'))
-        except Exception as e:
-            db.session.rollback()
-            flash("Error : {}".format(e), category="error")
-            return redirect(url_for("admin.register"))
+        db.session.add(admin)
+        db.session.commit()
 
         # Once a user account created, redirect them to login route
         return redirect(url_for("admin.login"))
-    # Renders sign_up template if user made a GET request
+
+    # if request == GET, Renders sign_up template
     return render_template("admin/register.html")
 
 
@@ -124,7 +116,6 @@ def add_question():
         try:
             db.session.add(new_question)
             db.session.commit()
-
             return redirect(url_for('admin.add_question'))
         except IntegrityError as ie:
             db.session.rollback()

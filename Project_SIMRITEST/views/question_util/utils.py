@@ -42,7 +42,7 @@ def redirect_next_question(current_question_order_num, session_info):
     :param session_info:
     :return:
     """
-    if current_question_order_num < len(get_questions()):
+    if session_info and current_question_order_num < len(get_questions()):
         return redirect(url_for('QUESTION.question_detail', question_order_num=current_question_order_num + 1))
     else:
         return redirect(url_for('QUESTION.question_result'))

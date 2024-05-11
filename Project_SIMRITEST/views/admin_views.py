@@ -129,13 +129,13 @@ def update_questions():
         return redirect(url_for("admin.question_list"))
 
     # if update to set activate request
-    elif request.form.get("active_status") == "update":
+    elif request.form.get("activate_status") == "activate":
         update_target_ids = request.form.getlist("question_checkbox")
         update_activation(update_target_ids, 1)
         return redirect(url_for("admin.question_list"))
 
     # if update to set deactivate request
-    elif request.form.get("deactive_status") == "update":
+    elif request.form.get("deactivate_status") == "deactivate":
         update_target_ids = request.form.getlist("question_checkbox")
         update_activation(update_target_ids, 0)
         return redirect(url_for("admin.question_list"))

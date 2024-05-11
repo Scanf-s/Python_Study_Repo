@@ -74,10 +74,17 @@ def update_activation(update_target_ids, set_activate_status):
     """
     # https://docs.sqlalchemy.org/en/20/core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_
     target_metadata_list = QuestionModel.query.filter(QuestionModel.id.in_(update_target_ids))
-    for target_metadata in target_metadata_list:
-        target_metadata.is_active = True
+    if set_activate_status == 1:
+        for target_metadata in target_metadata_list:
+            target_metadata.is_active = True
+        flash("Activated checked questions.", category="success")
+    elif set_activate_status == 0:
+        for target_metadata in target_metadata_list:
+            target_metadata.is_active = False
+        flash("Deactivated checked questions.", category="success")
+    else:
+        flash("Wrong activation status.", category="error")
     db.session.commit()
-    flash("Activated checked questions.", category="success")
 
 
 def delete_questions_in_database(update_target_ids):

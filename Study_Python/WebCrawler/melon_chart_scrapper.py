@@ -10,7 +10,10 @@ base_url = "https://www.melon.com/chart/index.htm"
 html = requests.get(url=base_url, headers=header_user).text
 
 soup = BeautifulSoup(html, "html.parser")
-song_list = soup.select("tbody tr")
+
+# 둘중에 아무거나 써도 작동합니다.
+# song_list = soup.select("tbody tr")
+song_list = soup.find_all(class_=["lst50", "lst100"])
 
 for song_container in song_list:
     rank = song_container.select_one(".rank")

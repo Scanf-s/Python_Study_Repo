@@ -12,7 +12,7 @@ html = requests.get(url=base_url, headers=header_user).text
 soup = BeautifulSoup(html, "html.parser")
 movie_list = soup.select(".sect-movie-chart ol li")
 
-# 19개 초과로 가져오려면 Selenium으로 마우스 조작해야함
+# 19개 초과로 가져오려면 Selenium, javascript로 마우스 조작해야함
 for i, movie in enumerate(movie_list):
     if i >= 19:
         break

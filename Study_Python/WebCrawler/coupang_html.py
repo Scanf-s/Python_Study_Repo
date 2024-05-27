@@ -4,7 +4,7 @@ from datetime import datetime
 import ftplib
 from ftp_connection_info import ftp_host, ftp_user, ftp_passwd
 
-keyword = input("검색헐 상품 : ")
+keyword = input("검색할 상품 : ")
 url = f"https://www.coupang.com/np/search?component=&q={keyword}"
 
 header_user = {

@@ -68,7 +68,7 @@ html_text = f"""
                 <div id="wrapper">
                     <!-- Header -->
                     <header id="header">
-                        <a href="index.html" class="logo">Massively</a>
+                        <a href="index.html" class="logo">쿠팡크롤링</a>
                     </header>
 
                     <!-- Main -->

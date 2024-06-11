@@ -49,6 +49,7 @@ black = "^24.4.2"
 matplotlib = "^3.9.0"
 pandas = "^2.2.2"
 google-api-python-client = "^2.132.0"
+google-auth-oauthlib = "^1.2.0"
 
 
 [build-system]

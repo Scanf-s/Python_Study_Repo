@@ -11,7 +11,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 
 
@@ -37,37 +37,32 @@ def init_driver() -> WebDriver:
 
 def scroll(driver):
     """
-    유튜브 라이브 페이지를 실제 사람이 사용하는 것처럼 스크롤하는 함수
+    페이지 끝까지 내려주는 함수
+    Contributor : im-niber(GyuJae Jo)
     """
+    elem = driver.find_element(By.TAG_NAME, "body")
+
+    no_of_pagedowns = 999
     last_height = driver.execute_script("return document.documentElement.scrollHeight")
 
-    while True:
-        # 랜덤한 높이로 스크롤
-        scroll_height = uniform(200, 500)
-        driver.execute_script(f"window.scrollBy(0, {scroll_height});")
+    last_chk_cnt = 0
+    while no_of_pagedowns:
 
-        # 랜덤한 대기 시간
-        time.sleep(uniform(1.0, 3.0))
+        elem.send_keys(Keys.PAGE_DOWN)
+        time.sleep(0.5)
 
-        # 새로운 높이 확인
         new_height = driver.execute_script("return document.documentElement.scrollHeight")
-        if new_height == last_height:
-            # 높이가 변하지 않았다면 마지막 시도로 스크롤
-            driver.execute_script("window.scrollBy(0, document.documentElement.scrollHeight);")
-            time.sleep(uniform(1.0, 3.0))
-            new_height = driver.execute_script("return document.documentElement.scrollHeight")
-            if new_height == last_height:
-                break
-        last_height = new_height
 
-        # 특정 요소가 나타날 때까지 기다리기
-        try:
-            WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.CLASS_NAME, "yt-core-image"))
-            )
-        except Exception as e:
-            print(f"Error during waiting for new content: {e}")
+        if last_height == new_height:
+            last_chk_cnt += 1
+
+        else:
+            last_chk_cnt = 0
+
+        if last_chk_cnt > 5:
             break
+
+        last_height = new_height
 
 
 def press_show_all(driver):

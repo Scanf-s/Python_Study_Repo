@@ -9,12 +9,8 @@ from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
-
-import pandas as pd
-import matplotlib.pyplot as plt
 
 
 def init_driver() -> WebDriver:

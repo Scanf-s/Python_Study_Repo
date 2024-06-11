@@ -14,9 +14,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 
-import pandas as pd
-import matplotlib.pyplot as plt
-
 
 def init_driver() -> WebDriver:
     """
@@ -46,8 +43,8 @@ def scroll(driver):
 
     while True:
         # 랜덤한 높이로 스크롤
-        scroll_height = uniform(200, 800)
-        driver.execute_script("window.scrollBy(0, {});".format(scroll_height))
+        scroll_height = uniform(200, 500)
+        driver.execute_script(f"window.scrollBy(0, {scroll_height});")
 
         # 랜덤한 대기 시간
         time.sleep(uniform(1.0, 3.0))

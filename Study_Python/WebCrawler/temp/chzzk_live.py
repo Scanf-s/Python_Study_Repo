@@ -7,7 +7,6 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -38,22 +37,22 @@ def init_driver() -> WebDriver:
     return new_driver
 
 
-def scroll(driver):
+def scroll(driver: WebDriver):
     """
-    유튜브 라이브 페이지를 실제 사람이 사용하는 것처럼 스크롤하는 함수
+    치지직 라이브 페이지를 실제 사람이 사용하는 것처럼 스크롤하는 함수
     """
-    last_height = driver.execute_script("return document.documentElement.scrollHeight")
+    last_height: int = driver.execute_script("return document.documentElement.scrollHeight")
 
-    while True:
+    for i in range(5):
         # 랜덤한 높이로 스크롤
-        scroll_height = uniform(200, 800)
-        driver.execute_script("window.scrollBy(0, {});".format(scroll_height))
+        scroll_height: int = uniform(200, 800)
+        driver.execute_script(f"window.scrollBy(0, {scroll_height});")
 
         # 랜덤한 대기 시간
         time.sleep(uniform(1.0, 3.0))
 
         # 새로운 높이 확인
-        new_height = driver.execute_script("return document.documentElement.scrollHeight")
+        new_height: int = driver.execute_script("return document.documentElement.scrollHeight")
         if new_height == last_height:
             # 높이가 변하지 않았다면 마지막 시도로 스크롤
             driver.execute_script("window.scrollBy(0, document.documentElement.scrollHeight);")
@@ -73,70 +72,41 @@ def scroll(driver):
             break
 
 
-def press_show_all(driver):
+def get_live_details(driver: WebDriver):
     """
-    모두보기 버튼 클릭
-    """
-    contents: WebElement = driver.find_element(By.ID, "contents")
-    first_section: WebElement = contents.find_element(By.TAG_NAME, "ytd-rich-section-renderer")
-    menu_container: WebElement = first_section.find_element(By.ID, "menu-container")
-    ActionChains(driver).move_to_element(menu_container).click().perform()
-    time.sleep(3)
-
-
-def parse_viewer_count(viewer_count: str) -> int:
-    """
-    K나 M 붙은 숫자들 파싱해주는 함수 (Chat GPT 4o 사용)
-    """
-    viewer_count = viewer_count.replace(' watching', '').replace(',', '')
-    if 'K' in viewer_count:
-        return int(float(viewer_count.replace('K', '')) * 1000)
-    elif 'M' in viewer_count:
-        return int(float(viewer_count.replace('M', '')) * 1000000)
-    else:
-        return int(viewer_count)
-
-
-def get_live_details(driver: WebDriver) -> Tuple[List[Any], List[str], List[str], List[str]]:
-    """
-    thumbnail_list : 썸네일 이미지 링크 리스트
-    title_list : 방송 제목 리스트
-    channel_name_list : 채널 주인장 이름 리스트
-    live_viewers_list : 시청자 수 리스트
+    치지직 데이터 가져오기
     """
     page: str = driver.page_source
     soup: BeautifulSoup = BeautifulSoup(page, "html.parser")
-    thumbnails, titles, channel_names, live_viewers = [], [], [], []
 
-    for thumbnail, title, channel_name, viewers in zip(
-            soup.find_all("ytd-thumbnail"),
-            soup.find_all("yt-formatted-string", id="video-title"),
-            soup.find_all("div", {"id": "text-container"}),
-            soup.find_all("span", class_="inline-metadata-item style-scope ytd-video-meta-block")
+    thumbnails: List = []
+    titles: List = []
+    channel_names: List = []
+    live_viewers: List = []
+
+    for thumbnail, title, channel_name, live_viewer in zip(
+        soup.find_all("a", class_="video_card_thumbnail__QXYT8"),
+        soup.find_all("a", class_="video_card_title__Amjk2"),
+        soup.find_all("span", class_="name_text__yQG50"),
+        soup.find_all("span", class_="video_card_badge__w02UD")
     ):
-        viewer_count_text = viewers.text.strip()
-        if 'watching' in viewer_count_text:
-            viewer_count = parse_viewer_count(viewer_count_text)
-            img = thumbnail.find("img", class_="yt-core-image")
-            if img and 'src' in img.attrs:
-                thumbnails.append(img['src'])
-            titles.append(title.text.strip())
-            channel_names.append(channel_name.find('a').text.strip())
-            live_viewers.append(viewer_count_text)
+        img = thumbnail.find("img")
+        if img and 'src' in img.attrs:
+            thumbnails.append(img['src'])
+        titles.append(title.text.strip("라이브 엔드로 이동"))
+        channel_names.append(channel_name.text.strip().strip('\n'))
+        live_viewers.append(live_viewer.text.strip())
 
     return thumbnails, titles, channel_names, live_viewers
 
 
 def main(driver: WebDriver):
-    url: str = "https://www.youtube.com/channel/UC4R8DWoMoI7CAwX8_LjQHig"
+    url: str = "https://chzzk.naver.com/lives"
     driver.get(url)
     time.sleep(2)
 
     try:
-        # 모두보기 버튼 클릭
-        press_show_all(driver)
-
-        # 페이지 끝까지 내리기
+        # 페이지 조금만 내려주기 (치지직은 이미 인기순으로 정렬되어 있어서 적당히만 내려주면 된다.)
         scroll(driver)
 
         thumbnail_list, title_list, channel_name_list, live_viewers_list = get_live_details(driver)
@@ -157,8 +127,5 @@ def main(driver: WebDriver):
 
 
 if __name__ == "__main__":
-    # 참고 블로그 :
-    # https://m.blog.naver.com/ksg97031/222070026332
-    # https://m.blog.naver.com/lmj4160/222462966573
     driver: WebDriver = init_driver()
     main(driver)

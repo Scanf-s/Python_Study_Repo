@@ -13,6 +13,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
 
 def init_driver():
+    """
+    웹 드라이버 초기화
+    """
     user_info = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
     service = Service(ChromeDriverManager().install())
 
@@ -29,6 +32,9 @@ def init_driver():
     return new_driver
 
 def scroll(driver):
+    """
+    유튜브 라이브 페이지 맨 밑까지 내려주는 함수
+    """
     last_height: int = driver.execute_script("return document.documentElement.scrollHeight")
 
     while True:
